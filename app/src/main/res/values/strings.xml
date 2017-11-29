@@ -1,0 +1,9 @@
+<resources>
+  <string name="app_name">Hunters</string>
+  <string name="home_nav_posts">Posts</string>
+  <string name="home_nav_collection">Collections</string>
+  <string name="home_title">Hunters</string>
+  <string name="home_post_item_img_description">Post image</string>
+  <string name="home_posts_item_thumbnail_discription">Post Thumbnail</string>
+  <string name="empty"/>
+</resources>

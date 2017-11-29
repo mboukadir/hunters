@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <style name="Theme.Hunters" parent="Base.Theme.Hunters"/>
+
+  <!-- Base application theme. -->
+  <style name="Base.Theme.Hunters" parent="Theme.AppCompat.Light.NoActionBar">
+
+    <item name="colorPrimary">@color/primary</item>
+    <item name="colorPrimaryDark">@color/primary_dark</item>
+    <item name="colorAccent">@color/accent</item>
+
+    <item name="android:colorBackground">@color/porcelain</item>
+    <item name="android:textColorPrimary">@color/falcon</item>
+    <item name="android:textColorSecondary">@color/stratus</item>
+
+    <item name="windowNoTitle">true</item>
+    <item name="windowActionBar">false</item>
+    <item name="colorControlHighlight">@color/secondaryLightColor</item>
+
+    <item name="android:fontFamily">monospace</item>
+
+    <item name="actionBarTheme">@style/ThemeOverlay.Hunters.ActionBar</item>
+    <item name="actionBarPopupTheme">@style/ThemeOverlay.Hunters.Popup</item>
+
+  </style>
+
+  <style name="ThemeOverlay.Hunters.ActionBar" parent="ThemeOverlay.AppCompat.ActionBar"/>
+
+  <style name="ThemeOverlay.Hunters.Popup" parent="ThemeOverlay.AppCompat.Light"/>
+
+  <style name="Theme.Hunters.Home">
+    <item name="toolbarStyle">@style/Widget.Hunters.Toolbar</item>
+  </style>
+
+  <!-- Preview themes. -->
+  <style name="PreviewTheme.Hunters" parent="android:Theme.Material.Light.DarkActionBar">
+    <item name="android:actionBarStyle">@style/PreviewWidget.ActionBar</item>
+    <item name="android:colorPrimary">@color/primary</item>
+    <item name="android:colorPrimaryDark">@color/primary_dark</item>
+    <item name="android:colorBackground">@color/porcelain</item>
+
+    <item name="runtimeTheme">@style/Theme.Hunters</item>
+
+  </style>
+
+  <style name="PreviewWidget.ActionBar" parent="android:Widget.Material.ActionBar.Solid">
+    <item name="android:background">@color/gray_gull</item> 
+    <item name="android:displayOptions">none</item>
+  </style>
+
+  <style name="PreviewTheme.Hunters.Home">
+    <item name="android:actionBarStyle">@style/PreviewWidget.ActionBar</item>
+    <item name="runtimeTheme">@style/Theme.Hunters.Home</item>
+
+  </style>
+
+
+</resources>

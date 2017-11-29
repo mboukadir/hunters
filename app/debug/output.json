@@ -1,0 +1,18 @@
+[
+  {
+    "outputType": {
+      "type": "APK"
+    },
+    "apkInfo": {
+      "type": "MAIN",
+      "splits": [],
+      "versionCode": 100
+    },
+    "path": "app-debug.apk",
+    "properties": {
+      "packageId": "com.mb.hunters.debug",
+      "split": "",
+      "minSdkVersion": "15"
+    }
+  }
+]
