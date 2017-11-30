@@ -4,6 +4,11 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
+apply plugin: 'com.getkeepsafe.dexcount'
+dexcount {
+  // Only run the method counter on CI
+  runOnEachPackage = ci
+}
 
 apply plugin: 'com.diffplug.gradle.spotless'
 spotless {
@@ -41,6 +46,7 @@ android {
   signingConfigs {
     releaseConfig {
       //TODO
+
     }
 
     debugConfig {
@@ -57,7 +63,7 @@ android {
       // Enabling multidex support.
       signingConfig signingConfigs.debugConfig
       applicationIdSuffix '.debug'
-      versionNameSuffix '-debug'
+      versionNameSuffix "-debug [${getGitHash()}]"
       //http://tools.android.com/tech-docs/new-build-system/built-in-shrinker
       //shrinkResources false
       minifyEnabled false
@@ -67,7 +73,7 @@ android {
     }
 
     release {
-      signingConfig signingConfigs.releaseConfig
+      signingConfig null
       shrinkResources true
       minifyEnabled true
       useProguard true
@@ -78,6 +84,11 @@ android {
   compileOptions {
     sourceCompatibility JavaVersion.VERSION_1_8
     targetCompatibility JavaVersion.VERSION_1_8
+  }
+
+  dexOptions {
+    // Don't pre-dex on CI
+    preDexLibraries !ci
   }
 
   packagingOptions {
@@ -141,7 +152,7 @@ dependencies {
 
   debugImplementation "com.squareup.retrofit2:retrofit-mock:${retrofit_version}"
   // debugImplementation "com.squareup.leakcanary:leakcanary-android:${leakcanary_version}"
-  debugImplementation "com.squareup.okhttp3:logging-interceptor:${okhttp_version}"
+  implementation "com.squareup.okhttp3:logging-interceptor:${okhttp_version}"
   //debugImplementation 'com.facebook.stetho:stetho:1.5.0'
 
   // Dependencies for local unit tests
@@ -174,4 +185,13 @@ dependencies {
   androidTestImplementation "com.android.support:support-v4:${support_lib_version}"
   androidTestImplementation "com.android.support:appcompat-v7:${support_lib_version}"
   androidTestImplementation "com.android.support:design:${support_lib_version}"
+}
+
+def getGitHash() {
+  def stdout = new ByteArrayOutputStream()
+  exec {
+    commandLine 'git', 'rev-parse', '--short', 'HEAD'
+    standardOutput = stdout
+  }
+  return stdout.toString().trim()
 }
