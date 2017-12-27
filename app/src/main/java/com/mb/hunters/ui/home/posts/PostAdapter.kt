@@ -58,6 +58,9 @@ class PostAdapter(val itemActionListener: ItemActionListener)
     var showLoadingMore: Boolean = false
         private set
 
+    private var items = mutableListOf<PostUiModel>()
+
+
     fun startLoadingMore() {
         Timber.d("startLoadingMore")
         if (showLoadingMore) return
@@ -78,7 +81,6 @@ class PostAdapter(val itemActionListener: ItemActionListener)
         return if (showLoadingMore) itemCount - 1 else RecyclerView.NO_POSITION
     }
 
-    private var mValues = mutableListOf<PostUiModel>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -92,7 +94,7 @@ class PostAdapter(val itemActionListener: ItemActionListener)
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
         when (holder) {
-            is PostViewHolder -> holder.bind(mValues[position])
+            is PostViewHolder -> holder.bind(items[position])
             is LoadingViewHolder -> holder.bind()
 
             else -> require(false) {
@@ -106,7 +108,7 @@ class PostAdapter(val itemActionListener: ItemActionListener)
             payloads: MutableList<Any>) {
 
         when (holder) {
-            is PostViewHolder -> holder.bind(mValues[position], payloads)
+            is PostViewHolder -> holder.bind(items[position], payloads)
             is LoadingViewHolder -> holder.bind()
 
             else -> require(false) {
@@ -120,11 +122,11 @@ class PostAdapter(val itemActionListener: ItemActionListener)
         if (getItemViewType(position) == TYPE_LOADING_MORE) {
             return RecyclerView.NO_ID
         }
-        return mValues[position].id
+        return items[position].id
     }
 
     fun getDataItemCount(): Int {
-        return mValues.size
+        return items.size
     }
 
     override fun getItemCount(): Int {
@@ -140,21 +142,21 @@ class PostAdapter(val itemActionListener: ItemActionListener)
     }
 
     fun showMore(posts: List<PostUiModel>) {
-        val newList = mValues.plus(posts)
-        val diffUtilResult = DiffUtil.calculateDiff(DiffUtilPosts(mValues, newList))
-        mValues = newList.toMutableList()
+        val newList = items.plus(posts)
+        val diffUtilResult = DiffUtil.calculateDiff(DiffUtilPosts(items, newList))
+        items = newList.toMutableList()
         diffUtilResult.dispatchUpdatesTo(this)
 
     }
 
     fun update(newPosts: List<PostUiModel>) {
-        val diffUtilResult = DiffUtil.calculateDiff(DiffUtilPosts(mValues, newPosts))
-        mValues = newPosts.toMutableList()
+        val diffUtilResult = DiffUtil.calculateDiff(DiffUtilPosts(items, newPosts))
+        items = newPosts.toMutableList()
         diffUtilResult.dispatchUpdatesTo(this)
 
     }
 
-    fun getLastItemDayAgo() = mValues.last().daysAgo
+    fun getLastItemDayAgo() = items.last().daysAgo
 
     inner class PostViewHolder(parent: ViewGroup, @LayoutRes layoutResId: Int)
         : BaseViewHolder(parent, layoutResId) {
@@ -162,7 +164,7 @@ class PostAdapter(val itemActionListener: ItemActionListener)
         init {
             itemView.setOnClickListener({
                 if (adapterPosition != NO_POSITION) {
-                    itemActionListener.onItemClick(mValues[adapterPosition])
+                    itemActionListener.onItemClick(items[adapterPosition])
                 }
             })
         }
