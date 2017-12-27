@@ -1,5 +1,5 @@
 
-# Hunters  (work-in-progress)
+# Hunters  [🛠 WORK-IN-PROGRESS 🛠]
  Hunters is Unofficial Android client for Product Hunt
  
  
