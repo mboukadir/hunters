@@ -1,6 +1,6 @@
 
 # Hunters  [🛠 WORK-IN-PROGRESS 🛠]
- Hunters is Unofficial Android client for Product Hunt
+ Hunters is Unofficial Android client for [Product Hunt](https://www.producthunt.com/)
  
  
  ## Android development
