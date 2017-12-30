@@ -14,14 +14,21 @@
  * limitations under the License.
  */
 
-package com.mb.hunters.di
+package com.mb.hunters.ui.common
 
-import com.mb.hunters.data.DataModule
-import com.mb.hunters.ui.UiModule
-import dagger.Module
+import com.mb.hunters.ui.base.SchedulerProvider
+import io.reactivex.Scheduler
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-@Module(includes = arrayOf(
-        UiModule::class,
-        DataModule::class
-))
-class AppModule
+class AppSchedulerProvider @Inject constructor() : SchedulerProvider {
+
+    override fun mainThread(): Scheduler {
+        return AndroidSchedulers.mainThread()
+    }
+
+    override fun io(): Scheduler {
+        return Schedulers.io()
+    }
+}

@@ -17,23 +17,9 @@
 package com.mb.hunters.data.repository
 
 import com.mb.hunters.data.database.entity.PostEntity
-import com.mb.hunters.data.repository.local.PostLocalDataSource
-import com.mb.hunters.data.repository.remote.PostRemoteDataSource
 import io.reactivex.Single
 
-class PostRepository(private val postRemoteDataSource: PostRemoteDataSource,
-        private val postLocalDataSource: PostLocalDataSource) {
-
-    fun loadPosts(daysAgo: Long): Single<List<PostEntity>> {
-
-        return postRemoteDataSource.getPosts(daysAgo)
-                .doOnSuccess { postLocalDataSource.savePosts(it) }
-                .onErrorResumeNext { postLocalDataSource.getPostsAtDaysAgoOrOlder(daysAgo) }
-    }
-
-    fun refreshPosts(daysAgo: Long): Single<List<PostEntity>> {
-        return postRemoteDataSource.getPosts(daysAgo)
-                .doOnSuccess { postLocalDataSource.savePosts(it) }
-    }
-
+interface PostRepository {
+    fun loadPosts(daysAgo: Long): Single<List<PostEntity>>
+    fun refreshPosts(daysAgo: Long): Single<List<PostEntity>>
 }

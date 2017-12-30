@@ -14,14 +14,13 @@
  * limitations under the License.
  */
 
-package com.mb.hunters.di
+package com.mb.hunters.ui.base
 
-import com.mb.hunters.data.DataModule
-import com.mb.hunters.ui.UiModule
-import dagger.Module
+import io.reactivex.Scheduler
 
-@Module(includes = arrayOf(
-        UiModule::class,
-        DataModule::class
-))
-class AppModule
+interface SchedulerProvider {
+
+    fun io(): Scheduler
+
+    fun mainThread(): Scheduler
+}

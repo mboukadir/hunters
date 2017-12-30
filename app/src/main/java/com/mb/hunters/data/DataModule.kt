@@ -22,6 +22,7 @@ import com.mb.hunters.data.api.ApiModule
 import com.mb.hunters.data.api.PostService
 import com.mb.hunters.data.database.HuntersDatabase
 import com.mb.hunters.data.repository.PostRepository
+import com.mb.hunters.data.repository.PostRepositoryData
 import com.mb.hunters.data.repository.local.PostLocalDataSource
 import com.mb.hunters.data.repository.remote.PostRemoteDataSource
 import dagger.Module
@@ -44,7 +45,7 @@ class DataModule {
     @Singleton
     fun providePostRepository(postService: PostService,
             huntersDatabase: HuntersDatabase): PostRepository {
-        return PostRepository(PostRemoteDataSource(postService),
+        return PostRepositoryData(PostRemoteDataSource(postService),
                 PostLocalDataSource(huntersDatabase.postDao()))
     }
 

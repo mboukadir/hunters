@@ -16,12 +16,13 @@
 
 package com.mb.hunters.di
 
-import com.mb.hunters.data.DataModule
 import com.mb.hunters.ui.UiModule
+import com.mb.hunters.ui.home.di.HomeBuilderModule
 import dagger.Module
 
-@Module(includes = arrayOf(
-        UiModule::class,
-        DataModule::class
-))
-class AppModule
+@Module(includes = [
+    TestDataModule::class,
+    HomeBuilderModule::class,
+    UiModule::class
+])
+class TestAppModule

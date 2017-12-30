@@ -60,7 +60,6 @@ class PostAdapter(val itemActionListener: ItemActionListener)
 
     private var items = mutableListOf<PostUiModel>()
 
-
     fun startLoadingMore() {
         Timber.d("startLoadingMore")
         if (showLoadingMore) return
@@ -80,7 +79,6 @@ class PostAdapter(val itemActionListener: ItemActionListener)
     private fun getLoadingMoreItemPosition(): Int {
         return if (showLoadingMore) itemCount - 1 else RecyclerView.NO_POSITION
     }
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {

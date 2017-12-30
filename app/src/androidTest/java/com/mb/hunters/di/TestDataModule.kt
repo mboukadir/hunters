@@ -16,12 +16,19 @@
 
 package com.mb.hunters.di
 
-import com.mb.hunters.data.DataModule
-import com.mb.hunters.ui.UiModule
+import com.mb.hunters.data.repository.PostRepository
 import dagger.Module
+import dagger.Provides
+import org.mockito.Mockito
+import javax.inject.Singleton
 
-@Module(includes = arrayOf(
-        UiModule::class,
-        DataModule::class
-))
-class AppModule
+@Module
+class TestDataModule {
+
+    @Provides
+    @Singleton
+    fun providePostRepository(): PostRepository {
+        return Mockito.mock(PostRepository::class.java)
+    }
+
+}

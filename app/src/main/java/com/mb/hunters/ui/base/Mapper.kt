@@ -14,14 +14,9 @@
  * limitations under the License.
  */
 
-package com.mb.hunters.di
+package com.mb.hunters.ui.base
 
-import com.mb.hunters.data.DataModule
-import com.mb.hunters.ui.UiModule
-import dagger.Module
+interface Mapper<in E, out D> {
 
-@Module(includes = arrayOf(
-        UiModule::class,
-        DataModule::class
-))
-class AppModule
+    fun mapToUiModel(type: E): D
+}

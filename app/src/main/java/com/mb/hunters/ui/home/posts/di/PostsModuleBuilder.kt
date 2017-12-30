@@ -42,5 +42,4 @@ abstract class PostsModuleBuilder {
 
     @Binds
     abstract fun bindNavigator(huntersNavigator: HuntersNavigator): Navigator
-
 }

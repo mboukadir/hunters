@@ -14,14 +14,17 @@
  * limitations under the License.
  */
 
-package com.mb.hunters.di
+package com.mb.hunters.ui
 
-import com.mb.hunters.data.DataModule
-import com.mb.hunters.ui.UiModule
+import com.mb.hunters.ui.base.SchedulerProvider
+import com.mb.hunters.ui.common.AppSchedulerProvider
+import dagger.Binds
 import dagger.Module
 
-@Module(includes = arrayOf(
-        UiModule::class,
-        DataModule::class
-))
-class AppModule
+@Module
+abstract class UiModule {
+
+    @Binds
+    abstract fun bindSchedularProvider(shedularProvider: AppSchedulerProvider): SchedulerProvider
+
+}
