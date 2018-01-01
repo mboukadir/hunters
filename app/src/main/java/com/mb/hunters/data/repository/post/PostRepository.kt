@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.mb.hunters.data.repository
+package com.mb.hunters.data.repository.post
 
 import com.mb.hunters.data.database.entity.PostEntity
 import io.reactivex.Single

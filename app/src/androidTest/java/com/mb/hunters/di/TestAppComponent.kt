@@ -17,7 +17,7 @@
 package com.mb.hunters.di
 
 import com.mb.hunters.TestApplication
-import com.mb.hunters.data.repository.PostRepository
+import com.mb.hunters.data.repository.post.PostRepository
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector

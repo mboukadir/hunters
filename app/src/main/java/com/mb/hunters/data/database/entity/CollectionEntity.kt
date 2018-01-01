@@ -14,21 +14,16 @@
  * limitations under the License.
  */
 
-package com.mb.hunters.di
+package com.mb.hunters.data.database.entity
 
-import com.mb.hunters.data.repository.post.PostRepository
-import dagger.Module
-import dagger.Provides
-import org.mockito.Mockito
-import javax.inject.Singleton
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.PrimaryKey
 
-@Module
-class TestDataModule {
-
-    @Provides
-    @Singleton
-    fun providePostRepository(): PostRepository {
-        return Mockito.mock(PostRepository::class.java)
-    }
-
-}
+@Entity(tableName = "collections")
+data class CollectionEntity(
+        @PrimaryKey val id: Long,
+        val name: String,
+        val title: String,
+        val backgroundImageUrl: String,
+        val collectionUrl: String
+)

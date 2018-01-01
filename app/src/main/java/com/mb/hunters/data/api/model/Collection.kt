@@ -14,21 +14,16 @@
  * limitations under the License.
  */
 
-package com.mb.hunters.di
+package com.mb.hunters.data.api.model
 
-import com.mb.hunters.data.repository.post.PostRepository
-import dagger.Module
-import dagger.Provides
-import org.mockito.Mockito
-import javax.inject.Singleton
+import com.squareup.moshi.Json
 
-@Module
-class TestDataModule {
-
-    @Provides
-    @Singleton
-    fun providePostRepository(): PostRepository {
-        return Mockito.mock(PostRepository::class.java)
-    }
-
-}
+data class Collection(
+        val id: Long,
+        val name: String,
+        val title: String,
+        @Json(name = "background_image_url")
+        val backgroundImageUrl: String,
+        @Json(name = "collection_url")
+        val collectionUrl: String,
+        val posts: List<Post>)

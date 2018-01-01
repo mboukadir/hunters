@@ -14,22 +14,21 @@
  * limitations under the License.
  */
 
-package com.mb.hunters.data.database
+package com.mb.hunters.data.database.dao
 
-import android.arch.persistence.room.Database
-import android.arch.persistence.room.RoomDatabase
-import android.arch.persistence.room.TypeConverters
-import com.mb.hunters.data.database.dao.CollectionDao
-import com.mb.hunters.data.database.dao.PostDao
+import android.arch.persistence.room.Dao
+import android.arch.persistence.room.Insert
+import android.arch.persistence.room.OnConflictStrategy
+import android.arch.persistence.room.Query
 import com.mb.hunters.data.database.entity.CollectionEntity
-import com.mb.hunters.data.database.entity.PostEntity
+import io.reactivex.Single
 
-@Database(entities = [
-    PostEntity::class,
-    CollectionEntity::class
-], version = 1)
-@TypeConverters(DateConverter::class)
-abstract class HuntersDatabase : RoomDatabase() {
-    abstract fun postDao(): PostDao
-    abstract fun collectionDao(): CollectionDao
+@Dao
+interface CollectionDao {
+
+    @Query("SELECT * FROM collections")
+    fun getCollections(): Single<List<CollectionEntity>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(collections: List<CollectionEntity>)
 }

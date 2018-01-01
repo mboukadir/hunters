@@ -19,7 +19,7 @@ package com.mb.hunters.ui.home.posts
 import android.arch.core.executor.testing.InstantTaskExecutorRule
 import android.arch.lifecycle.Observer
 import com.mb.hunters.data.database.entity.PostEntity
-import com.mb.hunters.data.repository.PostRepository
+import com.mb.hunters.data.repository.post.PostRepository
 import com.mb.hunters.test.TestSchedulerProvider
 import dagger.Lazy
 import io.reactivex.Single

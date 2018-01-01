@@ -14,21 +14,14 @@
  * limitations under the License.
  */
 
-package com.mb.hunters.di
+package com.mb.hunters.data.api
 
-import com.mb.hunters.data.repository.post.PostRepository
-import dagger.Module
-import dagger.Provides
-import org.mockito.Mockito
-import javax.inject.Singleton
+import com.mb.hunters.data.api.model.CollectionsResponse
+import io.reactivex.Single
+import retrofit2.http.GET
 
-@Module
-class TestDataModule {
+interface CollectionService {
 
-    @Provides
-    @Singleton
-    fun providePostRepository(): PostRepository {
-        return Mockito.mock(PostRepository::class.java)
-    }
-
+    @GET("collections?search[featured]=true")
+    fun getCollections(): Single<CollectionsResponse>
 }

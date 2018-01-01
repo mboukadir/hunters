@@ -14,21 +14,15 @@
  * limitations under the License.
  */
 
-package com.mb.hunters.di
+package com.mb.hunters.data.repository.collection.remote
 
-import com.mb.hunters.data.repository.post.PostRepository
-import dagger.Module
-import dagger.Provides
-import org.mockito.Mockito
-import javax.inject.Singleton
+import com.mb.hunters.data.api.CollectionService
+import com.mb.hunters.data.api.model.Collection
+import io.reactivex.Single
 
-@Module
-class TestDataModule {
+class CollectionRemoteDataSource(private val collectionService: CollectionService) {
 
-    @Provides
-    @Singleton
-    fun providePostRepository(): PostRepository {
-        return Mockito.mock(PostRepository::class.java)
+    fun getCollections(): Single<List<Collection>> {
+        return collectionService.getCollections().map { it.collections }
     }
-
 }

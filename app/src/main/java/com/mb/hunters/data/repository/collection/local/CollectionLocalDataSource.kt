@@ -14,22 +14,19 @@
  * limitations under the License.
  */
 
-package com.mb.hunters.data.database
+package com.mb.hunters.data.repository.collection.local
 
-import android.arch.persistence.room.Database
-import android.arch.persistence.room.RoomDatabase
-import android.arch.persistence.room.TypeConverters
 import com.mb.hunters.data.database.dao.CollectionDao
-import com.mb.hunters.data.database.dao.PostDao
 import com.mb.hunters.data.database.entity.CollectionEntity
-import com.mb.hunters.data.database.entity.PostEntity
+import io.reactivex.Single
 
-@Database(entities = [
-    PostEntity::class,
-    CollectionEntity::class
-], version = 1)
-@TypeConverters(DateConverter::class)
-abstract class HuntersDatabase : RoomDatabase() {
-    abstract fun postDao(): PostDao
-    abstract fun collectionDao(): CollectionDao
+class CollectionLocalDataSource(private val collectionDao: CollectionDao) {
+
+    fun save(collectionEntityList: List<CollectionEntity>) {
+        collectionDao.insert(collectionEntityList)
+    }
+
+    fun getCollections(): Single<List<CollectionEntity>> {
+        return collectionDao.getCollections()
+    }
 }

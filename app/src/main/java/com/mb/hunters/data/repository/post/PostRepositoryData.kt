@@ -14,15 +14,16 @@
  * limitations under the License.
  */
 
-package com.mb.hunters.data.repository
+package com.mb.hunters.data.repository.post
 
 import com.mb.hunters.data.database.entity.PostEntity
-import com.mb.hunters.data.repository.local.PostLocalDataSource
-import com.mb.hunters.data.repository.remote.PostRemoteDataSource
+import com.mb.hunters.data.repository.post.local.PostLocalDataSource
+import com.mb.hunters.data.repository.post.remote.PostRemoteDataSource
 import io.reactivex.Single
 
 class PostRepositoryData(private val postRemoteDataSource: PostRemoteDataSource,
-        private val postLocalDataSource: PostLocalDataSource) : PostRepository {
+        private val postLocalDataSource: PostLocalDataSource) :
+        PostRepository {
 
     override fun loadPosts(daysAgo: Long): Single<List<PostEntity>> {
 
