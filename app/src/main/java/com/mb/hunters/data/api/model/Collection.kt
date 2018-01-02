@@ -23,7 +23,6 @@ data class Collection(
         val name: String,
         val title: String,
         @Json(name = "background_image_url")
-        val backgroundImageUrl: String,
+        val backgroundImageUrl: String?,
         @Json(name = "collection_url")
-        val collectionUrl: String,
-        val posts: List<Post>)
+        val collectionUrl: String)

@@ -18,10 +18,11 @@ package com.mb.hunters.data.api
 
 import com.mb.hunters.data.api.model.CollectionsResponse
 import io.reactivex.Single
+import retrofit2.adapter.rxjava2.Result
 import retrofit2.http.GET
 
 interface CollectionService {
 
-    @GET("collections?search[featured]=true")
-    fun getCollections(): Single<CollectionsResponse>
+    @GET("v1/collections?search[featured]=true")
+    fun getCollections(): Single<Result<CollectionsResponse>>
 }

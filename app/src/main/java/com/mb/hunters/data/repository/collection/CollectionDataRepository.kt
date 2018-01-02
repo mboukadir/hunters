@@ -41,7 +41,7 @@ class CollectionDataRepository(private val localDataSource: CollectionLocalDataS
                     id = it.id,
                     name = it.name,
                     title = it.title,
-                    backgroundImageUrl = it.backgroundImageUrl,
+                    backgroundImageUrl = it.backgroundImageUrl?:"",
                     collectionUrl = it.collectionUrl
             )
         }

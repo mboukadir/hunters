@@ -26,13 +26,15 @@ import com.mb.hunters.ui.home.posts.PostsViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
+import dagger.android.support.FragmentKey
 import dagger.multibindings.IntoMap
 
 @Module
 abstract class PostsModuleBuilder {
 
     @PerFragment
-    @ContributesAndroidInjector(modules = arrayOf(PostsModule::class))
+    @ContributesAndroidInjector(modules = [(PostsModule::class)])
+    @FragmentKey(PostsFragment::class)
     abstract fun bindPostFragment(): PostsFragment
 
     @Binds
@@ -40,6 +42,4 @@ abstract class PostsModuleBuilder {
     @ViewModelKey(PostsViewModel::class)
     abstract fun bindPostsViewModel(postsViewModel: PostsViewModel): ViewModel
 
-    @Binds
-    abstract fun bindNavigator(huntersNavigator: HuntersNavigator): Navigator
 }
