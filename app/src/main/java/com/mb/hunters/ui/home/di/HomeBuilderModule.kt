@@ -18,7 +18,6 @@ package com.mb.hunters.ui.home.di
 
 import com.mb.hunters.di.PerActivity
 import com.mb.hunters.ui.base.Navigator
-import com.mb.hunters.ui.common.HuntersNavigator
 import com.mb.hunters.ui.home.HomeActivity
 import com.mb.hunters.ui.home.collection.di.CollectionModuleBuilder
 import com.mb.hunters.ui.home.posts.di.PostsModuleBuilder
@@ -35,6 +34,5 @@ abstract class HomeBuilderModule {
             modules = [PostsModuleBuilder::class, CollectionModuleBuilder::class])
     @ActivityKey(HomeActivity::class)
     abstract fun bindHomeActivity(): HomeActivity
-
 
 }

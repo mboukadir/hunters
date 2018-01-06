@@ -41,7 +41,7 @@ import timber.log.Timber
 class PostAdapter(val itemActionListener: ItemActionListener)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-     object Constant {
+    object Constant {
         const val KEY_COMMENT = "key_comment"
         const val KEY_VOTES = "key_votes"
         const val TYPE_ITEM = R.layout.home_post_list_item

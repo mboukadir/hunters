@@ -15,7 +15,6 @@
       app:layout_constraintDimensionRatio="16:9"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:srcCompat="@drawable/screen_shot"
       />
   <TextView
       android:id="@+id/name"

@@ -20,7 +20,6 @@ import android.arch.lifecycle.ViewModel
 import com.mb.hunters.di.PerFragment
 import com.mb.hunters.di.ViewModelKey
 import com.mb.hunters.ui.base.Navigator
-import com.mb.hunters.ui.common.HuntersNavigator
 import com.mb.hunters.ui.home.posts.PostsFragment
 import com.mb.hunters.ui.home.posts.PostsViewModel
 import dagger.Binds
