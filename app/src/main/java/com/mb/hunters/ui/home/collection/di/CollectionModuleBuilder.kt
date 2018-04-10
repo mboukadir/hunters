@@ -24,7 +24,7 @@ import com.mb.hunters.ui.home.collection.CollectionsViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
-import dagger.android.support.FragmentKey
+import dagger.multibindings.ClassKey
 import dagger.multibindings.IntoMap
 
 @Module
@@ -32,7 +32,7 @@ abstract class CollectionModuleBuilder {
 
     @PerFragment
     @ContributesAndroidInjector(modules = [CollectionsModule::class])
-    @FragmentKey(CollectionsFragment::class)
+    @ClassKey(CollectionsFragment::class)
     abstract fun bindCollectionsFragment(): CollectionsFragment
 
     @Binds

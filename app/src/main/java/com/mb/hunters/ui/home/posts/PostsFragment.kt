@@ -16,6 +16,7 @@
 
 package com.mb.hunters.ui.home.posts
 
+import android.app.Activity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
@@ -47,16 +48,19 @@ class PostsFragment : BaseFragment(), PostAdapter.ItemActionListener {
     private lateinit var postAdapter: PostAdapter
     private lateinit var postViewModel: PostsViewModel
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
-            savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
         Timber.d("OnCreatView")
 
-        val view = inflater!!.inflate(R.layout.home_post_fragment_list, container, false)
+        val view = inflater.inflate(R.layout.home_post_fragment_list, container, false)
 
         setupToolbar(view)
 
-        setupRecylerView(view)
+        setupRecyclerView(view)
         return view
     }
 
@@ -110,29 +114,30 @@ class PostsFragment : BaseFragment(), PostAdapter.ItemActionListener {
 
     }
 
-    private fun setupRecylerView(root: View) {
+    private fun setupRecyclerView(root: View) {
         postAdapter = PostAdapter(this)
 
         root.postRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = this@PostsFragment.postAdapter
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
-            addOnScrollListener(EndlessRecyclerViewScrollListener(layoutManager,
-                    { _: Int, recyclerView: RecyclerView ->
-                        recyclerView.post {
-                            if (postAdapter.showLoadingMore.not()) {
-                                postAdapter.startLoadingMore()
-                                postViewModel.loadMore(postAdapter.getLastItemDayAgo() + 1)
-                            }
-                        }
+            addOnScrollListener(EndlessRecyclerViewScrollListener(
+                layoutManager as LinearLayoutManager
+            ) { _: Int, recyclerView: RecyclerView ->
+                recyclerView.post {
+                    if (postAdapter.showLoadingMore.not()) {
+                        postAdapter.startLoadingMore()
+                        postViewModel.loadMore(postAdapter.getLastItemDayAgo() + 1)
+                    }
+                }
 
-                    }))
+            })
         }
     }
 
     override fun onItemClick(item: PostUiModel) {
 
-        navigator.toDetailPost(activity, item)
+        navigator.toDetailPost(activity as Activity, item)
 
     }
 

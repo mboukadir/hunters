@@ -33,7 +33,6 @@ import com.mb.hunters.ui.base.Navigator
 import kotlinx.android.synthetic.main.home_collection_fragment_list.collectionRecyclerView
 import kotlinx.android.synthetic.main.home_collection_fragment_list.loading
 import kotlinx.android.synthetic.main.home_collection_fragment_list.view.collectionRecyclerView
-import kotlinx.android.synthetic.main.home_post_fragment_list.postRecyclerView
 import javax.inject.Inject
 
 class CollectionsFragment : BaseFragment() {
@@ -50,10 +49,10 @@ class CollectionsFragment : BaseFragment() {
                 CollectionsViewModel::class.java)
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?): View? {
 
-        val root = inflater!!.inflate(R.layout.home_collection_fragment_list, container, false)
+        val root = inflater.inflate(R.layout.home_collection_fragment_list, container, false)
 
         setupRecyclerView(root)
 

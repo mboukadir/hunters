@@ -54,7 +54,6 @@ class CollectionRemoteDataSourceTest {
 
     }
 
-
     @Test
     fun getCollectionsReturnCollectionList() {
 
@@ -72,9 +71,7 @@ class CollectionRemoteDataSourceTest {
 
     companion object {
 
-
-        fun <T> resultOf(response:T): Result<T> = Result.response(Response.success(response))
-
+        fun <T> resultOf(response: T): Result<T> = Result.response(Response.success(response))
 
         val COLLECTIONS_RESPONSE_EMPTY = CollectionsResponse(emptyList())
 

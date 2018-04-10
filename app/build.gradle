@@ -26,12 +26,13 @@ def versionPatch = 1
 def versionBuild = 0
 
 android {
-  compileSdkVersion 26
-  buildToolsVersion "26.0.3"
+  compileSdkVersion 28
+  buildToolsVersion '28.0.3'
+
   defaultConfig {
     applicationId "com.mb.hunters"
     minSdkVersion 21
-    targetSdkVersion 26
+    targetSdkVersion 28
 
     versionCode versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100 + versionBuild
     versionName "${versionMajor}.${versionMinor}.${versionPatch}"
@@ -104,10 +105,10 @@ androidExtensions {
 dependencies {
   implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-  implementation "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
 
-  implementation "com.android.support:support-v4:${support_lib_version}"
+  implementation """com.android.support:support-v4:${support_lib_version}"""
   implementation "com.android.support:appcompat-v7:${support_lib_version}"
   implementation "com.android.support:design:${support_lib_version}"
   implementation "com.android.support:recyclerview-v7:${support_lib_version}"
@@ -117,14 +118,14 @@ dependencies {
   implementation "com.android.support.constraint:constraint-layout:${constraint_layout_version}"
 
 
-  implementation "android.arch.lifecycle:runtime:${arch_component_version}"
-  implementation "android.arch.lifecycle:extensions:${arch_component_version}"
-  implementation "android.arch.lifecycle:reactivestreams:${arch_component_version}"
-  kapt "android.arch.lifecycle:compiler:${arch_component_version}"
+  implementation "android.arch.lifecycle:runtime:${arch_component_lifecycle_version}"
+  implementation "android.arch.lifecycle:extensions:${arch_component_lifecycle_version}"
+  implementation "android.arch.lifecycle:reactivestreams:${arch_component_lifecycle_version}"
+  kapt "android.arch.lifecycle:compiler:${arch_component_lifecycle_version}"
 
-  implementation "android.arch.persistence.room:runtime:${arch_component_version}"
-  implementation "android.arch.persistence.room:rxjava2:${arch_component_version}"
-  kapt "android.arch.persistence.room:compiler:${arch_component_version}"
+  implementation "android.arch.persistence.room:runtime:${arch_component_room_version}"
+  implementation "android.arch.persistence.room:rxjava2:${arch_component_room_version}"
+  kapt "android.arch.persistence.room:compiler:1.1.1"
 
   implementation "com.google.dagger:dagger:${dagger_version}"
   implementation "com.google.dagger:dagger-android:${dagger_version}"
@@ -134,7 +135,7 @@ dependencies {
 
 
   implementation "io.reactivex.rxjava2:rxjava:${rx_version}"
-  implementation "io.reactivex.rxjava2:rxandroid:2.0.1"
+  implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
 
   implementation "com.squareup.retrofit2:retrofit:${retrofit_version}"
   implementation "com.squareup.retrofit2:converter-moshi:${retrofit_version}"
@@ -144,9 +145,9 @@ dependencies {
   implementation "com.squareup.moshi:moshi-kotlin:${mushi_version}"
   implementation "com.squareup.moshi:moshi-adapters:${mushi_version}"
 
-  implementation 'com.jakewharton.timber:timber:4.6.0'
+  implementation 'com.jakewharton.timber:timber:4.7.1'
 
-  implementation "com.github.bumptech.glide:glide:4.2.0"
+  implementation 'com.github.bumptech.glide:glide:4.9.0'
 
   releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:${leakcanary_version}"
 
@@ -160,7 +161,7 @@ dependencies {
   //testImplementation "org.mockito:mockito-all:${mockito_version}"
   testImplementation "org.mockito:mockito-core:${mockito_version}"
   testImplementation "org.hamcrest:hamcrest-all:${hamcrest_version}"
-  testImplementation "android.arch.core:core-testing:${arch_component_version}"
+  testImplementation "android.arch.core:core-testing:${arch_component_lifecycle_version}"
   testImplementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
   testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
 
@@ -172,8 +173,8 @@ dependencies {
   // Android Testing Support Library's runner and rules
   androidTestImplementation "com.android.support.test:runner:${runner_version}"
   androidTestImplementation "com.android.support.test:rules:${runner_version}"
-  androidTestImplementation "android.arch.persistence.room:testing:${arch_component_version}"
-  androidTestImplementation "android.arch.core:core-testing:${arch_component_version}"
+  androidTestImplementation "android.arch.persistence.room:testing:${arch_component_room_version}"
+  androidTestImplementation "android.arch.core:core-testing:${arch_component_lifecycle_version}"
 
   // Dependencies for Android unit tests
   androidTestImplementation "junit:junit:${junit_version}"
