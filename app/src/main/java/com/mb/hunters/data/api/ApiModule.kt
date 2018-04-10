@@ -76,4 +76,10 @@ class ApiModule {
         return retrofit.create(PostService::class.java)
     }
 
+    @Provides
+    @Singleton
+    fun provideCollectionService(retrofit: Retrofit) : CollectionService {
+        return retrofit.create(CollectionService::class.java)
+    }
+
 }

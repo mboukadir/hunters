@@ -21,6 +21,7 @@ import com.mb.hunters.R
 import com.mb.hunters.ui.base.BaseActivity
 import com.mb.hunters.ui.common.chromtab.CustomTabActivityHelper
 import com.mb.hunters.ui.common.extensions.replaceFragmentInActivity
+import com.mb.hunters.ui.home.collection.CollectionsFragment
 import com.mb.hunters.ui.home.posts.PostsFragment
 import kotlinx.android.synthetic.main.home_activity.homeBottomNav
 import kotlinx.android.synthetic.main.home_activity.homeContainer
@@ -42,7 +43,7 @@ class HomeActivity : BaseActivity() {
                     true
                 }
                 R.id.home_nav_collection -> {
-                    replaceFragmentInActivity(PostsFragment(), homeContainer.id)
+                    replaceFragmentInActivity(CollectionsFragment.newInstance(), homeContainer.id)
                     true
                 }
                 else -> true

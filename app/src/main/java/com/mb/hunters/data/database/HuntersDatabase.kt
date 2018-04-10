@@ -19,11 +19,17 @@ package com.mb.hunters.data.database
 import android.arch.persistence.room.Database
 import android.arch.persistence.room.RoomDatabase
 import android.arch.persistence.room.TypeConverters
+import com.mb.hunters.data.database.dao.CollectionDao
 import com.mb.hunters.data.database.dao.PostDao
+import com.mb.hunters.data.database.entity.CollectionEntity
 import com.mb.hunters.data.database.entity.PostEntity
 
-@Database(entities = arrayOf(PostEntity::class), version = 1)
+@Database(entities = [
+    PostEntity::class,
+    CollectionEntity::class
+], version = 1)
 @TypeConverters(DateConverter::class)
 abstract class HuntersDatabase : RoomDatabase() {
     abstract fun postDao(): PostDao
+    abstract fun collectionDao(): CollectionDao
 }

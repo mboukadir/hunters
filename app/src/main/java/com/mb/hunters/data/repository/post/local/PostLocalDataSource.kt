@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.mb.hunters.data.repository.local
+package com.mb.hunters.data.repository.post.local
 
 import com.mb.hunters.data.database.dao.PostDao
 import com.mb.hunters.data.database.entity.PostEntity

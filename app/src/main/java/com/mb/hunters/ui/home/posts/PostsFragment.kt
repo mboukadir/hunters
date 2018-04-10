@@ -36,6 +36,7 @@ import kotlinx.android.synthetic.main.home_post_fragment_list.postRecyclerView
 import kotlinx.android.synthetic.main.home_post_fragment_list.postSwipeRefreshLayout
 import kotlinx.android.synthetic.main.home_post_fragment_list.view.postRecyclerView
 import kotlinx.android.synthetic.main.home_post_fragment_list.view.posts_fragment_toolbar
+import timber.log.Timber
 import javax.inject.Inject
 
 class PostsFragment : BaseFragment(), PostAdapter.ItemActionListener {
@@ -48,6 +49,9 @@ class PostsFragment : BaseFragment(), PostAdapter.ItemActionListener {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
             savedInstanceState: Bundle?): View? {
+
+        Timber.d("OnCreatView")
+
         val view = inflater!!.inflate(R.layout.home_post_fragment_list, container, false)
 
         setupToolbar(view)
@@ -58,6 +62,8 @@ class PostsFragment : BaseFragment(), PostAdapter.ItemActionListener {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        Timber.d("onActivityCreated")
 
         postViewModel = ViewModelProviders.of(this, viewModelFactory)
                 .get(PostsViewModel::class.java)

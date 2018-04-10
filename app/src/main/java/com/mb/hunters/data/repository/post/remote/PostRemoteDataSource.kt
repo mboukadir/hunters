@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.mb.hunters.data.repository.remote
+package com.mb.hunters.data.repository.post.remote
 
 import com.mb.hunters.data.api.PostService
 import com.mb.hunters.data.api.model.Post

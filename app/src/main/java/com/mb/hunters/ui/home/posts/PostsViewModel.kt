@@ -17,32 +17,33 @@
 package com.mb.hunters.ui.home.posts
 
 import android.arch.lifecycle.MutableLiveData
-import com.mb.hunters.data.database.entity.PostEntity
-import com.mb.hunters.data.repository.PostRepository
+import com.mb.hunters.data.repository.post.PostRepository
 import com.mb.hunters.ui.base.BaseViewModel
-import com.mb.hunters.ui.common.extensions.daysAgo
+import com.mb.hunters.ui.base.SchedulerProvider
 import dagger.Lazy
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 import javax.inject.Inject
 
-class PostsViewModel @Inject constructor(private val postRepository: Lazy<PostRepository>) :
-        BaseViewModel() {
+class PostsViewModel @Inject constructor(
+        private val mapper: PostMapper,
+        private val schedulerProvider: SchedulerProvider,
+        private val postRepository: Lazy<PostRepository>
+
+) : BaseViewModel() {
 
     val morePosts = MutableLiveData<List<PostUiModel>>()
     val toDayPosts = MutableLiveData<List<PostUiModel>>()
 
     fun loadToDayPost() {
-        loadPosts(livedata = toDayPosts)
+        loadPosts(liveData = toDayPosts)
     }
 
     fun refreshToDayPost() {
         disposables.add(postRepository.get()
                 .refreshPosts(0)
-                .map { postEnityList -> postEnityList.map { mapToUiModel(it) } }
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .map { postEntityList -> postEntityList.map { mapper.mapToUiModel(it) } }
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.mainThread())
                 .subscribe({
                     toDayPosts.value = it
                 }, {
@@ -55,39 +56,20 @@ class PostsViewModel @Inject constructor(private val postRepository: Lazy<PostRe
         loadPosts(daysAgo, morePosts)
     }
 
-    fun loadPosts(daysAgo: Long = 0, livedata: MutableLiveData<List<PostUiModel>>) {
+    private fun loadPosts(daysAgo: Long = 0, liveData: MutableLiveData<List<PostUiModel>>) {
         disposables.add(postRepository.get()
                 .loadPosts(daysAgo)
                 .map { postEnityList ->
-                    postEnityList.map { mapToUiModel(it) }
+                    postEnityList.map { mapper.mapToUiModel(it) }
                 }
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.mainThread())
                 .subscribe({
-                    livedata.value = it
+                    liveData.value = it
                 }, {
                     Timber.e(it)
                 })
         )
-    }
-
-    private fun mapToUiModel(postEntity: PostEntity): PostUiModel {
-
-        return with(postEntity) {
-            PostUiModel(
-                    id = id,
-                    title = name,
-                    subTitle = tagline,
-                    postUrl = redirectUrl,
-                    votesCount = votesCount,
-                    commentsCount = commentsCount,
-                    daysAgo = day.daysAgo(),
-                    date = createdAt.toString(),
-                    bigImageUrl = screenshotUrl,
-                    smallImageUrl = thumbnailUrl
-            )
-        }
-
     }
 
 }

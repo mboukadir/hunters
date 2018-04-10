@@ -151,19 +151,13 @@ class PostDaoTest {
 
         private val YESTERDAY = Calendar.getInstance().apply {
             time = TODAY
-            set(Calendar.DATE, -1)
+            add(Calendar.DATE, -1)
 
         }.time
 
         private val ONEDAY_BEFORE_YESTERDAY = Calendar.getInstance().apply {
             time = TODAY
-            set(Calendar.DATE, -2)
-
-        }.time
-
-        private val TOWDAYS_BEFORE_YESTERDAY = Calendar.getInstance().apply {
-            time = TODAY
-            set(Calendar.DATE, -3)
+            add(Calendar.DATE, -2)
 
         }.time
 

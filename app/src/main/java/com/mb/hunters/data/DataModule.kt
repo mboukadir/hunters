@@ -19,18 +19,22 @@ package com.mb.hunters.data
 import android.app.Application
 import android.arch.persistence.room.Room
 import com.mb.hunters.data.api.ApiModule
+import com.mb.hunters.data.api.CollectionService
 import com.mb.hunters.data.api.PostService
 import com.mb.hunters.data.database.HuntersDatabase
-import com.mb.hunters.data.repository.PostRepository
-import com.mb.hunters.data.repository.local.PostLocalDataSource
-import com.mb.hunters.data.repository.remote.PostRemoteDataSource
+import com.mb.hunters.data.repository.collection.CollectionDataRepository
+import com.mb.hunters.data.repository.collection.CollectionRepository
+import com.mb.hunters.data.repository.collection.local.CollectionLocalDataSource
+import com.mb.hunters.data.repository.collection.remote.CollectionRemoteDataSource
+import com.mb.hunters.data.repository.post.PostRepository
+import com.mb.hunters.data.repository.post.PostRepositoryData
+import com.mb.hunters.data.repository.post.local.PostLocalDataSource
+import com.mb.hunters.data.repository.post.remote.PostRemoteDataSource
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
-@Module(includes = arrayOf(
-        ApiModule::class
-))
+@Module(includes = [(ApiModule::class)])
 class DataModule {
 
     @Provides
@@ -44,8 +48,22 @@ class DataModule {
     @Singleton
     fun providePostRepository(postService: PostService,
             huntersDatabase: HuntersDatabase): PostRepository {
-        return PostRepository(PostRemoteDataSource(postService),
+        return PostRepositoryData(
+                PostRemoteDataSource(postService),
                 PostLocalDataSource(huntersDatabase.postDao()))
+    }
+
+    @Provides
+    @Singleton
+    fun provideCollectionRepository(collectionService: CollectionService,
+            huntersDatabase: HuntersDatabase): CollectionRepository {
+
+        return CollectionDataRepository(
+                CollectionLocalDataSource(huntersDatabase.collectionDao()),
+                CollectionRemoteDataSource(collectionService)
+
+        )
+
     }
 
 }

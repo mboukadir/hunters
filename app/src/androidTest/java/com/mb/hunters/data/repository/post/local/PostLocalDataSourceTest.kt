@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.mb.hunters.data.repository.local
+package com.mb.hunters.data.repository.post.local
 
 import android.arch.core.executor.testing.InstantTaskExecutorRule
 import android.arch.persistence.room.Room
@@ -23,6 +23,7 @@ import android.support.test.runner.AndroidJUnit4
 import com.mb.hunters.data.database.HuntersDatabase
 import com.mb.hunters.data.database.entity.PostEntity
 import com.mb.hunters.ui.common.extensions.dateAt
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -30,20 +31,28 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class PostLocalDataSourceTest {
-    @get:Rule
+    @Rule
+    @JvmField
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     private lateinit var postLocalDataRepository: PostLocalDataSource
 
+    private lateinit var database: HuntersDatabase
+
     @Before
     fun initDb() {
 
-        val database = Room.inMemoryDatabaseBuilder(InstrumentationRegistry.getContext(),
+        database = Room.inMemoryDatabaseBuilder(InstrumentationRegistry.getContext(),
                 HuntersDatabase::class.java)
                 .allowMainThreadQueries()
                 .build()
 
         postLocalDataRepository = PostLocalDataSource(database.postDao())
+    }
+
+    @After
+    fun closeDb() {
+        database.close()
     }
 
     @Test
@@ -65,7 +74,7 @@ class PostLocalDataSourceTest {
         postLocalDataRepository.getPostsAtDaysAgoOrOlder(1)
                 .test()
                 .assertValue {
-                    !it.isEmpty()
+                    it.containsAll(POSTS)
                 }
 
     }
