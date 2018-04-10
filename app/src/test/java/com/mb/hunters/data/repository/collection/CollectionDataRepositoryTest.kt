@@ -103,8 +103,7 @@ class CollectionDataRepositoryTest {
                 name = "name",
                 title = "title",
                 collectionUrl = "collectionUrl",
-                backgroundImageUrl = "backgroundImageUrl",
-                posts = emptyList()
+                backgroundImageUrl = "backgroundImageUrl"
         )
 
         val COLLECTION_ENTITY = CollectionEntity(
@@ -112,7 +111,7 @@ class CollectionDataRepositoryTest {
                 name = COLLECTION.name,
                 title = COLLECTION.title,
                 collectionUrl = COLLECTION.collectionUrl,
-                backgroundImageUrl = COLLECTION.backgroundImageUrl
+                backgroundImageUrl = COLLECTION.backgroundImageUrl ?:""
         )
 
         val COLLECTIONS = listOf(COLLECTION,

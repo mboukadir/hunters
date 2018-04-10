@@ -26,6 +26,8 @@ import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
+import retrofit2.Response
+import retrofit2.adapter.rxjava2.Result
 
 @RunWith(MockitoJUnitRunner::class)
 class CollectionRemoteDataSourceTest {
@@ -42,8 +44,7 @@ class CollectionRemoteDataSourceTest {
     @Test
     fun getCollectionsReturnEmptyCollectionList() {
 
-        `when`(collectionService.getCollections()).thenReturn(Single.just(
-                COLLECTIONS_RESPONSE_EMPTY))
+        `when`(collectionService.getCollections()).thenReturn(Single.just(resultOf(COLLECTIONS_RESPONSE_EMPTY)))
 
         collectionRemoteDataSource.getCollections()
                 .test()
@@ -53,10 +54,11 @@ class CollectionRemoteDataSourceTest {
 
     }
 
+
     @Test
     fun getCollectionsReturnCollectionList() {
 
-        `when`(collectionService.getCollections()).thenReturn(Single.just(COLLECTIONS_RESPONSE))
+        `when`(collectionService.getCollections()).thenReturn(Single.just(resultOf(COLLECTIONS_RESPONSE)))
 
         collectionRemoteDataSource.getCollections()
                 .test()
@@ -70,6 +72,10 @@ class CollectionRemoteDataSourceTest {
 
     companion object {
 
+
+        fun <T> resultOf(response:T): Result<T> = Result.response(Response.success(response))
+
+
         val COLLECTIONS_RESPONSE_EMPTY = CollectionsResponse(emptyList())
 
         val COLLECTION = Collection(
@@ -77,8 +83,7 @@ class CollectionRemoteDataSourceTest {
                 name = "name",
                 title = "title",
                 collectionUrl = "collectionUrl",
-                backgroundImageUrl = "backgroundImageUrl",
-                posts = emptyList()
+                backgroundImageUrl = "backgroundImageUrl"
         )
 
         val COLLECTIONS = listOf(COLLECTION,
