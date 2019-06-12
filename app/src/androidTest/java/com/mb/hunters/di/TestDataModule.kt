@@ -38,5 +38,4 @@ class TestDataModule {
         return Mockito.mock(CollectionRepository::class.java)
     }
 
-
 }

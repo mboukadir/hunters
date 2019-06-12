@@ -17,7 +17,6 @@
 package com.mb.hunters.ui.base
 
 import android.app.Activity
-import android.support.v4.app.FragmentActivity
 import com.mb.hunters.ui.home.posts.PostUiModel
 
 interface Navigator {
