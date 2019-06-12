@@ -20,7 +20,6 @@ import com.mb.hunters.data.api.model.Collection
 import com.mb.hunters.data.database.entity.CollectionEntity
 import com.mb.hunters.data.repository.collection.local.CollectionLocalDataSource
 import com.mb.hunters.data.repository.collection.remote.CollectionRemoteDataSource
-import com.mb.hunters.test.any
 import com.mb.hunters.test.capture
 import io.reactivex.Single
 import org.hamcrest.BaseMatcher

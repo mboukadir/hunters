@@ -16,6 +16,7 @@
 
 package com.mb.hunters.di
 
+import com.mb.hunters.data.repository.collection.CollectionRepository
 import com.mb.hunters.data.repository.post.PostRepository
 import dagger.Module
 import dagger.Provides
@@ -30,5 +31,12 @@ class TestDataModule {
     fun providePostRepository(): PostRepository {
         return Mockito.mock(PostRepository::class.java)
     }
+
+    @Provides
+    @Singleton
+    fun provideCollectionRepository(): CollectionRepository {
+        return Mockito.mock(CollectionRepository::class.java)
+    }
+
 
 }
