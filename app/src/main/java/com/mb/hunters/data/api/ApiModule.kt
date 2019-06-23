@@ -17,9 +17,9 @@
 package com.mb.hunters.data.api
 
 import com.mb.hunters.BuildConfig
-import com.squareup.moshi.KotlinJsonAdapterFactory
 import com.squareup.moshi.Moshi
-import com.squareup.moshi.Rfc3339DateJsonAdapter
+import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -30,7 +30,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import timber.log.Timber
-import java.util.Date
+import java.util.*
 import javax.inject.Singleton
 
 @Module
@@ -40,8 +40,10 @@ class ApiModule {
     @Singleton
     fun provideOkHttp(): OkHttpClient {
 
-        val logging = HttpLoggingInterceptor(Logger {
-            Timber.tag("Okhttp").d(it)
+        val logging = HttpLoggingInterceptor(object : Logger {
+            override fun log(message: String) {
+                Timber.tag("Okhttp").d(message)
+            }
         })
         logging.level = Level.BODY
         return OkHttpClient.Builder()
@@ -78,7 +80,7 @@ class ApiModule {
 
     @Provides
     @Singleton
-    fun provideCollectionService(retrofit: Retrofit) : CollectionService {
+    fun provideCollectionService(retrofit: Retrofit): CollectionService {
         return retrofit.create(CollectionService::class.java)
     }
 
