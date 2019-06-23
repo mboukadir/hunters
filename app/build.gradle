@@ -178,7 +178,7 @@ dependencies {
 
   // Dependencies for Android unit tests
   androidTestImplementation "junit:junit:${junit_version}"
-  androidTestImplementation "org.mockito:mockito-android:2.8.47"
+  androidTestImplementation "org.mockito:mockito-android:2.28.2"
   //androidTestImplementation 'com.google.dexmaker:dexmaker:1.2'
   //androidTestImplementation 'com.google.dexmaker:dexmaker-mockito:1.2'
 
