@@ -16,10 +16,10 @@
 
 package com.mb.hunters.ui.common.extensions
 
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentTransaction
-import android.support.v7.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
+import androidx.appcompat.app.AppCompatActivity
 import android.util.TypedValue
 import com.mb.hunters.R
 
@@ -46,7 +46,7 @@ fun AppCompatActivity.ensureRuntimeTheme() {
  * The `fragment` is added to the container view with id `frameId`. The operation is
  * performed by the `fragmentManager`.
  */
-fun AppCompatActivity.replaceFragmentInActivity(fragment: Fragment, frameId: Int) {
+fun AppCompatActivity.replaceFragmentInActivity(fragment: androidx.fragment.app.Fragment, frameId: Int) {
     supportFragmentManager.transact {
         replace(frameId, fragment)
     }
@@ -56,7 +56,7 @@ fun AppCompatActivity.replaceFragmentInActivity(fragment: Fragment, frameId: Int
  * The `fragment` is added to the container view with tag. The operation is
  * performed by the `fragmentManager`.
  */
-fun AppCompatActivity.addFragmentToActivity(fragment: Fragment, tag: String) {
+fun AppCompatActivity.addFragmentToActivity(fragment: androidx.fragment.app.Fragment, tag: String) {
     supportFragmentManager.transact {
         add(fragment, tag)
     }
@@ -65,7 +65,7 @@ fun AppCompatActivity.addFragmentToActivity(fragment: Fragment, tag: String) {
 /**
  * Runs a FragmentTransaction, then calls commit().
  */
-private inline fun FragmentManager.transact(action: FragmentTransaction.() -> Unit) {
+private inline fun androidx.fragment.app.FragmentManager.transact(action: androidx.fragment.app.FragmentTransaction.() -> Unit) {
     beginTransaction().apply {
         action()
     }.commit()

@@ -16,15 +16,15 @@
 
 package com.mb.hunters.ui.common
 
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.StaggeredGridLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 
 class EndlessRecyclerViewScrollListener(
-        private val layoutManager: RecyclerView.LayoutManager,
-        private val loadMore: (totalItemsCount: Int, view: RecyclerView) -> Unit)
-    : RecyclerView.OnScrollListener() {
+        private val layoutManager: androidx.recyclerview.widget.RecyclerView.LayoutManager,
+        private val loadMore: (totalItemsCount: Int, view: androidx.recyclerview.widget.RecyclerView) -> Unit)
+    : androidx.recyclerview.widget.RecyclerView.OnScrollListener() {
 
     private var loadMoreThreshold = 2
     private var previousItemCount = 0
@@ -33,10 +33,10 @@ class EndlessRecyclerViewScrollListener(
     init {
         // Convert the threshold so that is for rows, not items
         when (layoutManager) {
-            is GridLayoutManager -> {
+            is androidx.recyclerview.widget.GridLayoutManager -> {
                 loadMoreThreshold *= layoutManager.spanCount
             }
-            is StaggeredGridLayoutManager -> {
+            is androidx.recyclerview.widget.StaggeredGridLayoutManager -> {
                 loadMoreThreshold *= layoutManager.spanCount
             }
         }
@@ -54,18 +54,18 @@ class EndlessRecyclerViewScrollListener(
         return maxSize
     }
 
-    override fun onScrolled(view: RecyclerView, dx: Int, dy: Int) {
+    override fun onScrolled(view: androidx.recyclerview.widget.RecyclerView, dx: Int, dy: Int) {
         var lastVisibleItemPosition = 0
         val itemCount = layoutManager.itemCount
 
         when (layoutManager) {
-            is StaggeredGridLayoutManager -> {
+            is androidx.recyclerview.widget.StaggeredGridLayoutManager -> {
                 val lastVisibleItemPositions = layoutManager.findLastVisibleItemPositions(null)
                 // get maximum element within the list
                 lastVisibleItemPosition = getLastVisibleItem(lastVisibleItemPositions)
             }
-            is GridLayoutManager -> lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
-            is LinearLayoutManager -> lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
+            is androidx.recyclerview.widget.GridLayoutManager -> lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
+            is androidx.recyclerview.widget.LinearLayoutManager -> lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
         }
 
         if (itemCount < previousItemCount) {

@@ -16,8 +16,8 @@
 
 package com.mb.hunters.ui.home.collection
 
-import android.arch.core.executor.testing.InstantTaskExecutorRule
-import android.arch.lifecycle.Observer
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.Observer
 import com.mb.hunters.data.database.entity.CollectionEntity
 import com.mb.hunters.data.repository.collection.CollectionRepository
 import com.mb.hunters.test.TestSchedulerProvider

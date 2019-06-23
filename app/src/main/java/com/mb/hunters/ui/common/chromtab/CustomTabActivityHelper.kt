@@ -19,11 +19,11 @@ package com.mb.hunters.ui.common.chromtab
 import android.app.Activity
 import android.net.Uri
 import android.os.Bundle
-import android.support.customtabs.CustomTabsClient
-import android.support.customtabs.CustomTabsIntent
-import android.support.customtabs.CustomTabsServiceConnection
-import android.support.customtabs.CustomTabsSession
-import android.support.v4.app.ActivityCompat
+import androidx.browser.customtabs.CustomTabsClient
+import androidx.browser.customtabs.CustomTabsIntent
+import androidx.browser.customtabs.CustomTabsServiceConnection
+import androidx.browser.customtabs.CustomTabsSession
+import androidx.core.app.ActivityCompat
 
 /**
  * This is a helper class to manage the connection to the Custom Tabs Service.

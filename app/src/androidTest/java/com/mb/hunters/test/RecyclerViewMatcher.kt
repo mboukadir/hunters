@@ -17,7 +17,7 @@
 package com.mb.hunters.test
 
 import android.content.res.Resources
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import org.hamcrest.Description
 import org.hamcrest.Matcher
@@ -55,8 +55,8 @@ class RecyclerViewMatcher private constructor(var recyclerViewId: Int) {
                 this.resources = view.resources
 
                 if (childView == null) {
-                    val recyclerView = view.rootView.findViewById<RecyclerView>(recyclerViewId)
-                            as RecyclerView
+                    val recyclerView = view.rootView.findViewById<androidx.recyclerview.widget.RecyclerView>(recyclerViewId)
+                            as androidx.recyclerview.widget.RecyclerView
                     if (recyclerView != null && recyclerView.id == recyclerViewId) {
                         childView = recyclerView.findViewHolderForAdapterPosition(position)!!.itemView
                     } else {
