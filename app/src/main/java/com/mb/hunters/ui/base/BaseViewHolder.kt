@@ -16,15 +16,15 @@
 
 package com.mb.hunters.ui.base
 
-import android.support.annotation.LayoutRes
-import android.support.v7.widget.RecyclerView
+import androidx.annotation.LayoutRes
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.extensions.LayoutContainer
 
 open class BaseViewHolder(parent: ViewGroup, @LayoutRes layoutResId: Int)
-    : RecyclerView.ViewHolder(
+    : androidx.recyclerview.widget.RecyclerView.ViewHolder(
         LayoutInflater.from(parent.context).inflate(layoutResId, parent, false)),
         LayoutContainer {
     override val containerView: View?

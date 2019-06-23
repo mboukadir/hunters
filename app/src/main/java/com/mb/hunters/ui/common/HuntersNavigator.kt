@@ -19,7 +19,7 @@ package com.mb.hunters.ui.common
 import android.app.Activity
 import android.graphics.BitmapFactory
 import android.net.Uri
-import android.support.customtabs.CustomTabsIntent
+import androidx.browser.customtabs.CustomTabsIntent
 import com.mb.hunters.R
 import com.mb.hunters.ui.base.Navigator
 import com.mb.hunters.ui.common.chromtab.CustomTabActivityHelper

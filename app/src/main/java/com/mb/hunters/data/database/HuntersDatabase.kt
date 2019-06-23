@@ -16,9 +16,9 @@
 
 package com.mb.hunters.data.database
 
-import android.arch.persistence.room.Database
-import android.arch.persistence.room.RoomDatabase
-import android.arch.persistence.room.TypeConverters
+import androidx.room.Database
+import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.mb.hunters.data.database.dao.CollectionDao
 import com.mb.hunters.data.database.dao.PostDao
 import com.mb.hunters.data.database.entity.CollectionEntity

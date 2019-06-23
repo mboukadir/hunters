@@ -17,10 +17,10 @@
 package com.mb.hunters.ui.home.posts
 
 import android.os.Bundle
-import android.support.annotation.LayoutRes
-import android.support.v7.util.DiffUtil
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.RecyclerView.NO_POSITION
+import androidx.annotation.LayoutRes
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.NO_POSITION
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
@@ -39,7 +39,7 @@ import kotlinx.android.synthetic.main.home_post_list_item.view.upVotesCount
 import timber.log.Timber
 
 class PostAdapter(val itemActionListener: ItemActionListener)
-    : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
 
     object Constant {
         const val KEY_COMMENT = "key_comment"
@@ -77,10 +77,10 @@ class PostAdapter(val itemActionListener: ItemActionListener)
     }
 
     private fun getLoadingMoreItemPosition(): Int {
-        return if (showLoadingMore) itemCount - 1 else RecyclerView.NO_POSITION
+        return if (showLoadingMore) itemCount - 1 else androidx.recyclerview.widget.RecyclerView.NO_POSITION
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
         return when (viewType) {
             TYPE_ITEM -> PostViewHolder(parent, TYPE_ITEM)
             TYPE_LOADING_MORE -> LoadingViewHolder(parent, TYPE_LOADING_MORE)
@@ -89,7 +89,7 @@ class PostAdapter(val itemActionListener: ItemActionListener)
         }
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
 
         when (holder) {
             is PostViewHolder -> holder.bind(items[position])
@@ -102,8 +102,8 @@ class PostAdapter(val itemActionListener: ItemActionListener)
 
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int,
-            payloads: MutableList<Any>) {
+    override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int,
+                                  payloads: MutableList<Any>) {
 
         when (holder) {
             is PostViewHolder -> holder.bind(items[position], payloads)
@@ -118,7 +118,7 @@ class PostAdapter(val itemActionListener: ItemActionListener)
 
     override fun getItemId(position: Int): Long {
         if (getItemViewType(position) == TYPE_LOADING_MORE) {
-            return RecyclerView.NO_ID
+            return androidx.recyclerview.widget.RecyclerView.NO_ID
         }
         return items[position].id
     }

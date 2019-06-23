@@ -4,7 +4,7 @@
   <style name="Theme.Hunters" parent="Base.Theme.Hunters"/>
 
   <!-- Base application theme. -->
-  <style name="Base.Theme.Hunters" parent="Theme.AppCompat.Light.NoActionBar">
+  <style name="Base.Theme.Hunters" parent="Theme.MaterialComponents.Light.NoActionBar">
 
     <item name="colorPrimary">@color/primary</item>
     <item name="colorPrimaryDark">@color/primary_dark</item>
@@ -25,9 +25,9 @@
 
   </style>
 
-  <style name="ThemeOverlay.Hunters.ActionBar" parent="ThemeOverlay.AppCompat.ActionBar"/>
+  <style name="ThemeOverlay.Hunters.ActionBar" parent="ThemeOverlay.MaterialComponents.ActionBar"/>
 
-  <style name="ThemeOverlay.Hunters.Popup" parent="ThemeOverlay.AppCompat.Light"/>
+  <style name="ThemeOverlay.Hunters.Popup" parent="ThemeOverlay.MaterialComponents.Light"/>
 
   <style name="Theme.Hunters.Home">
     <item name="toolbarStyle">@style/Widget.Hunters.Toolbar</item>

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright 2017 Mohammed Boukadir
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,61 +15,54 @@
   ~
   -->
 
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/actualtes_detailarticle_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.common.chromtab.WebViewActivity"
-    >
+    tools:context=".ui.common.chromtab.WebViewActivity">
 
 
-  <android.support.design.widget.AppBarLayout
-      android:id="@+id/appbar"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:fitsSystemWindows="true"
-      android:theme="?android:attr/actionBarTheme"
-      >
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        app:popupTheme="?android:attr/actionBarPopupTheme"
-        />
-  </android.support.design.widget.AppBarLayout>
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:theme="?android:attr/actionBarTheme">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:popupTheme="?android:attr/actionBarPopupTheme" />
+    </com.google.android.material.appbar.AppBarLayout>
 
 
-  <android.support.v4.widget.NestedScrollView
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      app:layout_behavior="@string/appbar_scrolling_view_behavior"
-      >
-
-    <FrameLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-      <ProgressBar
-          android:id="@+id/progressBar"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center"
-          android:indeterminate="true"
-          />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-
-      <WebView
-          android:id="@+id/webView"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          />
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminate="true" />
 
 
-    </FrameLayout>
-  </android.support.v4.widget.NestedScrollView>
+            <WebView
+                android:id="@+id/webView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
-</android.support.design.widget.CoordinatorLayout>
+
+        </FrameLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

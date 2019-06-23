@@ -17,7 +17,7 @@
 package com.mb.hunters.data
 
 import android.app.Application
-import android.arch.persistence.room.Room
+import androidx.room.Room
 import com.mb.hunters.data.api.ApiModule
 import com.mb.hunters.data.api.CollectionService
 import com.mb.hunters.data.api.PostService

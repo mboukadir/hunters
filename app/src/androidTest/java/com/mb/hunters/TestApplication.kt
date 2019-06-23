@@ -16,7 +16,7 @@
 
 package com.mb.hunters
 
-import android.support.test.InstrumentationRegistry
+import androidx.test.platform.app.InstrumentationRegistry
 import com.mb.hunters.di.DaggerTestAppComponent
 import com.mb.hunters.di.TestAppComponent
 import dagger.android.AndroidInjector

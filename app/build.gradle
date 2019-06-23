@@ -108,24 +108,22 @@ dependencies {
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
 
-  implementation """com.android.support:support-v4:${support_lib_version}"""
-  implementation "com.android.support:appcompat-v7:${support_lib_version}"
-  implementation "com.android.support:design:${support_lib_version}"
-  implementation "com.android.support:recyclerview-v7:${support_lib_version}"
-  implementation "com.android.support:customtabs:${support_lib_version}"
+  implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+  implementation 'androidx.appcompat:appcompat:1.0.2'
+  implementation 'com.google.android.material:material:1.1.0-alpha07'
+  implementation 'androidx.recyclerview:recyclerview:1.0.0'
+  implementation 'androidx.browser:browser:1.0.0'
 
+  implementation "androidx.constraintlayout:constraintlayout:${constraintLayout_version}"
 
-  implementation "com.android.support.constraint:constraint-layout:${constraint_layout_version}"
+  implementation "androidx.lifecycle:lifecycle-runtime:${lifecycle_version}"
+  implementation "androidx.lifecycle:lifecycle-extensions:${lifecycle_version}"
+  implementation "androidx.lifecycle:lifecycle-reactivestreams:${lifecycle_version}"
+  kapt "androidx.lifecycle:lifecycle-common-java8:${lifecycle_version}"
 
-
-  implementation "android.arch.lifecycle:runtime:${arch_component_lifecycle_version}"
-  implementation "android.arch.lifecycle:extensions:${arch_component_lifecycle_version}"
-  implementation "android.arch.lifecycle:reactivestreams:${arch_component_lifecycle_version}"
-  kapt "android.arch.lifecycle:compiler:${arch_component_lifecycle_version}"
-
-  implementation "android.arch.persistence.room:runtime:${arch_component_room_version}"
-  implementation "android.arch.persistence.room:rxjava2:${arch_component_room_version}"
-  kapt "android.arch.persistence.room:compiler:1.1.1"
+  implementation "androidx.room:room-runtime:${room_version}"
+  implementation "androidx.room:room-rxjava2:${room_version}"
+  kapt "androidx.room:room-compiler:${room_version}"
 
   implementation "com.google.dagger:dagger:${dagger_version}"
   implementation "com.google.dagger:dagger-android:${dagger_version}"
@@ -161,7 +159,7 @@ dependencies {
   //testImplementation "org.mockito:mockito-all:${mockito_version}"
   testImplementation "org.mockito:mockito-core:${mockito_version}"
   testImplementation "org.hamcrest:hamcrest-all:${hamcrest_version}"
-  testImplementation "android.arch.core:core-testing:${arch_component_lifecycle_version}"
+  testImplementation 'androidx.arch.core:core-testing:2.0.1'
   testImplementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
   testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
 
@@ -171,10 +169,10 @@ dependencies {
   kaptAndroidTest "com.google.dagger:dagger-android-processor:${dagger_version}"
 
   // Android Testing Support Library's runner and rules
-  androidTestImplementation "com.android.support.test:runner:${runner_version}"
-  androidTestImplementation "com.android.support.test:rules:${runner_version}"
-  androidTestImplementation "android.arch.persistence.room:testing:${arch_component_room_version}"
-  androidTestImplementation "android.arch.core:core-testing:${arch_component_lifecycle_version}"
+  androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+  androidTestImplementation 'androidx.test:rules:1.2.0'
+  androidTestImplementation 'androidx.room:room-testing:2.1.0'
+  androidTestImplementation 'androidx.arch.core:core-testing:2.0.1'
 
   // Dependencies for Android unit tests
   androidTestImplementation "junit:junit:${junit_version}"
@@ -183,15 +181,15 @@ dependencies {
   //androidTestImplementation 'com.google.dexmaker:dexmaker-mockito:1.2'
 
   // Espresso UI Testing
-  androidTestImplementation "com.android.support.test.espresso:espresso-core:${espresso_version}"
-  androidTestImplementation "com.android.support.test.espresso:espresso-contrib:${espresso_version}"
-  androidTestImplementation "com.android.support.test.espresso:espresso-intents:${espresso_version}"
+  androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+  androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.2.0'
+  androidTestImplementation 'androidx.test.espresso:espresso-intents:3.2.0'
 
   // Resolve conflicts between main and test APK:
-  androidTestImplementation "com.android.support:support-annotations:${support_lib_version}"
-  androidTestImplementation "com.android.support:support-v4:${support_lib_version}"
-  androidTestImplementation "com.android.support:appcompat-v7:${support_lib_version}"
-  androidTestImplementation "com.android.support:design:${support_lib_version}"
+  androidTestImplementation 'androidx.annotation:annotation:1.1.0'
+  androidTestImplementation 'androidx.legacy:legacy-support-v4:1.0.0'
+  androidTestImplementation 'androidx.appcompat:appcompat:1.0.2'
+  androidTestImplementation 'com.google.android.material:material:1.0.0'
 
 
 

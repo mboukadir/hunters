@@ -48,7 +48,7 @@
 
 
   <!--Widget styles-->
-  <style name="Widget.Hunters.ActionBar" parent="Widget.AppCompat.ActionBar.Solid">
+  <style name="Widget.Hunters.ActionBar" parent="Widget.AppCompat.Light.ActionBar.Solid">
     <item name="titleTextStyle">@style/TextAppearance.Hunters.Toolbar.Title</item>
   </style>
 

@@ -16,7 +16,7 @@
 
 package com.mb.hunters.ui.home.collection
 
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.MutableLiveData
 import com.mb.hunters.data.repository.collection.CollectionRepository
 import com.mb.hunters.ui.base.BaseViewModel
 import com.mb.hunters.ui.base.SchedulerProvider

@@ -16,7 +16,7 @@
 
 package com.mb.hunters.di
 
-import android.arch.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProvider
 import com.mb.hunters.ui.common.HuntersViewModelFactory
 import dagger.Binds
 import dagger.Module

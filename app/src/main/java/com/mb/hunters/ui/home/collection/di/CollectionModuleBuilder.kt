@@ -16,7 +16,7 @@
 
 package com.mb.hunters.ui.home.collection.di
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 import com.mb.hunters.di.PerFragment
 import com.mb.hunters.di.ViewModelKey
 import com.mb.hunters.ui.home.collection.CollectionsFragment

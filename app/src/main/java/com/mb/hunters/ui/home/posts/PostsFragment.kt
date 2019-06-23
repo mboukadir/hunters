@@ -17,14 +17,14 @@
 package com.mb.hunters.ui.home.posts
 
 import android.app.Activity
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -118,12 +118,12 @@ class PostsFragment : BaseFragment(), PostAdapter.ItemActionListener {
         postAdapter = PostAdapter(this)
 
         root.postRecyclerView.apply {
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
             adapter = this@PostsFragment.postAdapter
-            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+            addItemDecoration(androidx.recyclerview.widget.DividerItemDecoration(context, androidx.recyclerview.widget.DividerItemDecoration.VERTICAL))
             addOnScrollListener(EndlessRecyclerViewScrollListener(
-                layoutManager as LinearLayoutManager
-            ) { _: Int, recyclerView: RecyclerView ->
+                layoutManager as androidx.recyclerview.widget.LinearLayoutManager
+            ) { _: Int, recyclerView: androidx.recyclerview.widget.RecyclerView ->
                 recyclerView.post {
                     if (postAdapter.showLoadingMore.not()) {
                         postAdapter.startLoadingMore()

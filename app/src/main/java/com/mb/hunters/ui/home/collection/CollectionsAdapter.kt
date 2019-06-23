@@ -16,8 +16,8 @@
 
 package com.mb.hunters.ui.home.collection
 
-import android.support.annotation.LayoutRes
-import android.support.v7.widget.RecyclerView
+import androidx.annotation.LayoutRes
+import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.mb.hunters.R
@@ -27,7 +27,7 @@ import kotlinx.android.synthetic.main.home_collection_list_item.view.backgroundI
 import kotlinx.android.synthetic.main.home_collection_list_item.view.name
 import kotlinx.android.synthetic.main.home_collection_list_item.view.title
 
-class CollectionsAdapter : RecyclerView.Adapter<CollectionViewHolder>() {
+class CollectionsAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<CollectionViewHolder>() {
 
     private val items = mutableListOf<CollectionUiModel>()
 
