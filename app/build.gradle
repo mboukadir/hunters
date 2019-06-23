@@ -141,9 +141,9 @@ dependencies {
   implementation "com.squareup.retrofit2:converter-moshi:${retrofit_version}"
   implementation "com.squareup.retrofit2:adapter-rxjava2:${retrofit_version}"
   implementation "com.squareup.okhttp3:okhttp:${okhttp_version}"
-  implementation "com.squareup.moshi:moshi:${mushi_version}"
-  implementation "com.squareup.moshi:moshi-kotlin:${mushi_version}"
-  implementation "com.squareup.moshi:moshi-adapters:${mushi_version}"
+  implementation "com.squareup.moshi:moshi:${moshi_version}"
+  implementation "com.squareup.moshi:moshi-kotlin:${moshi_version}"
+  implementation "com.squareup.moshi:moshi-adapters:${moshi_version}"
 
   implementation 'com.jakewharton.timber:timber:4.7.1'
 
