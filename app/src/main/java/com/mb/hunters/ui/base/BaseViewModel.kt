@@ -25,6 +25,5 @@ abstract class BaseViewModel : ViewModel() {
     override fun onCleared() {
         disposables.clear()
         super.onCleared()
-
     }
 }

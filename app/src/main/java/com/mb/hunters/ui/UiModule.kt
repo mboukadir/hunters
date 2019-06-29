@@ -31,5 +31,4 @@ abstract class UiModule {
 
     @Binds
     abstract fun bindNavigator(huntersNavigator: HuntersNavigator): Navigator
-
 }

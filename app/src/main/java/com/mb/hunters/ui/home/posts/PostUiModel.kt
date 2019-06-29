@@ -17,16 +17,15 @@
 package com.mb.hunters.ui.home.posts
 
 data class PostUiModel(
-        val id: Long,
-        val title: String,
-        val subTitle: String,
-        val postUrl: String,
-        val votesCount: Long,
-        val commentsCount: Long,
-        val daysAgo: Long,
-        val date: String,
-        val bigImageUrl: String,
-        val smallImageUrl: String
+    val id: Long,
+    val title: String,
+    val subTitle: String,
+    val postUrl: String,
+    val votesCount: Long,
+    val commentsCount: Long,
+    val daysAgo: Long,
+    val date: String,
+    val bigImageUrl: String,
+    val smallImageUrl: String
 
 )
-

@@ -16,8 +16,7 @@
 
 package com.mb.hunters.ui.common.extensions
 
-import java.util.Calendar
-import java.util.Date
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 /**
@@ -26,7 +25,6 @@ import java.util.concurrent.TimeUnit
 
 fun Date.daysAgo(): Long {
     return TimeUnit.MILLISECONDS.toDays(System.currentTimeMillis() - time)
-
 }
 
 /**
@@ -42,5 +40,4 @@ fun dateAt(daysAgo: Long): Date {
                 set(Calendar.MILLISECOND, 0)
             }
             .time
-
 }

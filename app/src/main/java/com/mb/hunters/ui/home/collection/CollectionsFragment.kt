@@ -16,23 +16,19 @@
 
 package com.mb.hunters.ui.home.collection
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
+import com.google.android.material.snackbar.Snackbar
 import com.mb.hunters.R
 import com.mb.hunters.ui.base.BaseFragment
 import com.mb.hunters.ui.base.Navigator
-import kotlinx.android.synthetic.main.home_collection_fragment_list.collectionRecyclerView
-import kotlinx.android.synthetic.main.home_collection_fragment_list.loading
-import kotlinx.android.synthetic.main.home_collection_fragment_list.view.collectionRecyclerView
+import kotlinx.android.synthetic.main.home_collection_fragment_list.*
+import kotlinx.android.synthetic.main.home_collection_fragment_list.view.*
 import javax.inject.Inject
 
 class CollectionsFragment : BaseFragment() {
@@ -49,8 +45,11 @@ class CollectionsFragment : BaseFragment() {
                 CollectionsViewModel::class.java)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
         val root = inflater.inflate(R.layout.home_collection_fragment_list, container, false)
 
@@ -83,12 +82,10 @@ class CollectionsFragment : BaseFragment() {
                 collectionAdapter.render(it)
                 loading.visibility = View.GONE
                 collectionRecyclerView.visibility = View.VISIBLE
-
             }
         })
 
         collectionsViewModel.loadCollections()
-
     }
 
     companion object {

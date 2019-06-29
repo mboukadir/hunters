@@ -21,9 +21,9 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "collections")
 data class CollectionEntity(
-        @PrimaryKey val id: Long,
-        val name: String,
-        val title: String,
-        val backgroundImageUrl: String,
-        val collectionUrl: String
+    @PrimaryKey val id: Long,
+    val name: String,
+    val title: String,
+    val backgroundImageUrl: String,
+    val collectionUrl: String
 )

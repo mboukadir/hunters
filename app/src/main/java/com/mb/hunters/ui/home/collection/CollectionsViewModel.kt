@@ -25,9 +25,9 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class CollectionsViewModel @Inject constructor(
-        private val schedulerProvider: SchedulerProvider,
-        private val mapper: CollectionMapper,
-        private val collectionRepository: CollectionRepository
+    private val schedulerProvider: SchedulerProvider,
+    private val mapper: CollectionMapper,
+    private val collectionRepository: CollectionRepository
 ) : BaseViewModel() {
 
     val collections = MutableLiveData<List<CollectionUiModel>>()
@@ -48,6 +48,5 @@ class CollectionsViewModel @Inject constructor(
                             Timber.e(it)
                         })
         )
-
     }
 }

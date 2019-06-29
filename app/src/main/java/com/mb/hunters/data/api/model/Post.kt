@@ -17,15 +17,17 @@
 package com.mb.hunters.data.api.model
 
 import com.squareup.moshi.Json
-import java.util.Date
+import java.util.*
 
-data class Post(val id: Long,
-        val name: String,
-        val tagline: String,
-        @Json(name = "redirect_url") val redirectUrl: String,
-        @Json(name = "votes_count") val votesCount: Long,
-        @Json(name = "comments_count") val commentsCount: Long,
-        val day: Date,
-        @Json(name = "created_at") val createdAt: Date,
-        @Json(name = "screenshot_url") val screenshotUrl: ScreenshotUrl,
-        val thumbnail: Thumbnail)
+data class Post(
+    val id: Long,
+    val name: String,
+    val tagline: String,
+    @Json(name = "redirect_url") val redirectUrl: String,
+    @Json(name = "votes_count") val votesCount: Long,
+    @Json(name = "comments_count") val commentsCount: Long,
+    val day: Date,
+    @Json(name = "created_at") val createdAt: Date,
+    @Json(name = "screenshot_url") val screenshotUrl: ScreenshotUrl,
+    val thumbnail: Thumbnail
+)

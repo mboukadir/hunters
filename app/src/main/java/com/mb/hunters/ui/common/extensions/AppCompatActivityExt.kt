@@ -16,11 +16,8 @@
 
 package com.mb.hunters.ui.common.extensions
 
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
-import androidx.appcompat.app.AppCompatActivity
 import android.util.TypedValue
+import androidx.appcompat.app.AppCompatActivity
 import com.mb.hunters.R
 
 /**
@@ -39,7 +36,6 @@ fun AppCompatActivity.ensureRuntimeTheme() {
         "runtimeTheme is not defined in the preview theme"
     }
     this.setTheme(typedValue.resourceId)
-
 }
 
 /**
@@ -70,4 +66,3 @@ private inline fun androidx.fragment.app.FragmentManager.transact(action: androi
         action()
     }.commit()
 }
-

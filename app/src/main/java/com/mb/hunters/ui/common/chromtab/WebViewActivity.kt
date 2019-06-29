@@ -19,17 +19,15 @@ package com.mb.hunters.ui.common.chromtab
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.view.KeyEvent
 import android.view.View
 import android.webkit.WebChromeClient
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.appcompat.app.AppCompatActivity
 import com.mb.hunters.R
-import kotlinx.android.synthetic.main.home_detail_post_activity_webview.progressBar
-import kotlinx.android.synthetic.main.home_detail_post_activity_webview.toolbar
-import kotlinx.android.synthetic.main.home_detail_post_activity_webview.webView
+import kotlinx.android.synthetic.main.home_detail_post_activity_webview.*
 
 /**
  * This Activity is used as a fallback when there is no browser installed that supports

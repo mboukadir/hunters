@@ -28,7 +28,6 @@ class PostMapperTest {
 
     @Before
     fun setup() {
-
     }
 
     @Test
@@ -46,7 +45,6 @@ class PostMapperTest {
         assertEquals("thumbnailUrl", postUiModel.smallImageUrl)
         assertEquals(0, postUiModel.daysAgo)
         assertEquals(TODAY.toString(), postUiModel.date)
-
     }
 
     @Test
@@ -64,7 +62,6 @@ class PostMapperTest {
         assertEquals("thumbnailUrl", postUiModel.smallImageUrl)
         assertEquals(1, postUiModel.daysAgo)
         assertEquals(YESTERDAY.toString(), postUiModel.date)
-
     }
 
     companion object {
@@ -79,7 +76,6 @@ class PostMapperTest {
             time = TODAY
             // Move calendar to yesterday
             add(Calendar.DATE, -1)
-
         }.time
 
         private val POST = PostEntity(
@@ -96,7 +92,5 @@ class PostMapperTest {
         )
 
         private val YESTERDAY_POST = POST.copy(day = YESTERDAY, createdAt = YESTERDAY)
-
     }
-
 }

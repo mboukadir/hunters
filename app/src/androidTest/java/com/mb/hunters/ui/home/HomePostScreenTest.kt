@@ -80,7 +80,6 @@ class HomePostScreenTest {
         activity.launchActivity(null)
 
         checkPostItemDisplay(POST_UIMODEL, 0)
-
     }
 
     @Ignore
@@ -96,9 +95,7 @@ class HomePostScreenTest {
             onView(withId(R.id.postRecyclerView))
                     .perform(RecyclerViewActions.scrollToPosition<androidx.recyclerview.widget.RecyclerView.ViewHolder>(index))
             checkPostItemDisplay(postUiModel, index)
-
         }
-
     }
 
     private fun checkPostItemDisplay(postUiModel: PostUiModel, position: Int) {
@@ -166,5 +163,4 @@ class HomePostScreenTest {
 
         private val POSTS_UIMODEL = POSTS.map { postMapper.mapToUiModel(it) }
     }
-
 }

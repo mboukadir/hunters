@@ -44,7 +44,6 @@ class RecyclerViewMatcher private constructor(var recyclerViewId: Int) {
                         idDescription = String.format("%s (resource name not found)",
                                 *arrayOf<Any>(Integer.valueOf(recyclerViewId)))
                     }
-
                 }
 
                 description.appendText("with id: " + idDescription)
@@ -70,7 +69,6 @@ class RecyclerViewMatcher private constructor(var recyclerViewId: Int) {
                     val targetView = childView?.findViewById<View>(targetViewId)
                     return view === targetView
                 }
-
             }
         }
     }
@@ -80,7 +78,5 @@ class RecyclerViewMatcher private constructor(var recyclerViewId: Int) {
         fun withRecyclerView(recyclerViewId: Int): RecyclerViewMatcher {
             return RecyclerViewMatcher(recyclerViewId)
         }
-
     }
-
 }

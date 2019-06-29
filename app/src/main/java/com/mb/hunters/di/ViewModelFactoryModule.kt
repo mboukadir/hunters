@@ -26,5 +26,4 @@ abstract class ViewModelFactoryModule {
 
     @Binds
     abstract fun bindViewModelFactory(factory: HuntersViewModelFactory): ViewModelProvider.Factory
-
 }

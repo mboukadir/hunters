@@ -38,9 +38,8 @@ class TestApplication : DaggerApplication() {
     companion object {
 
         fun appComponent(): TestAppComponent {
-            return (InstrumentationRegistry.getTargetContext().applicationContext as TestApplication).
-                    appComponent
+            return (InstrumentationRegistry.getInstrumentation().targetContext as TestApplication)
+                    .appComponent
         }
-
     }
 }

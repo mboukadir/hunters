@@ -39,6 +39,5 @@ class PostMapper @Inject constructor() : Mapper<PostEntity, PostUiModel> {
                     smallImageUrl = thumbnailUrl
             )
         }
-
     }
 }

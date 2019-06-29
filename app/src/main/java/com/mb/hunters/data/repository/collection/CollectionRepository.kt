@@ -22,5 +22,4 @@ import io.reactivex.Single
 interface CollectionRepository {
 
     fun getCollections(): Single<List<CollectionEntity>>
-
 }

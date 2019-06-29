@@ -29,10 +29,11 @@ import androidx.core.app.ActivityCompat
  * This is a helper class to manage the connection to the Custom Tabs Service.
  */
 class CustomTabActivityHelper(
-        private var mCustomTabsSession: CustomTabsSession? = null,
-        private var mClient: CustomTabsClient? = null,
-        private var mConnection: CustomTabsServiceConnection? = null,
-        private var mConnectionCallback: ConnectionCallback? = null) : ServiceConnectionCallback {
+    private var mCustomTabsSession: CustomTabsSession? = null,
+    private var mClient: CustomTabsClient? = null,
+    private var mConnection: CustomTabsServiceConnection? = null,
+    private var mConnectionCallback: ConnectionCallback? = null
+) : ServiceConnectionCallback {
 
     /**
      * Creates or retrieves an exiting CustomTabsSession.
@@ -105,7 +106,6 @@ class CustomTabActivityHelper(
         mConnectionCallback?.run {
             onCustomTabsConnected()
         }
-
     }
 
     override fun onServiceDisconnected() {
@@ -147,20 +147,25 @@ class CustomTabActivityHelper(
 
     companion object {
 
-        fun openCustomTab(activity: Activity, requestCode: Int, customTabsIntent: CustomTabsIntent,
-                uri: Uri,
-                title: String, fallback: CustomTabFallback?) {
+        fun openCustomTab(
+            activity: Activity,
+            requestCode: Int,
+            customTabsIntent: CustomTabsIntent,
+            uri: Uri,
+            title: String,
+            fallback: CustomTabFallback?
+        ) {
             val packageName = CustomTabsHelper.getPackageNameToUse(activity)
 
-            //If we cant find a package name, it means theres no browser that supports
-            //Chrome Custom Tabs installed. So, we fallback to the webview
+            // If we cant find a package name, it means theres no browser that supports
+            // Chrome Custom Tabs installed. So, we fallback to the webview
             if (packageName == null) {
                 fallback?.openUri(activity, requestCode, uri, title)
             } else {
                 customTabsIntent.intent.`package` = packageName
 
-                //customTabsIntent.launchUrl(activity, uri);
-                //Hack to replace customTabsIntent.launchUrl(activity, uri);
+                // customTabsIntent.launchUrl(activity, uri);
+                // Hack to replace customTabsIntent.launchUrl(activity, uri);
                 customTabsIntent.intent.data = uri
                 ActivityCompat.startActivityForResult(activity, customTabsIntent.intent,
                         requestCode, customTabsIntent.startAnimationBundle)
@@ -175,12 +180,17 @@ class CustomTabActivityHelper(
          * @param uri the Uri to be opened.
          * @param fallback a CustomTabFallback to be used if Custom Tabs is not available.
          */
-        fun openCustomTab(activity: Activity, customTabsIntent: CustomTabsIntent, uri: Uri,
-                title: String, fallback: CustomTabFallback?) {
+        fun openCustomTab(
+            activity: Activity,
+            customTabsIntent: CustomTabsIntent,
+            uri: Uri,
+            title: String,
+            fallback: CustomTabFallback?
+        ) {
             val packageName = CustomTabsHelper.getPackageNameToUse(activity)
 
-            //If we cant find a package name, it means theres no browser that supports
-            //Chrome Custom Tabs installed. So, we fallback to the webview
+            // If we cant find a package name, it means theres no browser that supports
+            // Chrome Custom Tabs installed. So, we fallback to the webview
             if (packageName == null) {
                 fallback?.openUri(activity, uri, title)
             } else {

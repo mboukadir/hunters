@@ -41,6 +41,5 @@ interface TestAppComponent : AndroidInjector<TestApplication> {
         fun application(application: TestApplication): Builder
 
         fun build(): TestAppComponent
-
     }
 }

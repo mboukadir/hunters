@@ -44,11 +44,10 @@ class PostDaoTest {
     @Before
     fun initDb() {
 
-        database = Room.inMemoryDatabaseBuilder(InstrumentationRegistry.getContext(),
+        database = Room.inMemoryDatabaseBuilder(InstrumentationRegistry.getInstrumentation().targetContext,
                 HuntersDatabase::class.java)
                 .allowMainThreadQueries()
                 .build()
-
     }
 
     @After
@@ -59,7 +58,7 @@ class PostDaoTest {
     @Test
     fun insertAndGetPosts() {
 
-        //GIVEN
+        // GIVEN
         val posts = listOf(
                 POST,
                 POST.copy(id = 2),
@@ -69,23 +68,22 @@ class PostDaoTest {
                 POST.copy(id = 6, day = ONEDAY_BEFORE_YESTERDAY)
         )
 
-        //When
+        // When
         database.postDao().insert(posts)
 
-        //Then
+        // Then
         database.postDao()
                 .getPosts(TODAY)
                 .test()
                 .assertValue {
                     it.size == 3
                 }
-
     }
 
     @Test
     fun getCountWhenNotExistPostOlderThanGivenDate() {
 
-        //GIVEN
+        // GIVEN
         val posts = listOf(
                 POST,
                 POST.copy(id = 2),
@@ -95,11 +93,11 @@ class PostDaoTest {
                 POST.copy(id = 6, day = YESTERDAY)
         )
 
-        //When
+        // When
         database.postDao().insert(posts)
 
-        //Then
-        //Then
+        // Then
+        // Then
         val result = database.postDao()
                 .countPostOlderThan(YESTERDAY)
 
@@ -109,7 +107,7 @@ class PostDaoTest {
     @Test
     fun getCountWhenExistPostOlderThanGivenDate() {
 
-        //GIVEN
+        // GIVEN
         val posts = listOf(
                 POST.copy(id = 1, day = TODAY),
                 POST.copy(id = 2, day = TODAY),
@@ -119,15 +117,14 @@ class PostDaoTest {
                 POST.copy(id = 6, day = ONEDAY_BEFORE_YESTERDAY)
         )
 
-        //When
+        // When
         database.postDao().insert(posts)
 
-        //Then
+        // Then
         val restul = database.postDao()
                 .countPostOlderThan(TODAY)
 
         assertEquals(3, restul)
-
     }
 
     private class PostDateMatcher(val date: Date) : BaseMatcher<PostEntity>() {
@@ -137,9 +134,7 @@ class PostDaoTest {
         override fun matches(item: Any?): Boolean {
 
             return (item as PostEntity).day == date
-
         }
-
     }
 
     companion object {
@@ -152,13 +147,11 @@ class PostDaoTest {
         private val YESTERDAY = Calendar.getInstance().apply {
             time = TODAY
             add(Calendar.DATE, -1)
-
         }.time
 
         private val ONEDAY_BEFORE_YESTERDAY = Calendar.getInstance().apply {
             time = TODAY
             add(Calendar.DATE, -2)
-
         }.time
 
         private val POST = PostEntity(
@@ -183,5 +176,4 @@ class PostDaoTest {
                 POST.copy(id = 6, day = ONEDAY_BEFORE_YESTERDAY)
         )
     }
-
 }

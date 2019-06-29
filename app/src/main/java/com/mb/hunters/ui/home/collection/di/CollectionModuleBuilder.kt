@@ -39,5 +39,4 @@ abstract class CollectionModuleBuilder {
     @IntoMap
     @ViewModelKey(CollectionsViewModel::class)
     abstract fun bindCollectionViewModel(collectionsViewModel: CollectionsViewModel): ViewModel
-
 }

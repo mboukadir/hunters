@@ -46,8 +46,10 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun providePostRepository(postService: PostService,
-            huntersDatabase: HuntersDatabase): PostRepository {
+    fun providePostRepository(
+        postService: PostService,
+        huntersDatabase: HuntersDatabase
+    ): PostRepository {
         return PostRepositoryData(
                 PostRemoteDataSource(postService),
                 PostLocalDataSource(huntersDatabase.postDao()))
@@ -55,15 +57,15 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun provideCollectionRepository(collectionService: CollectionService,
-            huntersDatabase: HuntersDatabase): CollectionRepository {
+    fun provideCollectionRepository(
+        collectionService: CollectionService,
+        huntersDatabase: HuntersDatabase
+    ): CollectionRepository {
 
         return CollectionDataRepository(
                 CollectionLocalDataSource(huntersDatabase.collectionDao()),
                 CollectionRemoteDataSource(collectionService)
 
         )
-
     }
-
 }

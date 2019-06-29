@@ -42,7 +42,7 @@ class PostLocalDataSourceTest {
     @Before
     fun initDb() {
 
-        database = Room.inMemoryDatabaseBuilder(InstrumentationRegistry.getContext(),
+        database = Room.inMemoryDatabaseBuilder(InstrumentationRegistry.getInstrumentation().targetContext,
                 HuntersDatabase::class.java)
                 .allowMainThreadQueries()
                 .build()
@@ -58,7 +58,7 @@ class PostLocalDataSourceTest {
     @Test
     fun getNextDayPostWhenPostNotExistForGivenDay() {
 
-        //GIVEN
+        // GIVEN
         val posts = listOf(
                 POST,
                 POST.copy(id = 2),
@@ -68,7 +68,7 @@ class PostLocalDataSourceTest {
                 POST.copy(id = 6, day = ONEDAY_BEFORE_YESTERDAY)
         )
 
-        //When
+        // When
         postLocalDataRepository.savePosts(posts)
 
         postLocalDataRepository.getPostsAtDaysAgoOrOlder(1)
@@ -76,7 +76,6 @@ class PostLocalDataSourceTest {
                 .assertValue {
                     it.containsAll(POSTS)
                 }
-
     }
 
     companion object {
@@ -102,9 +101,6 @@ class PostLocalDataSourceTest {
         )
 
         private val POSTS = listOf(
-                POST,
-                POST.copy(id = 2),
-                POST.copy(id = 3),
                 POST.copy(id = 4, day = ONEDAY_BEFORE_YESTERDAY),
                 POST.copy(id = 5, day = ONEDAY_BEFORE_YESTERDAY),
                 POST.copy(id = 6, day = ONEDAY_BEFORE_YESTERDAY)

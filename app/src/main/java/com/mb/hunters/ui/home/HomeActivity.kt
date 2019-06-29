@@ -23,8 +23,7 @@ import com.mb.hunters.ui.common.chromtab.CustomTabActivityHelper
 import com.mb.hunters.ui.common.extensions.replaceFragmentInActivity
 import com.mb.hunters.ui.home.collection.CollectionsFragment
 import com.mb.hunters.ui.home.posts.PostsFragment
-import kotlinx.android.synthetic.main.home_activity.homeBottomNav
-import kotlinx.android.synthetic.main.home_activity.homeContainer
+import kotlinx.android.synthetic.main.home_activity.*
 
 class HomeActivity : BaseActivity() {
 
@@ -54,7 +53,6 @@ class HomeActivity : BaseActivity() {
 
             homeBottomNav.selectedItemId = R.id.home_nav_posts
         }
-
     }
 
     override fun onStart() {

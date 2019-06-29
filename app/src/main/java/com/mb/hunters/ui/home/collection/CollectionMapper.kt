@@ -30,6 +30,4 @@ class CollectionMapper @Inject constructor() {
             title = collectionEntity.title,
             collectionUrl = collectionEntity.collectionUrl,
             backgroundImageUrl = collectionEntity.backgroundImageUrl)
-
 }
-

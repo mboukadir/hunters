@@ -26,5 +26,4 @@ abstract class BaseActivity : DaggerAppCompatActivity() {
         this.ensureRuntimeTheme()
         super.onCreate(savedInstanceState)
     }
-
 }

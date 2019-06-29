@@ -65,7 +65,6 @@ class CollectionDataRepositoryTest {
         verify(localDataSource, never()).getCollections()
 
         assertThat(listEntityToSave.value, HasItems(COLLECTIONS_ENTITY_EXPECTED))
-
     }
 
     @Test
@@ -81,7 +80,6 @@ class CollectionDataRepositoryTest {
                 .assertValue({ it.containsAll(COLLECTIONS_ENTITY_EXPECTED) })
 
         verify(localDataSource, never()).save(capture(listEntityToSave))
-
     }
 
     class HasItems<T>(private val list: T) : BaseMatcher<T>() where T : List<*> {
@@ -92,7 +90,6 @@ class CollectionDataRepositoryTest {
 
             return list.containsAll((item as T))
         }
-
     }
 
     companion object {
@@ -110,7 +107,7 @@ class CollectionDataRepositoryTest {
                 name = COLLECTION.name,
                 title = COLLECTION.title,
                 collectionUrl = COLLECTION.collectionUrl,
-                backgroundImageUrl = COLLECTION.backgroundImageUrl ?:""
+                backgroundImageUrl = COLLECTION.backgroundImageUrl ?: ""
         )
 
         val COLLECTIONS = listOf(COLLECTION,
@@ -126,7 +123,5 @@ class CollectionDataRepositoryTest {
                 COLLECTION_ENTITY.copy(id = 4)
 
         )
-
     }
-
 }

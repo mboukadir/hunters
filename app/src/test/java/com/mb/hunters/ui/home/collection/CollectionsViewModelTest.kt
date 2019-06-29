@@ -32,7 +32,6 @@ import org.junit.runner.RunWith
 import org.mockito.ArgumentCaptor
 import org.mockito.Captor
 import org.mockito.Mock
-import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
@@ -48,7 +47,7 @@ class CollectionsViewModelTest {
     @Mock lateinit var collectionRepository: CollectionRepository
     @Mock lateinit var mapper: CollectionMapper
     @Captor lateinit var collectionEntityListCaptor: ArgumentCaptor<List<CollectionEntity>>
-    @Captor lateinit var collectionUiModelListCaptor : ArgumentCaptor<List<CollectionUiModel>>
+    @Captor lateinit var collectionUiModelListCaptor: ArgumentCaptor<List<CollectionUiModel>>
     @Mock lateinit var observer: Observer<List<CollectionUiModel>>
 
     private lateinit var collectionsViewModel: CollectionsViewModel
@@ -57,7 +56,6 @@ class CollectionsViewModelTest {
     fun setup() {
 
         collectionsViewModel = CollectionsViewModel(TestSchedulerProvider, mapper, collectionRepository)
-
     }
 
     @Test
@@ -78,7 +76,6 @@ class CollectionsViewModelTest {
 
         verify(observer, times(1)).onChanged(capture(collectionUiModelListCaptor))
         assertThat(collectionUiModelListCaptor.value, equalTo(COLLECTION_MODEL_LIST))
-
     }
 
     companion object {
@@ -109,7 +106,5 @@ class CollectionsViewModelTest {
                 COLLECTION_MODEL.copy(id = 2)
 
         )
-
     }
-
 }

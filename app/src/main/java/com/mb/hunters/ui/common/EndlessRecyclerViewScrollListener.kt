@@ -16,15 +16,11 @@
 
 package com.mb.hunters.ui.common
 
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
-
 class EndlessRecyclerViewScrollListener(
-        private val layoutManager: androidx.recyclerview.widget.RecyclerView.LayoutManager,
-        private val loadMore: (totalItemsCount: Int, view: androidx.recyclerview.widget.RecyclerView) -> Unit)
-    : androidx.recyclerview.widget.RecyclerView.OnScrollListener() {
+    private val layoutManager: androidx.recyclerview.widget.RecyclerView.LayoutManager,
+    private val loadMore: (totalItemsCount: Int, view: androidx.recyclerview.widget.RecyclerView) -> Unit
+) :
+    androidx.recyclerview.widget.RecyclerView.OnScrollListener() {
 
     private var loadMoreThreshold = 2
     private var previousItemCount = 0

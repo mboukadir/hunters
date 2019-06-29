@@ -51,7 +51,6 @@ class CollectionRemoteDataSourceTest {
                 .assertNoErrors()
                 .assertValue(emptyList())
                 .assertComplete()
-
     }
 
     @Test
@@ -66,7 +65,6 @@ class CollectionRemoteDataSourceTest {
                     it.contains(COLLECTION)
                 })
                 .assertComplete()
-
     }
 
     companion object {
@@ -84,13 +82,11 @@ class CollectionRemoteDataSourceTest {
         )
 
         val COLLECTIONS = listOf(COLLECTION,
-                COLLECTION.copy(id=2),
-                COLLECTION.copy(id=3),
-                COLLECTION.copy(id=4)
+                COLLECTION.copy(id = 2),
+                COLLECTION.copy(id = 3),
+                COLLECTION.copy(id = 4)
         )
 
         val COLLECTIONS_RESPONSE = CollectionsResponse(COLLECTIONS)
-
     }
-
 }

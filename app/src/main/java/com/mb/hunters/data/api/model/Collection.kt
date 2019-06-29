@@ -19,10 +19,11 @@ package com.mb.hunters.data.api.model
 import com.squareup.moshi.Json
 
 data class Collection(
-        val id: Long,
-        val name: String,
-        val title: String,
-        @Json(name = "background_image_url")
-        val backgroundImageUrl: String?,
-        @Json(name = "collection_url")
-        val collectionUrl: String)
+    val id: Long,
+    val name: String,
+    val title: String,
+    @Json(name = "background_image_url")
+    val backgroundImageUrl: String?,
+    @Json(name = "collection_url")
+    val collectionUrl: String
+)

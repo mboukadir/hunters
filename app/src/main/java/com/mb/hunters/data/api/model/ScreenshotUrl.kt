@@ -19,6 +19,6 @@ package com.mb.hunters.data.api.model
 import com.squareup.moshi.Json
 
 data class ScreenshotUrl(
-        @Json(name = "300px") val smallImgUrl: String,
-        @Json(name = "850px") val largeImgUrl: String
+    @Json(name = "300px") val smallImgUrl: String,
+    @Json(name = "850px") val largeImgUrl: String
 )
