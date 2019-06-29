@@ -1,32 +1,32 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.kotlin_version = '1.3.40'
+    ext.kotlin_version = '1.3.50'
 
     ext {
 
         ci = System.getenv("CI") == "true"
 
         constraintLayout_version = '2.0.0-beta2'
-        lifecycle_version = '2.2.0-alpha01'
-        room_version = '2.1.0'
+        lifecycle_version = '2.2.0-alpha03'
+        room_version = '2.2.0-beta01'
 
-        dagger_version = '2.23.2'
+        dagger_version = '2.24'
 
-        rx_version = '2.2.10'
+        rx_version = '2.2.12'
 
-        retrofit_version = '2.6.0'
-        okhttp_version = '4.0.0'
+        retrofit_version = '2.6.1'
+        okhttp_version = '4.1.0'
         moshi_version = '1.8.0'
 
         leakcanary_version = '1.6.3'
 
         ktlint_version = '0.33.0'
 
-        mockito_version = '2.28.2'
+        mockito_version = '3.0.0'
         junit_version = '4.13-beta-3'
         hamcrest_version = '1.3'
-        espresso_version = '3.3.0-alpha01'
+        espresso_version = '3.3.0-alpha02'
     }
 
 
@@ -35,7 +35,8 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.0-beta05'
+
+        classpath 'com.android.tools.build:gradle:3.5.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "org.jetbrains.kotlin:kotlin-android-extensions:$kotlin_version"
 
@@ -47,8 +48,8 @@ buildscript {
 }
 
 plugins {
-    id "com.diffplug.gradle.spotless" version "3.23.1"
-    id 'com.github.ben-manes.versions' version "0.21.0"
+    id "com.diffplug.gradle.spotless" version "3.24.2"
+    id 'com.github.ben-manes.versions' version "0.23.0"
 }
 
 
