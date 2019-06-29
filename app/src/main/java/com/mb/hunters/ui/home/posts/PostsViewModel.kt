@@ -25,9 +25,9 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class PostsViewModel @Inject constructor(
-        private val mapper: PostMapper,
-        private val schedulerProvider: SchedulerProvider,
-        private val postRepository: Lazy<PostRepository>
+    private val mapper: PostMapper,
+    private val schedulerProvider: SchedulerProvider,
+    private val postRepository: Lazy<PostRepository>
 
 ) : BaseViewModel() {
 
@@ -71,5 +71,4 @@ class PostsViewModel @Inject constructor(
                 })
         )
     }
-
 }

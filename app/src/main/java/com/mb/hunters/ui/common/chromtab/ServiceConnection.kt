@@ -28,8 +28,8 @@ import java.lang.ref.WeakReference
 class ServiceConnection(connectionCallback: ServiceConnectionCallback) :
         CustomTabsServiceConnection() {
     // A weak reference to the ServiceConnectionCallback to avoid leaking it.
-    private val mConnectionCallback: WeakReference<ServiceConnectionCallback>
-            = WeakReference(connectionCallback)
+    private val mConnectionCallback: WeakReference<ServiceConnectionCallback> =
+            WeakReference(connectionCallback)
 
     override fun onCustomTabsServiceConnected(name: ComponentName, client: CustomTabsClient) {
         val connectionCallback = mConnectionCallback.get()

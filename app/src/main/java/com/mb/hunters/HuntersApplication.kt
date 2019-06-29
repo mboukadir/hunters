@@ -29,7 +29,6 @@ class HuntersApplication : DaggerApplication() {
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
             // Stetho.initializeWithDefaults(this)
-
         }
     }
 
@@ -39,5 +38,4 @@ class HuntersApplication : DaggerApplication() {
         daggerAppComponent.inject(this)
         return daggerAppComponent
     }
-
 }

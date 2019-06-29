@@ -18,19 +18,19 @@ package com.mb.hunters.data.database.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.util.Date
+import java.util.*
 
 @Entity(tableName = "posts")
 data class PostEntity(
-        @PrimaryKey val id: Long,
-        val name: String,
-        val tagline: String,
-        val redirectUrl: String,
-        val votesCount: Long,
-        val commentsCount: Long,
-        val day: Date,
-        val createdAt: Date,
-        val screenshotUrl: String,
-        val thumbnailUrl: String
+    @PrimaryKey val id: Long,
+    val name: String,
+    val tagline: String,
+    val redirectUrl: String,
+    val votesCount: Long,
+    val commentsCount: Long,
+    val day: Date,
+    val createdAt: Date,
+    val screenshotUrl: String,
+    val thumbnailUrl: String
 
 )

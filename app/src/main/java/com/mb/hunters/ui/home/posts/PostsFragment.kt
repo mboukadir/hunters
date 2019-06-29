@@ -17,26 +17,20 @@
 package com.mb.hunters.ui.home.posts
 
 import android.app.Activity
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.mb.hunters.R
 import com.mb.hunters.ui.base.BaseFragment
 import com.mb.hunters.ui.base.Navigator
 import com.mb.hunters.ui.common.EndlessRecyclerViewScrollListener
-import kotlinx.android.synthetic.main.home_post_fragment_list.loading
-import kotlinx.android.synthetic.main.home_post_fragment_list.postRecyclerView
-import kotlinx.android.synthetic.main.home_post_fragment_list.postSwipeRefreshLayout
-import kotlinx.android.synthetic.main.home_post_fragment_list.view.postRecyclerView
-import kotlinx.android.synthetic.main.home_post_fragment_list.view.posts_fragment_toolbar
+import kotlinx.android.synthetic.main.home_post_fragment_list.*
+import kotlinx.android.synthetic.main.home_post_fragment_list.view.*
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -79,7 +73,6 @@ class PostsFragment : BaseFragment(), PostAdapter.ItemActionListener {
         }
 
         postViewModel.loadToDayPost()
-
     }
 
     private fun observe() {
@@ -89,7 +82,6 @@ class PostsFragment : BaseFragment(), PostAdapter.ItemActionListener {
                 it?.let {
                     postAdapter.finishedLoadingMore()
                     postAdapter.showMore(it)
-
                 }
             })
 
@@ -98,10 +90,8 @@ class PostsFragment : BaseFragment(), PostAdapter.ItemActionListener {
                     postAdapter.update(it)
                     loading.visibility = View.GONE
                     postRecyclerView.visibility = View.VISIBLE
-
                 }
             })
-
         }
     }
 
@@ -111,7 +101,6 @@ class PostsFragment : BaseFragment(), PostAdapter.ItemActionListener {
             setSupportActionBar(root.posts_fragment_toolbar)
             supportActionBar?.setTitle(R.string.home_title)
         }
-
     }
 
     private fun setupRecyclerView(root: View) {
@@ -130,7 +119,6 @@ class PostsFragment : BaseFragment(), PostAdapter.ItemActionListener {
                         postViewModel.loadMore(postAdapter.getLastItemDayAgo() + 1)
                     }
                 }
-
             })
         }
     }
@@ -138,7 +126,5 @@ class PostsFragment : BaseFragment(), PostAdapter.ItemActionListener {
     override fun onItemClick(item: PostUiModel) {
 
         navigator.toDetailPost(activity as Activity, item)
-
     }
-
 }

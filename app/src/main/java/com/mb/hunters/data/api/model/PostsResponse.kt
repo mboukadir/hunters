@@ -17,4 +17,3 @@
 package com.mb.hunters.data.api.model
 
 data class PostsResponse(val posts: List<Post>)
-

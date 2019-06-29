@@ -30,7 +30,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import timber.log.Timber
-import java.util.Date
+import java.util.*
 import javax.inject.Singleton
 
 @Module
@@ -83,5 +83,4 @@ class ApiModule {
     fun provideCollectionService(retrofit: Retrofit): CollectionService {
         return retrofit.create(CollectionService::class.java)
     }
-
 }

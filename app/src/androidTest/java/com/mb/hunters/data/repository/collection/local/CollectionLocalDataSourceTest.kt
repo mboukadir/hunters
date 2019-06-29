@@ -43,7 +43,7 @@ class CollectionLocalDataSourceTest {
     @Before
     fun initDb() {
 
-        database = Room.inMemoryDatabaseBuilder(InstrumentationRegistry.getContext(),
+        database = Room.inMemoryDatabaseBuilder(InstrumentationRegistry.getInstrumentation().targetContext,
                 HuntersDatabase::class.java)
                 .allowMainThreadQueries()
                 .build()
@@ -66,11 +66,11 @@ class CollectionLocalDataSourceTest {
                 CollectionDaoTest.COLLECTION.copy(id = 4)
         )
 
-        //When
+        // When
 
         collectionLocalDataRepository.save(collectionsToInsert)
 
-        //Then
+        // Then
 
         collectionLocalDataRepository.getCollections()
                 .test()
@@ -78,7 +78,6 @@ class CollectionLocalDataSourceTest {
                     it.containsAll(CollectionDaoTest.COLLECTIONS)
                 })
                 .assertComplete()
-
     }
 
     companion object {
@@ -95,7 +94,5 @@ class CollectionLocalDataSourceTest {
                 COLLECTION.copy(id = 3),
                 COLLECTION.copy(id = 4)
         )
-
     }
-
 }

@@ -22,8 +22,10 @@ import com.mb.hunters.data.repository.collection.local.CollectionLocalDataSource
 import com.mb.hunters.data.repository.collection.remote.CollectionRemoteDataSource
 import io.reactivex.Single
 
-class CollectionDataRepository(private val localDataSource: CollectionLocalDataSource,
-        private val remoteDataSource: CollectionRemoteDataSource) : CollectionRepository {
+class CollectionDataRepository(
+    private val localDataSource: CollectionLocalDataSource,
+    private val remoteDataSource: CollectionRemoteDataSource
+) : CollectionRepository {
 
     override fun getCollections(): Single<List<CollectionEntity>> {
 
@@ -34,18 +36,17 @@ class CollectionDataRepository(private val localDataSource: CollectionLocalDataS
     }
 
     private fun mapToCollectionEntityList(
-            collectionList: List<Collection>): List<CollectionEntity> {
+        collectionList: List<Collection>
+    ): List<CollectionEntity> {
 
         return collectionList.map {
             CollectionEntity(
                     id = it.id,
                     name = it.name,
                     title = it.title,
-                    backgroundImageUrl = it.backgroundImageUrl?:"",
+                    backgroundImageUrl = it.backgroundImageUrl ?: "",
                     collectionUrl = it.collectionUrl
             )
         }
-
     }
-
 }

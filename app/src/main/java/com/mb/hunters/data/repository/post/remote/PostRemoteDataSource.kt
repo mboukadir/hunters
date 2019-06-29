@@ -27,7 +27,6 @@ class PostRemoteDataSource(private val postService: PostService) {
 
         return postService.getPostsBy(page)
                 .map { mapToEntity(it.posts) }
-
     }
 
     private fun mapToEntity(posts: List<Post>): List<PostEntity> {

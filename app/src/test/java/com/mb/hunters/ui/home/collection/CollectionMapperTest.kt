@@ -31,7 +31,6 @@ class CollectionMapperTest {
         val result = collectionMapper.mapToUiModel(COLLECTION_ENTITY)
 
         assertThat(result, equalTo(COLLECTION_MODEL))
-
     }
 
     @Test
@@ -40,7 +39,6 @@ class CollectionMapperTest {
         val result = collectionMapper.mapToUiModel(COLLECTION_ENTITY_LIST)
 
         assertThat(result, equalTo(COLLECTION_MODEL_LIST))
-
     }
 
     companion object {
@@ -71,7 +69,5 @@ class CollectionMapperTest {
                 CollectionsViewModelTest.COLLECTION_MODEL.copy(id = 2)
 
         )
-
     }
-
 }

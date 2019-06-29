@@ -20,7 +20,7 @@ import com.mb.hunters.data.database.dao.PostDao
 import com.mb.hunters.data.database.entity.PostEntity
 import com.mb.hunters.ui.common.extensions.dateAt
 import io.reactivex.Single
-import java.util.Date
+import java.util.*
 
 class PostLocalDataSource(private val postDao: PostDao) {
 
@@ -48,5 +48,4 @@ class PostLocalDataSource(private val postDao: PostDao) {
     }
 
     private fun existPostsAt(date: Date) = postDao.countPostOlderThan(date) > 0
-
 }

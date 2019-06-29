@@ -58,7 +58,6 @@ class PostsViewModelTest {
 
         `when`(postRepositoryLazy.get()).thenReturn(postRepository)
         postsViewModel = PostsViewModel(postMapper, TestSchedulerProvider, postRepositoryLazy)
-
     }
 
     @Test
@@ -74,7 +73,6 @@ class PostsViewModelTest {
 
         verify(observer).onChanged(postsUiModels.capture())
         assertEquals(POSTS_UI_MODELS, postsUiModels.value)
-
     }
 
     @Test
@@ -90,7 +88,6 @@ class PostsViewModelTest {
         assertEquals(0, daysAgo.value)
 
         verify(observer, never()).onChanged(ArgumentMatchers.any())
-
     }
 
     @Test
@@ -105,7 +102,6 @@ class PostsViewModelTest {
         assertEquals(1, daysAgo.value)
 
         verify(observer).onChanged(POSTS_UI_MODELS)
-
     }
 
     @Test
@@ -121,7 +117,6 @@ class PostsViewModelTest {
         assertEquals(2, daysAgo.value)
 
         verify(observer, never()).onChanged(ArgumentMatchers.any())
-
     }
 
     @Test
@@ -137,7 +132,6 @@ class PostsViewModelTest {
         assertEquals(0, daysAgo.value)
 
         verify(observer).onChanged(POSTS_UI_MODELS)
-
     }
 
     @Test
@@ -153,7 +147,6 @@ class PostsViewModelTest {
         assertEquals(0, daysAgo.value)
 
         verify(observer, never()).onChanged(ArgumentMatchers.any())
-
     }
 
     companion object {
@@ -188,6 +181,5 @@ class PostsViewModelTest {
 
             postMapper.mapToUiModel(it)
         }
-
     }
 }

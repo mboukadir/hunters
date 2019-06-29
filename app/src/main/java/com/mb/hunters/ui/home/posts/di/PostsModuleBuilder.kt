@@ -39,5 +39,4 @@ abstract class PostsModuleBuilder {
     @IntoMap
     @ViewModelKey(PostsViewModel::class)
     abstract fun bindPostsViewModel(postsViewModel: PostsViewModel): ViewModel
-
 }

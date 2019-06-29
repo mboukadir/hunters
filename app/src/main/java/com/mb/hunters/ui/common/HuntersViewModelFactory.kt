@@ -26,7 +26,7 @@ import javax.inject.Provider
  * Multibinding.
  */
 class HuntersViewModelFactory @Inject constructor(
-        private val creators: @JvmSuppressWildcards Map<Class<out ViewModel>, Provider<ViewModel>>
+    private val creators: @JvmSuppressWildcards Map<Class<out ViewModel>, Provider<ViewModel>>
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

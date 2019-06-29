@@ -21,8 +21,10 @@ import com.mb.hunters.data.repository.post.local.PostLocalDataSource
 import com.mb.hunters.data.repository.post.remote.PostRemoteDataSource
 import io.reactivex.Single
 
-class PostRepositoryData(private val postRemoteDataSource: PostRemoteDataSource,
-        private val postLocalDataSource: PostLocalDataSource) :
+class PostRepositoryData(
+    private val postRemoteDataSource: PostRemoteDataSource,
+    private val postLocalDataSource: PostLocalDataSource
+) :
         PostRepository {
 
     override fun loadPosts(daysAgo: Long): Single<List<PostEntity>> {
@@ -36,5 +38,4 @@ class PostRepositoryData(private val postRemoteDataSource: PostRemoteDataSource,
         return postRemoteDataSource.getPosts(daysAgo)
                 .doOnSuccess { postLocalDataSource.savePosts(it) }
     }
-
 }

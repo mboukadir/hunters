@@ -22,7 +22,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.mb.hunters.data.database.entity.PostEntity
 import io.reactivex.Single
-import java.util.Date
+import java.util.*
 
 @Dao
 interface PostDao {
@@ -35,5 +35,4 @@ interface PostDao {
 
     @Query(value = "SELECT count(*) FROM posts WHERE day < :date")
     fun countPostOlderThan(date: Date): Int
-
 }

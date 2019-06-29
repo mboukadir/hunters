@@ -17,12 +17,12 @@
 package com.mb.hunters.ui.home.posts
 
 import android.os.Bundle
+import android.view.View
+import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.NO_POSITION
-import android.view.View
-import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.mb.hunters.R
 import com.mb.hunters.ui.base.BaseViewHolder
@@ -30,29 +30,22 @@ import com.mb.hunters.ui.home.posts.PostAdapter.Constant.KEY_COMMENT
 import com.mb.hunters.ui.home.posts.PostAdapter.Constant.KEY_VOTES
 import com.mb.hunters.ui.home.posts.PostAdapter.Constant.TYPE_ITEM
 import com.mb.hunters.ui.home.posts.PostAdapter.Constant.TYPE_LOADING_MORE
-import kotlinx.android.synthetic.main.home_post_list_item.view.commentsCount
-import kotlinx.android.synthetic.main.home_post_list_item.view.name
-import kotlinx.android.synthetic.main.home_post_list_item.view.screenShot
-import kotlinx.android.synthetic.main.home_post_list_item.view.tagline
-import kotlinx.android.synthetic.main.home_post_list_item.view.thumbnail
-import kotlinx.android.synthetic.main.home_post_list_item.view.upVotesCount
+import kotlinx.android.synthetic.main.home_post_list_item.view.*
 import timber.log.Timber
 
-class PostAdapter(val itemActionListener: ItemActionListener)
-    : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
+class PostAdapter(val itemActionListener: ItemActionListener) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     object Constant {
         const val KEY_COMMENT = "key_comment"
         const val KEY_VOTES = "key_votes"
         const val TYPE_ITEM = R.layout.home_post_list_item
         const val TYPE_LOADING_MORE = R.layout.common_infinite_loading
-
     }
 
     interface ItemActionListener {
 
         fun onItemClick(item: PostUiModel)
-
     }
 
     var showLoadingMore: Boolean = false
@@ -73,23 +66,21 @@ class PostAdapter(val itemActionListener: ItemActionListener)
         val loadingPos = getLoadingMoreItemPosition()
         showLoadingMore = false
         notifyItemRemoved(loadingPos)
-
     }
 
     private fun getLoadingMoreItemPosition(): Int {
-        return if (showLoadingMore) itemCount - 1 else androidx.recyclerview.widget.RecyclerView.NO_POSITION
+        return if (showLoadingMore) itemCount - 1 else RecyclerView.NO_POSITION
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             TYPE_ITEM -> PostViewHolder(parent, TYPE_ITEM)
             TYPE_LOADING_MORE -> LoadingViewHolder(parent, TYPE_LOADING_MORE)
             else -> throw IllegalArgumentException("Invalid item type")
-
         }
     }
 
-    override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
         when (holder) {
             is PostViewHolder -> holder.bind(items[position])
@@ -99,11 +90,13 @@ class PostAdapter(val itemActionListener: ItemActionListener)
                 "Invalid item type"
             }
         }
-
     }
 
-    override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int,
-                                  payloads: MutableList<Any>) {
+    override fun onBindViewHolder(
+        holder: RecyclerView.ViewHolder,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
 
         when (holder) {
             is PostViewHolder -> holder.bind(items[position], payloads)
@@ -113,12 +106,11 @@ class PostAdapter(val itemActionListener: ItemActionListener)
                 "Invalid item type"
             }
         }
-
     }
 
     override fun getItemId(position: Int): Long {
         if (getItemViewType(position) == TYPE_LOADING_MORE) {
-            return androidx.recyclerview.widget.RecyclerView.NO_ID
+            return RecyclerView.NO_ID
         }
         return items[position].id
     }
@@ -144,20 +136,18 @@ class PostAdapter(val itemActionListener: ItemActionListener)
         val diffUtilResult = DiffUtil.calculateDiff(DiffUtilPosts(items, newList))
         items = newList.toMutableList()
         diffUtilResult.dispatchUpdatesTo(this)
-
     }
 
     fun update(newPosts: List<PostUiModel>) {
         val diffUtilResult = DiffUtil.calculateDiff(DiffUtilPosts(items, newPosts))
         items = newPosts.toMutableList()
         diffUtilResult.dispatchUpdatesTo(this)
-
     }
 
     fun getLastItemDayAgo() = items.last().daysAgo
 
-    inner class PostViewHolder(parent: ViewGroup, @LayoutRes layoutResId: Int)
-        : BaseViewHolder(parent, layoutResId) {
+    inner class PostViewHolder(parent: ViewGroup, @LayoutRes layoutResId: Int) :
+        BaseViewHolder(parent, layoutResId) {
 
         init {
             itemView.setOnClickListener({
@@ -176,7 +166,6 @@ class PostAdapter(val itemActionListener: ItemActionListener)
             itemView.tagline.text = post.subTitle
             itemView.commentsCount.text = post.commentsCount.toString()
             itemView.upVotesCount.text = post.votesCount.toString()
-
         }
 
         fun bind(post: PostUiModel, payloads: MutableList<Any>) {
@@ -194,11 +183,10 @@ class PostAdapter(val itemActionListener: ItemActionListener)
                 }
             }
         }
-
     }
 
-    class LoadingViewHolder(parent: ViewGroup, @LayoutRes layoutResId: Int)
-        : BaseViewHolder(parent, layoutResId) {
+    class LoadingViewHolder(parent: ViewGroup, @LayoutRes layoutResId: Int) :
+        BaseViewHolder(parent, layoutResId) {
 
         override val containerView: View?
             get() = itemView
@@ -208,8 +196,10 @@ class PostAdapter(val itemActionListener: ItemActionListener)
         }
     }
 
-    private class DiffUtilPosts(private val oldList: List<PostUiModel>,
-            private val newList: List<PostUiModel>) : DiffUtil.Callback() {
+    private class DiffUtilPosts(
+        private val oldList: List<PostUiModel>,
+        private val newList: List<PostUiModel>
+    ) : DiffUtil.Callback() {
 
         override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
                 oldList[oldItemPosition].id == newList[newItemPosition].id
@@ -235,9 +225,6 @@ class PostAdapter(val itemActionListener: ItemActionListener)
             }
 
             return if (diffBundle.isEmpty) null else diffBundle
-
         }
-
     }
-
 }

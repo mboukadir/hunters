@@ -20,7 +20,6 @@ import com.mb.hunters.di.PerActivity
 import com.mb.hunters.ui.home.HomeActivity
 import com.mb.hunters.ui.home.collection.di.CollectionModuleBuilder
 import com.mb.hunters.ui.home.posts.di.PostsModuleBuilder
-import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import dagger.multibindings.ClassKey
@@ -33,5 +32,4 @@ abstract class HomeBuilderModule {
             modules = [PostsModuleBuilder::class, CollectionModuleBuilder::class])
     @ClassKey(HomeActivity::class)
     abstract fun bindHomeActivity(): HomeActivity
-
 }

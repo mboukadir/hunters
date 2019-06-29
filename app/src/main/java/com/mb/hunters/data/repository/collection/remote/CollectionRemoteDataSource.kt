@@ -31,14 +31,12 @@ class CollectionRemoteDataSource(private val collectionService: CollectionServic
                         Timber.e(it.error())
 
                         CollectionsResponse(emptyList())
-
                     } else {
 
                         it.response()!!.body()
                     }
-
-                }.
-                map {
+                }
+                .map {
                     it.collections
                 }
     }

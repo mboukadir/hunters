@@ -39,7 +39,7 @@ class CollectionDaoTest {
     @Before
     fun iniDb() {
 
-        database = Room.inMemoryDatabaseBuilder(InstrumentationRegistry.getContext(),
+        database = Room.inMemoryDatabaseBuilder(InstrumentationRegistry.getInstrumentation().targetContext,
                 HuntersDatabase::class.java)
                 .allowMainThreadQueries()
                 .build()
@@ -52,7 +52,7 @@ class CollectionDaoTest {
 
     @Test
     fun insertAndGetCollection() {
-        //GIVEN
+        // GIVEN
 
         val collectionsToInsert = listOf(COLLECTION,
                 COLLECTION.copy(id = 2),
@@ -60,11 +60,11 @@ class CollectionDaoTest {
                 COLLECTION.copy(id = 4)
         )
 
-        //When
+        // When
 
         database.collectionDao().insert(collectionsToInsert)
 
-        //Then
+        // Then
 
         database.collectionDao().getCollections()
                 .test()
@@ -88,7 +88,5 @@ class CollectionDaoTest {
                 COLLECTION.copy(id = 3),
                 COLLECTION.copy(id = 4)
         )
-
     }
-
 }

@@ -17,7 +17,7 @@
 package com.mb.hunters.data.database
 
 import androidx.room.TypeConverter
-import java.util.Date
+import java.util.*
 
 class DateConverter {
 
