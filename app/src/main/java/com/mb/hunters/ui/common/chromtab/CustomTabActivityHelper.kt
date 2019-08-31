@@ -80,8 +80,9 @@ class CustomTabActivityHelper(
 
         val packageName = CustomTabsHelper.getPackageNameToUse(activity) ?: return
 
-        mConnection = ServiceConnection(this)
-        CustomTabsClient.bindCustomTabsService(activity, packageName, mConnection)
+        mConnection = ServiceConnection(this).also {
+            CustomTabsClient.bindCustomTabsService(activity, packageName, it)
+        }
     }
 
     /**
