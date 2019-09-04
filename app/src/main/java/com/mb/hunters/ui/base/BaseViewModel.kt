@@ -17,13 +17,24 @@
 package com.mb.hunters.ui.base
 
 import androidx.lifecycle.ViewModel
+import com.mb.hunters.common.dispatcher.DispatchersProvider
 import io.reactivex.disposables.CompositeDisposable
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
+import timber.log.Timber
 
-abstract class BaseViewModel : ViewModel() {
+abstract class BaseViewModel(dispatchersProvider: DispatchersProvider) : ViewModel() {
     val disposables = CompositeDisposable()
+    val viewModelScope =
+        CoroutineScope(SupervisorJob() +
+                dispatchersProvider.main +
+                CoroutineExceptionHandler { _, throwable -> Timber.e(throwable) })
 
     override fun onCleared() {
         disposables.clear()
+        viewModelScope.coroutineContext.cancel()
         super.onCleared()
     }
 }

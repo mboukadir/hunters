@@ -23,6 +23,8 @@ buildscript {
 
         ktlint_version = '0.33.0'
 
+        coroutines_version = "1.3.0"
+
         mockito_version = '3.0.0'
         junit_version = '4.13-beta-3'
         hamcrest_version = '1.3'

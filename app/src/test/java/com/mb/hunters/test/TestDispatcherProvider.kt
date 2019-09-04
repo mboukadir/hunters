@@ -16,16 +16,11 @@
 
 package com.mb.hunters.test
 
-import com.mb.hunters.common.rxscheduler.SchedulerProvider
-import io.reactivex.Scheduler
-import io.reactivex.schedulers.Schedulers
+import com.mb.hunters.common.dispatcher.DispatchersProvider
+import kotlinx.coroutines.Dispatchers.Unconfined
 
-object TestSchedulerProvider : SchedulerProvider {
-    override fun io(): Scheduler {
-        return Schedulers.trampoline()
-    }
+object TestDispatcherProvider {
 
-    override fun mainThread(): Scheduler {
-        return Schedulers.trampoline()
-    }
+    val dispatcherProvider =
+            DispatchersProvider(Unconfined, Unconfined, Unconfined)
 }

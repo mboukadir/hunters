@@ -17,36 +17,45 @@
 package com.mb.hunters.ui.home.collection
 
 import androidx.lifecycle.MutableLiveData
+import com.mb.hunters.common.dispatcher.DispatchersProvider
 import com.mb.hunters.data.repository.collection.CollectionRepository
 import com.mb.hunters.ui.base.BaseViewModel
-import com.mb.hunters.ui.base.SchedulerProvider
 import com.mb.hunters.ui.common.SingleLiveEvent
-import timber.log.Timber
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.rx2.await
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class CollectionsViewModel @Inject constructor(
-    private val schedulerProvider: SchedulerProvider,
+    private val dispatchersProvider: DispatchersProvider,
     private val mapper: CollectionMapper,
     private val collectionRepository: CollectionRepository
-) : BaseViewModel() {
+) : BaseViewModel(dispatchersProvider) {
 
     val collections = MutableLiveData<List<CollectionUiModel>>()
     val errorMessage = SingleLiveEvent<String>()
 
     fun loadCollections() {
 
-        disposables.add(
-                collectionRepository.getCollections()
-                        .map { mapper.mapToUiModel(it) }
-                        .subscribeOn(schedulerProvider.io())
-                        .observeOn(schedulerProvider.mainThread())
-                        .subscribe({
-                            collections.value = it
-                        }, {
+        viewModelScope.launch {
+            try {
+                val collectionUiList = withContext(dispatchersProvider.io) {
 
-                            errorMessage.value = it.message
-                            Timber.e(it)
-                        })
-        )
+                    collectionRepository.getCollections()
+                        .map { mapper.mapToUiModel(it) }
+                        .await()
+                }
+                collections.value = collectionUiList
+            } catch (e: Exception) {
+                showErrorIfNeeded(e)
+            }
+        }
+    }
+
+    private fun showErrorIfNeeded(e: Exception) {
+        if (e !is CancellationException) {
+            errorMessage.value = e.message
+        }
     }
 }

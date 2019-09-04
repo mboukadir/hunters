@@ -17,26 +17,23 @@
 package com.mb.hunters.ui.home.collection
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.Observer
+import com.google.common.truth.Truth.assertThat
 import com.mb.hunters.data.database.entity.CollectionEntity
 import com.mb.hunters.data.repository.collection.CollectionRepository
-import com.mb.hunters.test.TestSchedulerProvider
-import com.mb.hunters.test.capture
+import com.mb.hunters.test.TestDispatcherProvider
+import com.mb.hunters.test.observeForTesting
 import io.reactivex.Single
-import org.hamcrest.Matchers.equalTo
-import org.junit.Assert.assertThat
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.ArgumentCaptor
-import org.mockito.Captor
+import org.mockito.BDDMockito.given
 import org.mockito.Mock
-import org.mockito.Mockito.`when`
-import org.mockito.Mockito.times
-import org.mockito.Mockito.verify
 import org.mockito.junit.MockitoJUnitRunner
 
+@ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
 class CollectionsViewModelTest {
 
@@ -44,66 +41,88 @@ class CollectionsViewModelTest {
     @JvmField
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    @Mock lateinit var collectionRepository: CollectionRepository
-    @Mock lateinit var mapper: CollectionMapper
-    @Captor lateinit var collectionEntityListCaptor: ArgumentCaptor<List<CollectionEntity>>
-    @Captor lateinit var collectionUiModelListCaptor: ArgumentCaptor<List<CollectionUiModel>>
-    @Mock lateinit var observer: Observer<List<CollectionUiModel>>
+    @Mock
+    lateinit var collectionRepository: CollectionRepository
+    @Mock
+    lateinit var mapper: CollectionMapper
 
     private lateinit var collectionsViewModel: CollectionsViewModel
 
     @Before
     fun setup() {
 
-        collectionsViewModel = CollectionsViewModel(TestSchedulerProvider, mapper, collectionRepository)
+        collectionsViewModel = CollectionsViewModel(
+            TestDispatcherProvider.dispatcherProvider,
+            mapper,
+            collectionRepository
+        )
     }
 
     @Test
-    fun loadCollections_ReturnListOfCollectionUiModel() {
+    fun `Should load collections list with success`() = runBlockingTest {
 
-        `when`(collectionRepository.getCollections()).thenReturn(
-                Single.just(COLLECTION_ENTITY_LIST))
-        `when`(mapper.mapToUiModel(capture(collectionEntityListCaptor))).thenReturn(
-                COLLECTION_MODEL_LIST)
+        // GIVEN
+        given(collectionRepository.getCollections()).willReturn(
+            Single.just(COLLECTION_ENTITY_LIST)
+        )
+        given(mapper.mapToUiModel(COLLECTION_ENTITY_LIST)).willReturn(
+            COLLECTION_MODEL_LIST
+        )
 
-        collectionsViewModel.collections.observeForever(observer)
+        // WHEN
         collectionsViewModel.loadCollections()
 
-        verify(collectionRepository, times(1)).getCollections()
+        // THEN
+        collectionsViewModel.collections.observeForTesting {
+            assertThat(collectionsViewModel.collections.value)
+                .containsExactlyElementsIn(COLLECTION_MODEL_LIST)
+        }
+    }
 
-        verify(mapper).mapToUiModel(capture(collectionEntityListCaptor))
-        assertThat(collectionEntityListCaptor.value, equalTo(COLLECTION_ENTITY_LIST))
+    @Test
+    fun `Should show error when load collection failed`() = runBlockingTest {
 
-        verify(observer, times(1)).onChanged(capture(collectionUiModelListCaptor))
-        assertThat(collectionUiModelListCaptor.value, equalTo(COLLECTION_MODEL_LIST))
+        // GIVEN
+        given(collectionRepository.getCollections()).willReturn(
+            Single.error(Exception("Error"))
+        )
+
+        // WHEN
+        collectionsViewModel.loadCollections()
+
+        // THEN
+        collectionsViewModel.errorMessage.observeForTesting {
+            assertThat(collectionsViewModel.errorMessage.value)
+                .isEqualTo("Error")
+        }
     }
 
     companion object {
 
         val COLLECTION_ENTITY = CollectionEntity(
-                id = 1,
-                name = "name",
-                title = "title",
-                collectionUrl = "collectionUrl",
-                backgroundImageUrl = "backgroundImageUrl"
+            id = 1,
+            name = "name",
+            title = "title",
+            collectionUrl = "collectionUrl",
+            backgroundImageUrl = "backgroundImageUrl"
         )
 
         val COLLECTION_MODEL = CollectionUiModel(
-                id = COLLECTION_ENTITY.id,
-                name = COLLECTION_ENTITY.name,
-                title = COLLECTION_ENTITY.title,
-                collectionUrl = COLLECTION_ENTITY.collectionUrl,
-                backgroundImageUrl = COLLECTION_ENTITY.backgroundImageUrl
+            id = COLLECTION_ENTITY.id,
+            name = COLLECTION_ENTITY.name,
+            title = COLLECTION_ENTITY.title,
+            collectionUrl = COLLECTION_ENTITY.collectionUrl,
+            backgroundImageUrl = COLLECTION_ENTITY.backgroundImageUrl
         )
 
         val COLLECTION_ENTITY_LIST = listOf(
-                COLLECTION_ENTITY,
-                COLLECTION_ENTITY.copy(id = 2)
+            COLLECTION_ENTITY,
+            COLLECTION_ENTITY.copy(id = 2)
         )
 
         val COLLECTION_MODEL_LIST = listOf(
-                COLLECTION_MODEL,
-                COLLECTION_MODEL.copy(id = 2)
+            COLLECTION_MODEL,
+            COLLECTION_MODEL.copy(id = 2)
 
         )
     }
