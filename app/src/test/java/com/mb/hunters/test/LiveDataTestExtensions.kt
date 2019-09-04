@@ -14,13 +14,17 @@
  * limitations under the License.
  */
 
-package com.mb.hunters.ui.base
+package com.mb.hunters.test
 
-import io.reactivex.Scheduler
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 
-interface SchedulerProvider {
-
-    fun io(): Scheduler
-
-    fun mainThread(): Scheduler
+fun <T> LiveData<T>.observeForTesting(block: () -> Unit) {
+    val observer = Observer<T> { Unit }
+    try {
+        observeForever(observer)
+        block()
+    } finally {
+        removeObserver(observer)
+    }
 }

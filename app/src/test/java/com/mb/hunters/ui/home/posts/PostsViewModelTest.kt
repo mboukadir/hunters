@@ -20,6 +20,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.mb.hunters.data.database.entity.PostEntity
 import com.mb.hunters.data.repository.post.PostRepository
+import com.mb.hunters.test.TestDispatcherProvider.dispatcherProvider
 import com.mb.hunters.test.TestSchedulerProvider
 import dagger.Lazy
 import io.reactivex.Single
@@ -57,7 +58,7 @@ class PostsViewModelTest {
     fun setup() {
 
         `when`(postRepositoryLazy.get()).thenReturn(postRepository)
-        postsViewModel = PostsViewModel(postMapper, TestSchedulerProvider, postRepositoryLazy)
+        postsViewModel = PostsViewModel(postMapper, TestSchedulerProvider, dispatcherProvider, postRepositoryLazy)
     }
 
     @Test

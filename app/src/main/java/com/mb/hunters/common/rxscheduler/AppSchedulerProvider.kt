@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package com.mb.hunters.ui.common
+package com.mb.hunters.common.rxscheduler
 
-import com.mb.hunters.ui.base.SchedulerProvider
 import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class AppSchedulerProvider @Inject constructor() : SchedulerProvider {
+class AppSchedulerProvider @Inject constructor() :
+    SchedulerProvider {
 
     override fun mainThread(): Scheduler {
         return AndroidSchedulers.mainThread()

@@ -14,18 +14,12 @@
  * limitations under the License.
  */
 
-package com.mb.hunters.test
+package com.mb.hunters.common.dispatcher
 
-import com.mb.hunters.common.rxscheduler.SchedulerProvider
-import io.reactivex.Scheduler
-import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.CoroutineDispatcher
 
-object TestSchedulerProvider : SchedulerProvider {
-    override fun io(): Scheduler {
-        return Schedulers.trampoline()
-    }
-
-    override fun mainThread(): Scheduler {
-        return Schedulers.trampoline()
-    }
-}
+data class DispatchersProvider(
+    val main: CoroutineDispatcher,
+    val computation: CoroutineDispatcher,
+    val io: CoroutineDispatcher
+)

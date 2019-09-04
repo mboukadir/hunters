@@ -17,9 +17,10 @@
 package com.mb.hunters.ui.home.posts
 
 import androidx.lifecycle.MutableLiveData
+import com.mb.hunters.common.dispatcher.DispatchersProvider
 import com.mb.hunters.data.repository.post.PostRepository
 import com.mb.hunters.ui.base.BaseViewModel
-import com.mb.hunters.ui.base.SchedulerProvider
+import com.mb.hunters.common.rxscheduler.SchedulerProvider
 import dagger.Lazy
 import timber.log.Timber
 import javax.inject.Inject
@@ -27,9 +28,10 @@ import javax.inject.Inject
 class PostsViewModel @Inject constructor(
     private val mapper: PostMapper,
     private val schedulerProvider: SchedulerProvider,
+    private val dispatchersProvider: DispatchersProvider,
     private val postRepository: Lazy<PostRepository>
 
-) : BaseViewModel() {
+) : BaseViewModel(dispatchersProvider) {
 
     val morePosts = MutableLiveData<List<PostUiModel>>()
     val toDayPosts = MutableLiveData<List<PostUiModel>>()

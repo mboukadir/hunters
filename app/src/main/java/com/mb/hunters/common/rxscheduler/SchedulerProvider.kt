@@ -14,18 +14,13 @@
  * limitations under the License.
  */
 
-package com.mb.hunters.test
+package com.mb.hunters.common.rxscheduler
 
-import com.mb.hunters.common.rxscheduler.SchedulerProvider
 import io.reactivex.Scheduler
-import io.reactivex.schedulers.Schedulers
 
-object TestSchedulerProvider : SchedulerProvider {
-    override fun io(): Scheduler {
-        return Schedulers.trampoline()
-    }
+interface SchedulerProvider {
 
-    override fun mainThread(): Scheduler {
-        return Schedulers.trampoline()
-    }
+    fun io(): Scheduler
+
+    fun mainThread(): Scheduler
 }
