@@ -18,15 +18,14 @@ package com.mb.hunters.data.repository.collection.local
 
 import com.mb.hunters.data.database.dao.CollectionDao
 import com.mb.hunters.data.database.entity.CollectionEntity
-import io.reactivex.Single
 
 class CollectionLocalDataSource(private val collectionDao: CollectionDao) {
 
-    fun save(collectionEntityList: List<CollectionEntity>) {
+    suspend fun save(collectionEntityList: List<CollectionEntity>) {
         collectionDao.insert(collectionEntityList)
     }
 
-    fun getCollections(): Single<List<CollectionEntity>> {
+    suspend fun getCollections(): List<CollectionEntity> {
         return collectionDao.getCollections()
     }
 }

@@ -20,29 +20,27 @@ import com.mb.hunters.data.api.model.Collection
 import com.mb.hunters.data.database.entity.CollectionEntity
 import com.mb.hunters.data.repository.collection.local.CollectionLocalDataSource
 import com.mb.hunters.data.repository.collection.remote.CollectionRemoteDataSource
-import com.mb.hunters.test.capture
 import io.reactivex.Single
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.BaseMatcher
 import org.hamcrest.Description
-import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.ArgumentCaptor
-import org.mockito.Captor
+import org.mockito.BDDMockito.given
+import org.mockito.BDDMockito.then
 import org.mockito.Mock
-import org.mockito.Mockito.`when`
-import org.mockito.Mockito.never
-import org.mockito.Mockito.times
-import org.mockito.Mockito.verify
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
+@UseExperimental(ExperimentalCoroutinesApi::class)
 class CollectionDataRepositoryTest {
 
-    @Mock lateinit var localDataSource: CollectionLocalDataSource
-    @Mock lateinit var remoteDataSource: CollectionRemoteDataSource
-    @Captor lateinit var listEntityToSave: ArgumentCaptor<List<CollectionEntity>>
+    @Mock
+    lateinit var localDataSource: CollectionLocalDataSource
+    @Mock
+    lateinit var remoteDataSource: CollectionRemoteDataSource
 
     lateinit var dataRepository: CollectionDataRepository
 
@@ -52,34 +50,36 @@ class CollectionDataRepositoryTest {
     }
 
     @Test
-    fun getCollectionSaveAndReturnCollectionList() {
+    fun `Should save and return collection list received from remote data`() = runBlockingTest {
+        // GIVEN
+        given(remoteDataSource.getCollections()).willReturn(Single.just(COLLECTIONS))
 
-        `when`(remoteDataSource.getCollections()).thenReturn(Single.just(COLLECTIONS))
+        // WHEN
+        val testObserver = dataRepository.getCollections().test()
 
-        dataRepository.getCollections()
-                .test()
-                .assertComplete()
-                .assertValue({ it.containsAll(COLLECTIONS_ENTITY_EXPECTED) })
+        // THEN
+        then(localDataSource).should().save(COLLECTIONS_ENTITY_EXPECTED)
 
-        verify(localDataSource, times(1)).save(capture(listEntityToSave))
-        verify(localDataSource, never()).getCollections()
-
-        assertThat(listEntityToSave.value, HasItems(COLLECTIONS_ENTITY_EXPECTED))
+        testObserver.assertComplete().assertValue {
+            it.containsAll(COLLECTIONS_ENTITY_EXPECTED)
+        }
     }
 
     @Test
-    fun getCollectionWhenApiCallReturnError_ReturnCollectionListFromLocal() {
+    fun `Should return local collection when remote source return error`() = runBlockingTest {
+        // GIVEN
+        given(remoteDataSource.getCollections()).willReturn(Single.error(Exception()))
+        given(localDataSource.getCollections()).willReturn(COLLECTIONS_ENTITY_EXPECTED)
 
-        `when`(remoteDataSource.getCollections()).thenReturn(Single.error(Exception()))
-        `when`(localDataSource.getCollections()).thenReturn(Single.just(COLLECTIONS_ENTITY_EXPECTED))
+        // WHEN
+        val testObserver = dataRepository.getCollections().test()
 
-        dataRepository.getCollections()
-                .test()
-                .assertNoErrors()
-                .assertComplete()
-                .assertValue({ it.containsAll(COLLECTIONS_ENTITY_EXPECTED) })
+        // THEN
+        then(localDataSource).should().getCollections()
 
-        verify(localDataSource, never()).save(capture(listEntityToSave))
+        testObserver.assertNoErrors().assertComplete().assertValue {
+            it.containsAll(COLLECTIONS_ENTITY_EXPECTED)
+        }
     }
 
     class HasItems<T>(private val list: T) : BaseMatcher<T>() where T : List<*> {
@@ -95,32 +95,33 @@ class CollectionDataRepositoryTest {
     companion object {
 
         val COLLECTION = Collection(
-                id = 1,
-                name = "name",
-                title = "title",
-                collectionUrl = "collectionUrl",
-                backgroundImageUrl = "backgroundImageUrl"
+            id = 1,
+            name = "name",
+            title = "title",
+            collectionUrl = "collectionUrl",
+            backgroundImageUrl = "backgroundImageUrl"
         )
 
         val COLLECTION_ENTITY = CollectionEntity(
-                id = COLLECTION.id,
-                name = COLLECTION.name,
-                title = COLLECTION.title,
-                collectionUrl = COLLECTION.collectionUrl,
-                backgroundImageUrl = COLLECTION.backgroundImageUrl ?: ""
+            id = COLLECTION.id,
+            name = COLLECTION.name,
+            title = COLLECTION.title,
+            collectionUrl = COLLECTION.collectionUrl,
+            backgroundImageUrl = COLLECTION.backgroundImageUrl ?: ""
         )
 
-        val COLLECTIONS = listOf(COLLECTION,
-                COLLECTION.copy(id = 2),
-                COLLECTION.copy(id = 3),
-                COLLECTION.copy(id = 4)
+        val COLLECTIONS = listOf(
+            COLLECTION,
+            COLLECTION.copy(id = 2),
+            COLLECTION.copy(id = 3),
+            COLLECTION.copy(id = 4)
         )
 
         val COLLECTIONS_ENTITY_EXPECTED = listOf(
-                COLLECTION_ENTITY,
-                COLLECTION_ENTITY.copy(id = 2),
-                COLLECTION_ENTITY.copy(id = 3),
-                COLLECTION_ENTITY.copy(id = 4)
+            COLLECTION_ENTITY,
+            COLLECTION_ENTITY.copy(id = 2),
+            COLLECTION_ENTITY.copy(id = 3),
+            COLLECTION_ENTITY.copy(id = 4)
 
         )
     }

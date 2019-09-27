@@ -20,15 +20,19 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.google.common.truth.Truth.assertThat
 import com.mb.hunters.data.database.HuntersDatabase
-import com.mb.hunters.data.database.dao.CollectionDaoTest
+import com.mb.hunters.data.database.dao.CollectionDaoTest.Companion.COLLECTION
 import com.mb.hunters.data.database.entity.CollectionEntity
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
+@ExperimentalCoroutinesApi
 @RunWith(AndroidJUnit4::class)
 class CollectionLocalDataSourceTest {
 
@@ -57,27 +61,16 @@ class CollectionLocalDataSourceTest {
     }
 
     @Test
-    fun saveAndGetCollection() {
+    fun saveAndGetCollection() = runBlockingTest {
 
-        val collectionsToInsert = listOf(
-                CollectionDaoTest.COLLECTION,
-                CollectionDaoTest.COLLECTION.copy(id = 2),
-                CollectionDaoTest.COLLECTION.copy(id = 3),
-                CollectionDaoTest.COLLECTION.copy(id = 4)
-        )
+        // Given
+        collectionLocalDataRepository.save(COLLECTIONS)
 
         // When
-
-        collectionLocalDataRepository.save(collectionsToInsert)
+        val actual = collectionLocalDataRepository.getCollections()
 
         // Then
-
-        collectionLocalDataRepository.getCollections()
-                .test()
-                .assertValue({
-                    it.containsAll(CollectionDaoTest.COLLECTIONS)
-                })
-                .assertComplete()
+        assertThat(actual).containsExactlyElementsIn(COLLECTIONS)
     }
 
     companion object {

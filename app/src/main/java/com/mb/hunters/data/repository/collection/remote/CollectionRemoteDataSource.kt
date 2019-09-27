@@ -18,24 +18,13 @@ package com.mb.hunters.data.repository.collection.remote
 
 import com.mb.hunters.data.api.CollectionService
 import com.mb.hunters.data.api.model.Collection
-import com.mb.hunters.data.api.model.CollectionsResponse
 import io.reactivex.Single
-import timber.log.Timber
 
 class CollectionRemoteDataSource(private val collectionService: CollectionService) {
 
     fun getCollections(): Single<List<Collection>> {
         return collectionService.getCollections()
-                .map {
-                    if (it.isError) {
-                        Timber.e(it.error())
-
-                        CollectionsResponse(emptyList())
-                    } else {
-
-                        it.response()!!.body()
-                    }
-                }
+                .map { it.response()!!.body() }
                 .map {
                     it.collections
                 }

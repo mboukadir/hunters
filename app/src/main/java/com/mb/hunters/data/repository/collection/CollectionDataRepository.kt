@@ -21,6 +21,7 @@ import com.mb.hunters.data.database.entity.CollectionEntity
 import com.mb.hunters.data.repository.collection.local.CollectionLocalDataSource
 import com.mb.hunters.data.repository.collection.remote.CollectionRemoteDataSource
 import io.reactivex.Single
+import kotlinx.coroutines.runBlocking
 
 class CollectionDataRepository(
     private val localDataSource: CollectionLocalDataSource,
@@ -30,9 +31,9 @@ class CollectionDataRepository(
     override fun getCollections(): Single<List<CollectionEntity>> {
 
         return remoteDataSource.getCollections()
-                .map { mapToCollectionEntityList(it) }
-                .doOnSuccess { localDataSource.save(it) }
-                .onErrorResumeNext { localDataSource.getCollections() }
+            .map { mapToCollectionEntityList(it) }
+            .doOnSuccess { data -> runBlocking { localDataSource.save(data) } }
+            .onErrorReturn { runBlocking { localDataSource.getCollections() } }
     }
 
     private fun mapToCollectionEntityList(
@@ -41,11 +42,11 @@ class CollectionDataRepository(
 
         return collectionList.map {
             CollectionEntity(
-                    id = it.id,
-                    name = it.name,
-                    title = it.title,
-                    backgroundImageUrl = it.backgroundImageUrl ?: "",
-                    collectionUrl = it.collectionUrl
+                id = it.id,
+                name = it.name,
+                title = it.title,
+                backgroundImageUrl = it.backgroundImageUrl ?: "",
+                collectionUrl = it.collectionUrl
             )
         }
     }
