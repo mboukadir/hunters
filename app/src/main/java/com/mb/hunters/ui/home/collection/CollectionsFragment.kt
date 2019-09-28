@@ -42,7 +42,6 @@ class CollectionsFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         collectionsViewModel = ViewModelProvider(this, viewModelFactory).get(
             CollectionsViewModel::class.java
         )

@@ -21,14 +21,13 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.mb.hunters.data.database.entity.CollectionEntity
-import io.reactivex.Single
 
 @Dao
 interface CollectionDao {
 
     @Query("SELECT * FROM collections")
-    fun getCollections(): Single<List<CollectionEntity>>
+    suspend fun getCollections(): List<CollectionEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(collections: List<CollectionEntity>)
+    suspend fun insert(collections: List<CollectionEntity>)
 }
