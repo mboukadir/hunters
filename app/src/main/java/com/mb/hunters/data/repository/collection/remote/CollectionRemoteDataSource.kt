@@ -16,17 +16,17 @@
 
 package com.mb.hunters.data.repository.collection.remote
 
+import com.mb.hunters.common.dispatcher.DispatchersProvider
 import com.mb.hunters.data.api.CollectionService
 import com.mb.hunters.data.api.model.Collection
-import io.reactivex.Single
+import kotlinx.coroutines.withContext
 
-class CollectionRemoteDataSource(private val collectionService: CollectionService) {
+class CollectionRemoteDataSource(
+    private val collectionService: CollectionService,
+    private val dispatchersProvider: DispatchersProvider
+) {
 
-    fun getCollections(): Single<List<Collection>> {
-        return collectionService.getCollections()
-                .map { it.response()!!.body() }
-                .map {
-                    it.collections
-                }
+    suspend fun getCollections(): List<Collection> = withContext(dispatchersProvider.computation) {
+        collectionService.getCollections().collections
     }
 }

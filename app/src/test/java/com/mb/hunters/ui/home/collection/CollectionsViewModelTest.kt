@@ -22,7 +22,6 @@ import com.mb.hunters.data.database.entity.CollectionEntity
 import com.mb.hunters.data.repository.collection.CollectionRepository
 import com.mb.hunters.test.TestDispatcherProvider
 import com.mb.hunters.test.observeForTesting
-import io.reactivex.Single
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
@@ -62,9 +61,8 @@ class CollectionsViewModelTest {
     fun `Should load collections list with success`() = runBlockingTest {
 
         // GIVEN
-        given(collectionRepository.getCollections()).willReturn(
-            Single.just(COLLECTION_ENTITY_LIST)
-        )
+        given(collectionRepository.getCollections()).willReturn(COLLECTION_ENTITY_LIST)
+
         given(mapper.mapToUiModel(COLLECTION_ENTITY_LIST)).willReturn(
             COLLECTION_MODEL_LIST
         )
@@ -83,9 +81,7 @@ class CollectionsViewModelTest {
     fun `Should show error when load collection failed`() = runBlockingTest {
 
         // GIVEN
-        given(collectionRepository.getCollections()).willReturn(
-            Single.error(Exception("Error"))
-        )
+        given(collectionRepository.getCollections()).willThrow(Exception("Error"))
 
         // WHEN
         collectionsViewModel.loadCollections()

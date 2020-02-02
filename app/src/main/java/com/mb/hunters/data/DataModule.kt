@@ -18,6 +18,7 @@ package com.mb.hunters.data
 
 import android.app.Application
 import androidx.room.Room
+import com.mb.hunters.common.dispatcher.DispatchersProvider
 import com.mb.hunters.data.api.ApiModule
 import com.mb.hunters.data.api.CollectionService
 import com.mb.hunters.data.api.PostService
@@ -41,7 +42,7 @@ class DataModule {
     @Singleton
     fun provideDatabase(application: Application): HuntersDatabase {
         return Room.databaseBuilder(application, HuntersDatabase::class.java, "database")
-            .build()
+                .build()
     }
 
     @Provides
@@ -51,8 +52,8 @@ class DataModule {
         huntersDatabase: HuntersDatabase
     ): PostRepository {
         return PostRepositoryData(
-            PostRemoteDataSource(postService),
-            PostLocalDataSource(huntersDatabase.postDao())
+                PostRemoteDataSource(postService),
+                PostLocalDataSource(huntersDatabase.postDao())
         )
     }
 
@@ -60,12 +61,14 @@ class DataModule {
     @Singleton
     fun provideCollectionRepository(
         collectionService: CollectionService,
-        huntersDatabase: HuntersDatabase
+        huntersDatabase: HuntersDatabase,
+        dispatchersProvider: DispatchersProvider
     ): CollectionRepository {
 
         return CollectionDataRepository(
-            CollectionLocalDataSource(huntersDatabase.collectionDao()),
-            CollectionRemoteDataSource(collectionService)
+                CollectionLocalDataSource(huntersDatabase.collectionDao()),
+                CollectionRemoteDataSource(collectionService, dispatchersProvider),
+                dispatchersProvider
         )
     }
 }

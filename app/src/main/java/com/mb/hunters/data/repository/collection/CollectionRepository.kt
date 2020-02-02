@@ -17,9 +17,7 @@
 package com.mb.hunters.data.repository.collection
 
 import com.mb.hunters.data.database.entity.CollectionEntity
-import io.reactivex.Single
 
 interface CollectionRepository {
-
-    fun getCollections(): Single<List<CollectionEntity>>
+    suspend fun getCollections(): List<CollectionEntity>
 }

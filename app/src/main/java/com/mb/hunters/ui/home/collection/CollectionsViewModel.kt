@@ -23,8 +23,6 @@ import com.mb.hunters.ui.base.BaseViewModel
 import com.mb.hunters.ui.common.SingleLiveEvent
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.rx2.await
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class CollectionsViewModel @Inject constructor(
@@ -39,21 +37,18 @@ class CollectionsViewModel @Inject constructor(
     fun loadCollections() {
 
         viewModelScope.launch {
-            try {
-                val collectionUiList = withContext(dispatchersProvider.io) {
-
-                    collectionRepository.getCollections()
+            runCatching {
+                collectionRepository.getCollections()
                         .map { mapper.mapToUiModel(it) }
-                        .await()
-                }
-                collections.value = collectionUiList
-            } catch (e: Exception) {
-                showErrorIfNeeded(e)
-            }
+            }.fold({
+                collections.value = it
+            }, {
+                showErrorIfNeeded(it)
+            })
         }
     }
 
-    private fun showErrorIfNeeded(e: Exception) {
+    private fun showErrorIfNeeded(e: Throwable) {
         if (e !is CancellationException) {
             errorMessage.value = e.message
         }
