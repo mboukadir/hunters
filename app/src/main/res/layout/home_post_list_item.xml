@@ -76,7 +76,7 @@
         android:layout_marginBottom="16dp"
         android:contentDescription="@string/empty"
         android:scaleType="centerCrop"
-        android:tint="@color/accent"
+        app:tint="@color/accent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/tagline"
         app:layout_constraintTop_toBottomOf="@+id/tagline"
@@ -99,7 +99,7 @@
         android:layout_marginTop="8dp"
         android:contentDescription="@string/empty"
         android:scaleType="center"
-        android:tint="@color/accent"
+        app:tint="@color/accent"
         app:layout_constraintEnd_toStartOf="@+id/upVotesCount"
         app:layout_constraintTop_toBottomOf="@+id/tagline"
         app:srcCompat="@drawable/ic_keyboard_arrow_up_black_24dp" />

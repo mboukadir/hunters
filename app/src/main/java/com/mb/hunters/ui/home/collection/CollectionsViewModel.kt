@@ -38,8 +38,7 @@ class CollectionsViewModel @Inject constructor(
 
         viewModelScope.launch {
             runCatching {
-                collectionRepository.getCollections()
-                        .map { mapper.mapToUiModel(it) }
+                mapper.mapToUiModel(collectionRepository.getCollections())
             }.fold({
                 collections.value = it
             }, {

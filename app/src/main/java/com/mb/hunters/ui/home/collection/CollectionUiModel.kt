@@ -22,5 +22,4 @@ data class CollectionUiModel(
     val title: String,
     val backgroundImageUrl: String,
     val collectionUrl: String
-
 )
