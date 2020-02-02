@@ -16,18 +16,18 @@
 
 package com.mb.hunters.data.repository.collection.remote
 
+import com.google.common.truth.Truth.assertThat
 import com.mb.hunters.data.api.CollectionService
 import com.mb.hunters.data.api.model.Collection
 import com.mb.hunters.data.api.model.CollectionsResponse
-import io.reactivex.Single
+import com.mb.hunters.test.TestDispatcherProvider
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.BDDMockito.given
 import org.mockito.Mock
-import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
-import retrofit2.Response
-import retrofit2.adapter.rxjava2.Result
 
 @RunWith(MockitoJUnitRunner::class)
 class CollectionRemoteDataSourceTest {
@@ -38,38 +38,30 @@ class CollectionRemoteDataSourceTest {
     @Before
     fun setup() {
 
-        collectionRemoteDataSource = CollectionRemoteDataSource(collectionService)
+        collectionRemoteDataSource = CollectionRemoteDataSource(collectionService, TestDispatcherProvider.dispatcherProvider)
     }
 
     @Test
-    fun getCollectionsReturnEmptyCollectionList() {
+    fun getCollectionsReturnEmptyCollectionList() = runBlockingTest {
 
-        `when`(collectionService.getCollections()).thenReturn(Single.just(resultOf(COLLECTIONS_RESPONSE_EMPTY)))
+        given(collectionService.getCollections()).willReturn(COLLECTIONS_RESPONSE_EMPTY)
 
-        collectionRemoteDataSource.getCollections()
-                .test()
-                .assertNoErrors()
-                .assertValue(emptyList())
-                .assertComplete()
+        val actual = collectionRemoteDataSource.getCollections()
+
+        assertThat(actual).isEmpty()
     }
 
     @Test
-    fun getCollectionsReturnCollectionList() {
+    fun getCollectionsReturnCollectionList() = runBlockingTest {
 
-        `when`(collectionService.getCollections()).thenReturn(Single.just(resultOf(COLLECTIONS_RESPONSE)))
+        given(collectionService.getCollections()).willReturn(COLLECTIONS_RESPONSE)
 
-        collectionRemoteDataSource.getCollections()
-                .test()
-                .assertNoErrors()
-                .assertValue({
-                    it.contains(COLLECTION)
-                })
-                .assertComplete()
+        val actual = collectionRemoteDataSource.getCollections()
+
+        assertThat(actual).containsExactlyElementsIn(COLLECTIONS)
     }
 
     companion object {
-
-        fun <T> resultOf(response: T): Result<T> = Result.response(Response.success(response))
 
         val COLLECTIONS_RESPONSE_EMPTY = CollectionsResponse(emptyList())
 

@@ -16,24 +16,33 @@
 
 package com.mb.hunters.data.repository.collection
 
+import com.mb.hunters.common.dispatcher.DispatchersProvider
 import com.mb.hunters.data.api.model.Collection
 import com.mb.hunters.data.database.entity.CollectionEntity
 import com.mb.hunters.data.repository.collection.local.CollectionLocalDataSource
 import com.mb.hunters.data.repository.collection.remote.CollectionRemoteDataSource
-import io.reactivex.Single
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.ensureActive
+import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 class CollectionDataRepository(
     private val localDataSource: CollectionLocalDataSource,
-    private val remoteDataSource: CollectionRemoteDataSource
+    private val remoteDataSource: CollectionRemoteDataSource,
+    private val dispatchersProvider: DispatchersProvider
 ) : CollectionRepository {
 
-    override fun getCollections(): Single<List<CollectionEntity>> {
-
-        return remoteDataSource.getCollections()
-            .map { mapToCollectionEntityList(it) }
-            .doOnSuccess { data -> runBlocking { localDataSource.save(data) } }
-            .onErrorReturn { runBlocking { localDataSource.getCollections() } }
+    override suspend fun getCollections(): List<CollectionEntity> = withContext(dispatchersProvider.computation) {
+        try {
+            mapToCollectionEntityList(remoteDataSource.getCollections())
+                    .also {
+                        localDataSource.save(it)
+                    }
+        } catch (e: Exception) {
+            Timber.e(e)
+            ensureActive().run {
+                localDataSource.getCollections()
+            }
+        }
     }
 
     private fun mapToCollectionEntityList(
@@ -42,11 +51,11 @@ class CollectionDataRepository(
 
         return collectionList.map {
             CollectionEntity(
-                id = it.id,
-                name = it.name,
-                title = it.title,
-                backgroundImageUrl = it.backgroundImageUrl ?: "",
-                collectionUrl = it.collectionUrl
+                    id = it.id,
+                    name = it.name,
+                    title = it.title,
+                    backgroundImageUrl = it.backgroundImageUrl ?: "",
+                    collectionUrl = it.collectionUrl
             )
         }
     }

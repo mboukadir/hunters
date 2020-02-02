@@ -16,25 +16,21 @@
 
 package com.mb.hunters.data.repository.collection
 
+import com.google.common.truth.Truth.assertThat
 import com.mb.hunters.data.api.model.Collection
 import com.mb.hunters.data.database.entity.CollectionEntity
 import com.mb.hunters.data.repository.collection.local.CollectionLocalDataSource
 import com.mb.hunters.data.repository.collection.remote.CollectionRemoteDataSource
-import io.reactivex.Single
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import com.mb.hunters.test.TestDispatcherProvider
 import kotlinx.coroutines.test.runBlockingTest
-import org.hamcrest.BaseMatcher
-import org.hamcrest.Description
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.BDDMockito.given
-import org.mockito.BDDMockito.then
+import org.mockito.BDDMockito.*
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
-@UseExperimental(ExperimentalCoroutinesApi::class)
 class CollectionDataRepositoryTest {
 
     @Mock
@@ -46,49 +42,39 @@ class CollectionDataRepositoryTest {
 
     @Before
     fun setup() {
-        dataRepository = CollectionDataRepository(localDataSource, remoteDataSource)
+        dataRepository = CollectionDataRepository(localDataSource, remoteDataSource, TestDispatcherProvider.dispatcherProvider)
     }
 
     @Test
     fun `Should save and return collection list received from remote data`() = runBlockingTest {
         // GIVEN
-        given(remoteDataSource.getCollections()).willReturn(Single.just(COLLECTIONS))
+        given(remoteDataSource.getCollections()).willReturn(COLLECTIONS)
+        given(localDataSource.save(COLLECTIONS_ENTITY_EXPECTED)).willAnswer { }
 
         // WHEN
-        val testObserver = dataRepository.getCollections().test()
+        val actual = dataRepository.getCollections()
 
         // THEN
         then(localDataSource).should().save(COLLECTIONS_ENTITY_EXPECTED)
 
-        testObserver.assertComplete().assertValue {
-            it.containsAll(COLLECTIONS_ENTITY_EXPECTED)
-        }
+        assertThat(actual).containsExactlyElementsIn(COLLECTIONS_ENTITY_EXPECTED)
     }
 
     @Test
-    fun `Should return local collection when remote source return error`() = runBlockingTest {
-        // GIVEN
-        given(remoteDataSource.getCollections()).willReturn(Single.error(Exception()))
-        given(localDataSource.getCollections()).willReturn(COLLECTIONS_ENTITY_EXPECTED)
+    fun `Should return local collection when remote source return error`() {
+        runBlockingTest {
+            // GIVEN
+            given(remoteDataSource.getCollections()).willAnswer {
+                Throwable()
+            }
+            given(localDataSource.getCollections()).willReturn(COLLECTIONS_ENTITY_EXPECTED)
 
-        // WHEN
-        val testObserver = dataRepository.getCollections().test()
+            // WHEN
+            val actual = dataRepository.getCollections()
 
-        // THEN
-        then(localDataSource).should().getCollections()
-
-        testObserver.assertNoErrors().assertComplete().assertValue {
-            it.containsAll(COLLECTIONS_ENTITY_EXPECTED)
-        }
-    }
-
-    class HasItems<T>(private val list: T) : BaseMatcher<T>() where T : List<*> {
-        override fun describeTo(description: Description?) {
-        }
-
-        override fun matches(item: Any?): Boolean {
-
-            return list.containsAll((item as T))
+            // THEN
+            then(localDataSource).should().getCollections()
+            assertThat(actual).containsExactlyElementsIn(COLLECTIONS_ENTITY_EXPECTED)
         }
     }
 
