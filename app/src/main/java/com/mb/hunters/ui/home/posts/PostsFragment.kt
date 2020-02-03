@@ -22,49 +22,40 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.observe
 import com.mb.hunters.R
 import com.mb.hunters.ui.base.BaseFragment
 import com.mb.hunters.ui.base.Navigator
 import com.mb.hunters.ui.common.EndlessRecyclerViewScrollListener
 import kotlinx.android.synthetic.main.home_post_fragment_list.*
 import kotlinx.android.synthetic.main.home_post_fragment_list.view.*
-import timber.log.Timber
 import javax.inject.Inject
 
 class PostsFragment : BaseFragment(), PostAdapter.ItemActionListener {
 
-    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
-    @Inject lateinit var navigator: Navigator
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+    @Inject
+    lateinit var navigator: Navigator
 
     private lateinit var postAdapter: PostAdapter
-    private lateinit var postViewModel: PostsViewModel
+    private val postViewModel: PostsViewModel by viewModels { viewModelFactory }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        return inflater.inflate(R.layout.home_post_fragment_list, container, false)
+    }
 
-        Timber.d("OnCreatView")
-
-        val view = inflater.inflate(R.layout.home_post_fragment_list, container, false)
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         setupToolbar(view)
 
         setupRecyclerView(view)
-        return view
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        Timber.d("onActivityCreated")
-
-        postViewModel = ViewModelProviders.of(this, viewModelFactory)
-                .get(PostsViewModel::class.java)
 
         observe()
 
@@ -76,22 +67,16 @@ class PostsFragment : BaseFragment(), PostAdapter.ItemActionListener {
     }
 
     private fun observe() {
-        with(postViewModel) {
 
-            morePosts.observe(this@PostsFragment, Observer {
-                it?.let {
-                    postAdapter.finishedLoadingMore()
-                    postAdapter.showMore(it)
-                }
-            })
+        postViewModel.morePosts.observe(this) {
+            postAdapter.finishedLoadingMore()
+            postAdapter.showMore(it)
+        }
 
-            toDayPosts.observe(this@PostsFragment, Observer {
-                it?.let {
-                    postAdapter.update(it)
-                    loading.visibility = View.GONE
-                    postRecyclerView.visibility = View.VISIBLE
-                }
-            })
+        postViewModel.toDayPosts.observe(this) {
+            postAdapter.update(it)
+            loading.visibility = View.GONE
+            postRecyclerView.visibility = View.VISIBLE
         }
     }
 
@@ -111,7 +96,7 @@ class PostsFragment : BaseFragment(), PostAdapter.ItemActionListener {
             adapter = this@PostsFragment.postAdapter
             addItemDecoration(androidx.recyclerview.widget.DividerItemDecoration(context, androidx.recyclerview.widget.DividerItemDecoration.VERTICAL))
             addOnScrollListener(EndlessRecyclerViewScrollListener(
-                layoutManager as androidx.recyclerview.widget.LinearLayoutManager
+                    layoutManager as androidx.recyclerview.widget.LinearLayoutManager
             ) { _: Int, recyclerView: androidx.recyclerview.widget.RecyclerView ->
                 recyclerView.post {
                     if (postAdapter.showLoadingMore.not()) {

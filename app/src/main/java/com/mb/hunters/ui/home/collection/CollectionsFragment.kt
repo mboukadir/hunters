@@ -21,8 +21,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.snackbar.Snackbar
 import com.mb.hunters.R
@@ -37,15 +38,8 @@ class CollectionsFragment : BaseFragment() {
     lateinit var navigator: Navigator
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var collectionsViewModel: CollectionsViewModel
+    private val collectionsViewModel: CollectionsViewModel by viewModels { viewModelFactory }
     private lateinit var collectionAdapter: CollectionsAdapter
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        collectionsViewModel = ViewModelProvider(this, viewModelFactory).get(
-            CollectionsViewModel::class.java
-        )
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,6 +53,22 @@ class CollectionsFragment : BaseFragment() {
         homeCollectionSwipeRefreshLayout.setOnRefreshListener {
             collectionsViewModel.loadCollections()
         }
+
+        collectionsViewModel.errorMessage.observe(this) {
+            it?.let {
+                Snackbar.make(this.view!!, it, Snackbar.LENGTH_LONG).show()
+            }
+        }
+
+        collectionsViewModel.collections.observe(this) {
+                it?.let {
+                    collectionAdapter.render(it)
+                    loading.visibility = View.GONE
+                    collectionRecyclerView.visibility = View.VISIBLE
+                }
+        }
+
+        collectionsViewModel.loadCollections()
     }
 
     private fun setupRecyclerView() {
@@ -68,26 +78,6 @@ class CollectionsFragment : BaseFragment() {
             adapter = collectionAdapter
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        collectionsViewModel.errorMessage.observe(this@CollectionsFragment, Observer {
-            it?.let {
-                Snackbar.make(this.view!!, it, Snackbar.LENGTH_LONG).show()
-            }
-        })
-
-        collectionsViewModel.collections.observe(this, Observer {
-            it?.let {
-                collectionAdapter.render(it)
-                loading.visibility = View.GONE
-                collectionRecyclerView.visibility = View.VISIBLE
-            }
-        })
-
-        collectionsViewModel.loadCollections()
     }
 
     companion object {

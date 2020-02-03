@@ -16,9 +16,8 @@
 
 package com.mb.hunters.ui.home.collection
 
+import com.google.common.truth.Truth.assertThat
 import com.mb.hunters.data.database.entity.CollectionEntity
-import org.hamcrest.Matchers.equalTo
-import org.junit.Assert.assertThat
 import org.junit.Test
 
 class CollectionMapperTest {
@@ -30,7 +29,7 @@ class CollectionMapperTest {
 
         val result = collectionMapper.mapToUiModel(COLLECTION_ENTITY)
 
-        assertThat(result, equalTo(COLLECTION_MODEL))
+        assertThat(result).isEqualTo(COLLECTION_MODEL)
     }
 
     @Test
@@ -38,7 +37,7 @@ class CollectionMapperTest {
 
         val result = collectionMapper.mapToUiModel(COLLECTION_ENTITY_LIST)
 
-        assertThat(result, equalTo(COLLECTION_MODEL_LIST))
+        assertThat(result).containsExactlyElementsIn(COLLECTION_MODEL_LIST)
     }
 
     companion object {

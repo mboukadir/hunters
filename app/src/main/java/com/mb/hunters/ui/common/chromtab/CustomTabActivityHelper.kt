@@ -56,8 +56,10 @@ class CustomTabActivityHelper(
      * @param activity the activity that is connected to the service.
      */
     fun unbindCustomTabsService(activity: Activity) {
-        if (mConnection == null) return
-        activity.unbindService(mConnection)
+        mConnection?.let {
+            activity.unbindService(it)
+        }
+
         mClient = null
         mCustomTabsSession = null
         mConnection = null

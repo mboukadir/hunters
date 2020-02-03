@@ -33,7 +33,7 @@ class HomeActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.home_activity)
 
-        homeBottomNav.setOnNavigationItemSelectedListener({
+        homeBottomNav.setOnNavigationItemSelectedListener {
 
             when (it.itemId) {
                 R.id.home_nav_posts -> {
@@ -47,7 +47,7 @@ class HomeActivity : BaseActivity() {
                 }
                 else -> true
             }
-        })
+        }
 
         if (savedInstanceState == null) {
 

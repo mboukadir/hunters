@@ -63,9 +63,7 @@ class CollectionsViewModelTest {
         // GIVEN
         given(collectionRepository.getCollections()).willReturn(COLLECTION_ENTITY_LIST)
 
-        given(mapper.mapToUiModel(COLLECTION_ENTITY_LIST)).willReturn(
-            COLLECTION_MODEL_LIST
-        )
+        given(mapper.mapToUiModel(COLLECTION_ENTITY_LIST)).willReturn(COLLECTION_MODEL_LIST)
 
         // WHEN
         collectionsViewModel.loadCollections()
@@ -81,7 +79,7 @@ class CollectionsViewModelTest {
     fun `Should show error when load collection failed`() = runBlockingTest {
 
         // GIVEN
-        given(collectionRepository.getCollections()).willThrow(Exception("Error"))
+        given(collectionRepository.getCollections()).willAnswer { throw Exception("Error") }
 
         // WHEN
         collectionsViewModel.loadCollections()
