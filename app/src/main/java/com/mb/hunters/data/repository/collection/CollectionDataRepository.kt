@@ -21,27 +21,20 @@ import com.mb.hunters.data.api.model.Collection
 import com.mb.hunters.data.database.entity.CollectionEntity
 import com.mb.hunters.data.repository.collection.local.CollectionLocalDataSource
 import com.mb.hunters.data.repository.collection.remote.CollectionRemoteDataSource
-import kotlinx.coroutines.ensureActive
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
-import timber.log.Timber
 
 class CollectionDataRepository(
     private val localDataSource: CollectionLocalDataSource,
     private val remoteDataSource: CollectionRemoteDataSource,
     private val dispatchersProvider: DispatchersProvider
 ) : CollectionRepository {
+    override fun getCollections(): Flow<List<CollectionEntity>> =
+            localDataSource.getCollections()
 
-    override suspend fun getCollections(): List<CollectionEntity> = withContext(dispatchersProvider.computation) {
-        try {
-            mapToCollectionEntityList(remoteDataSource.getCollections())
-                    .also {
-                        localDataSource.save(it)
-                    }
-        } catch (e: Exception) {
-            Timber.e(e)
-            ensureActive().run {
-                localDataSource.getCollections()
-            }
+    override suspend fun syncCollections(): Unit = withContext(dispatchersProvider.computation) {
+        mapToCollectionEntityList(remoteDataSource.getCollections()).run {
+            localDataSource.save(this)
         }
     }
 

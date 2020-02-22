@@ -17,7 +17,9 @@
 package com.mb.hunters.data.repository.collection
 
 import com.mb.hunters.data.database.entity.CollectionEntity
+import kotlinx.coroutines.flow.Flow
 
 interface CollectionRepository {
-    suspend fun getCollections(): List<CollectionEntity>
+    fun getCollections(): Flow<List<CollectionEntity>>
+    suspend fun syncCollections()
 }

@@ -17,9 +17,8 @@
 package com.mb.hunters.data.repository.post
 
 import com.mb.hunters.data.database.entity.PostEntity
-import io.reactivex.Single
 
 interface PostRepository {
-    fun loadPosts(daysAgo: Long): Single<List<PostEntity>>
-    fun refreshPosts(daysAgo: Long): Single<List<PostEntity>>
+    suspend fun loadPosts(daysAgo: Long): List<PostEntity>
+    suspend fun refreshPosts(daysAgo: Long): List<PostEntity>
 }

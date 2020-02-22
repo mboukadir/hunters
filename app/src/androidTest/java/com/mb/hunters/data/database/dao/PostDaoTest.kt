@@ -20,8 +20,10 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.google.common.truth.Truth.*
 import com.mb.hunters.data.database.HuntersDatabase
 import com.mb.hunters.data.database.entity.PostEntity
+import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.BaseMatcher
 import org.hamcrest.Description
 import org.junit.After
@@ -56,7 +58,7 @@ class PostDaoTest {
     }
 
     @Test
-    fun insertAndGetPosts() {
+    fun insertAndGetPosts() = runBlockingTest {
 
         // GIVEN
         val posts = listOf(
@@ -72,16 +74,14 @@ class PostDaoTest {
         database.postDao().insert(posts)
 
         // Then
-        database.postDao()
+        val result = database.postDao()
                 .getPosts(TODAY)
-                .test()
-                .assertValue {
-                    it.size == 3
-                }
+
+        assertThat(result).containsExactlyElementsIn(listOf(POST, POST.copy(id = 2), POST.copy(id = 3)))
     }
 
     @Test
-    fun getCountWhenNotExistPostOlderThanGivenDate() {
+    fun getCountWhenNotExistPostOlderThanGivenDate() = runBlockingTest {
 
         // GIVEN
         val posts = listOf(
@@ -105,7 +105,7 @@ class PostDaoTest {
     }
 
     @Test
-    fun getCountWhenExistPostOlderThanGivenDate() {
+    fun getCountWhenExistPostOlderThanGivenDate() = runBlockingTest {
 
         // GIVEN
         val posts = listOf(

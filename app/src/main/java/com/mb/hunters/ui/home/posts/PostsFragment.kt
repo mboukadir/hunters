@@ -25,6 +25,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.mb.hunters.R
 import com.mb.hunters.ui.base.BaseFragment
 import com.mb.hunters.ui.base.Navigator
@@ -68,12 +69,12 @@ class PostsFragment : BaseFragment(), PostAdapter.ItemActionListener {
 
     private fun observe() {
 
-        postViewModel.morePosts.observe(this) {
+        postViewModel.morePosts.observe(viewLifecycleOwner) {
             postAdapter.finishedLoadingMore()
             postAdapter.showMore(it)
         }
 
-        postViewModel.toDayPosts.observe(this) {
+        postViewModel.toDayPosts.observe(viewLifecycleOwner) {
             postAdapter.update(it)
             loading.visibility = View.GONE
             postRecyclerView.visibility = View.VISIBLE
@@ -94,7 +95,7 @@ class PostsFragment : BaseFragment(), PostAdapter.ItemActionListener {
         root.postRecyclerView.apply {
             layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
             adapter = this@PostsFragment.postAdapter
-            addItemDecoration(androidx.recyclerview.widget.DividerItemDecoration(context, androidx.recyclerview.widget.DividerItemDecoration.VERTICAL))
+            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
             addOnScrollListener(EndlessRecyclerViewScrollListener(
                     layoutManager as androidx.recyclerview.widget.LinearLayoutManager
             ) { _: Int, recyclerView: androidx.recyclerview.widget.RecyclerView ->

@@ -20,16 +20,15 @@ import androidx.lifecycle.MutableLiveData
 import com.mb.hunters.common.dispatcher.DispatchersProvider
 import com.mb.hunters.data.repository.post.PostRepository
 import com.mb.hunters.ui.base.BaseViewModel
-import com.mb.hunters.common.rxscheduler.SchedulerProvider
 import dagger.Lazy
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
 class PostsViewModel @Inject constructor(
     private val mapper: PostMapper,
-    private val schedulerProvider: SchedulerProvider,
-    private val dispatchersProvider: DispatchersProvider,
-    private val postRepository: Lazy<PostRepository>
+    private val postRepository: Lazy<PostRepository>,
+    dispatchersProvider: DispatchersProvider
 
 ) : BaseViewModel(dispatchersProvider) {
 
@@ -41,17 +40,17 @@ class PostsViewModel @Inject constructor(
     }
 
     fun refreshToDayPost() {
-        disposables.add(postRepository.get()
-                .refreshPosts(0)
-                .map { postEntityList -> postEntityList.map { mapper.mapToUiModel(it) } }
-                .subscribeOn(schedulerProvider.io())
-                .observeOn(schedulerProvider.mainThread())
-                .subscribe({
-                    toDayPosts.value = it
-                }, {
-                    Timber.e(it)
-                })
-        )
+        viewModelScope.launch {
+            runCatching {
+                toDayPosts.value = postRepository.get()
+                        .refreshPosts(0)
+                        .map {
+                            mapper.mapToUiModel(it)
+                        }
+            }.onFailure {
+                Timber.e(it)
+            }
+        }
     }
 
     fun loadMore(daysAgo: Long) {
@@ -59,18 +58,16 @@ class PostsViewModel @Inject constructor(
     }
 
     private fun loadPosts(daysAgo: Long = 0, liveData: MutableLiveData<List<PostUiModel>>) {
-        disposables.add(postRepository.get()
-                .loadPosts(daysAgo)
-                .map { postEnityList ->
-                    postEnityList.map { mapper.mapToUiModel(it) }
-                }
-                .subscribeOn(schedulerProvider.io())
-                .observeOn(schedulerProvider.mainThread())
-                .subscribe({
-                    liveData.value = it
-                }, {
-                    Timber.e(it)
-                })
-        )
+        viewModelScope.launch {
+            runCatching {
+                liveData.value = postRepository.get()
+                        .loadPosts(daysAgo)
+                        .map {
+                            mapper.mapToUiModel(it)
+                        }
+            }.onFailure {
+                Timber.e(it)
+            }
+        }
     }
 }

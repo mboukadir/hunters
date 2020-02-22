@@ -21,18 +21,17 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.mb.hunters.data.database.entity.PostEntity
-import io.reactivex.Single
 import java.util.*
 
 @Dao
 interface PostDao {
 
     @Query(value = "SELECT * FROM posts WHERE day = :dayDate")
-    fun getPosts(dayDate: Date): Single<List<PostEntity>>
+    suspend fun getPosts(dayDate: Date): List<PostEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(posts: List<PostEntity>)
+    suspend fun insert(posts: List<PostEntity>)
 
     @Query(value = "SELECT count(*) FROM posts WHERE day < :date")
-    fun countPostOlderThan(date: Date): Int
+    suspend fun countPostOlderThan(date: Date): Int
 }

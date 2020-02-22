@@ -25,14 +25,17 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.mb.hunters.R
 import com.mb.hunters.ui.base.BaseFragment
 import com.mb.hunters.ui.base.Navigator
 import kotlinx.android.synthetic.main.home_collection_fragment_list.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
 
-class CollectionsFragment : BaseFragment() {
+@ExperimentalCoroutinesApi
+class CollectionsFragment : BaseFragment(), CollectionsAdapter.ItemActionListener {
 
     @Inject
     lateinit var navigator: Navigator
@@ -51,30 +54,27 @@ class CollectionsFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         homeCollectionSwipeRefreshLayout.setOnRefreshListener {
-            collectionsViewModel.loadCollections()
+            collectionsViewModel.syncCollections()
         }
 
-        collectionsViewModel.errorMessage.observe(this) {
-            it?.let {
-                Snackbar.make(this.view!!, it, Snackbar.LENGTH_LONG).show()
+        collectionsViewModel.errorMessage.observe(viewLifecycleOwner) {
+            Snackbar.make(view, it, Snackbar.LENGTH_LONG).show()
+        }
+
+        collectionsViewModel.collections.observe(viewLifecycleOwner) {
+            collectionAdapter.submitList(it) {
+                loading.visibility = View.GONE
+                collectionRecyclerView.visibility = View.VISIBLE
             }
         }
 
-        collectionsViewModel.collections.observe(this) {
-                it?.let {
-                    collectionAdapter.render(it)
-                    loading.visibility = View.GONE
-                    collectionRecyclerView.visibility = View.VISIBLE
-                }
-        }
-
-        collectionsViewModel.loadCollections()
+        collectionsViewModel.syncCollections()
     }
 
     private fun setupRecyclerView() {
-        collectionAdapter = CollectionsAdapter()
+        collectionAdapter = CollectionsAdapter(this)
         collectionRecyclerView.apply {
-            layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
+            layoutManager = LinearLayoutManager(context)
             adapter = collectionAdapter
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
@@ -82,8 +82,11 @@ class CollectionsFragment : BaseFragment() {
 
     companion object {
         fun newInstance(): Fragment {
-
             return CollectionsFragment()
         }
+    }
+
+    override fun onItemClick(item: CollectionUiModel) {
+        collectionsViewModel.onClicked()
     }
 }

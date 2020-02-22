@@ -16,18 +16,23 @@
 
 package com.mb.hunters.data.repository.post.remote
 
-import com.mb.hunters.common.dispatcher.DispatchersProvider
-import com.mb.hunters.data.api.PostService
+import com.mb.hunters.data.api.model.PostsResponse
 import com.mb.hunters.data.database.entity.PostEntity
-import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class PostRemoteDataSource(
-    private val postService: PostService,
-    private val converter: PostsResponseConverter,
-    private val dispatchersProvider: DispatchersProvider
-) {
-
-    suspend fun getPosts(page: Long): List<PostEntity> = withContext(dispatchersProvider.computation) {
-        converter.convert(postService.getPostsBy(page))
+class PostsResponseConverter @Inject constructor() {
+    fun convert(postsResponse: PostsResponse): List<PostEntity> {
+        return postsResponse.postResponses.map {
+            PostEntity(it.id,
+                    it.name,
+                    it.tagline,
+                    it.redirectUrl,
+                    it.votesCount,
+                    it.commentsCount,
+                    it.day,
+                    it.createdAt,
+                    it.screenshotUrl.smallImgUrl,
+                    it.thumbnail.imageUrl)
+        }
     }
 }
