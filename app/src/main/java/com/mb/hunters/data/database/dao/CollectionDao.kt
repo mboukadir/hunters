@@ -21,12 +21,13 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.mb.hunters.data.database.entity.CollectionEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CollectionDao {
 
     @Query("SELECT * FROM collections")
-    suspend fun getCollections(): List<CollectionEntity>
+    fun getCollections(): Flow<List<CollectionEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(collections: List<CollectionEntity>)

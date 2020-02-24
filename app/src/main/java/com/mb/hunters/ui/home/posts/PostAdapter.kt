@@ -150,11 +150,11 @@ class PostAdapter(val itemActionListener: ItemActionListener) :
         BaseViewHolder(parent, layoutResId) {
 
         init {
-            itemView.setOnClickListener({
+            itemView.setOnClickListener {
                 if (adapterPosition != NO_POSITION) {
                     itemActionListener.onItemClick(items[adapterPosition])
                 }
-            })
+            }
         }
 
         fun bind(post: PostUiModel) {

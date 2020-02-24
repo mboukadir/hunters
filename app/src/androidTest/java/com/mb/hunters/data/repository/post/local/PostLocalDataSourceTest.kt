@@ -20,9 +20,11 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.google.common.truth.Truth
 import com.mb.hunters.data.database.HuntersDatabase
 import com.mb.hunters.data.database.entity.PostEntity
 import com.mb.hunters.ui.common.extensions.dateAt
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -56,7 +58,7 @@ class PostLocalDataSourceTest {
     }
 
     @Test
-    fun getNextDayPostWhenPostNotExistForGivenDay() {
+    fun getNextDayPostWhenPostNotExistForGivenDay() = runBlockingTest {
 
         // GIVEN
         val posts = listOf(
@@ -71,11 +73,8 @@ class PostLocalDataSourceTest {
         // When
         postLocalDataRepository.savePosts(posts)
 
-        postLocalDataRepository.getPostsAtDaysAgoOrOlder(1)
-                .test()
-                .assertValue {
-                    it.containsAll(POSTS)
-                }
+        val actual = postLocalDataRepository.getPostsAtDaysAgoOrOlder(1)
+        Truth.assertThat(actual).containsExactlyElementsIn(POSTS)
     }
 
     companion object {

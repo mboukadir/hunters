@@ -32,5 +32,4 @@ data class PostEntity(
     val createdAt: Date,
     val screenshotUrl: String,
     val thumbnailUrl: String
-
 )

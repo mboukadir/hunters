@@ -18,14 +18,13 @@ package com.mb.hunters.data.repository.collection.local
 
 import com.mb.hunters.data.database.dao.CollectionDao
 import com.mb.hunters.data.database.entity.CollectionEntity
+import kotlinx.coroutines.flow.Flow
 
 class CollectionLocalDataSource(private val collectionDao: CollectionDao) {
 
-    suspend fun save(collectionEntityList: List<CollectionEntity>) {
-        collectionDao.insert(collectionEntityList)
-    }
+    suspend fun save(collectionEntityList: List<CollectionEntity>) =
+            collectionDao.insert(collectionEntityList)
 
-    suspend fun getCollections(): List<CollectionEntity> {
-        return collectionDao.getCollections()
-    }
+    fun getCollections(): Flow<List<CollectionEntity>> =
+            collectionDao.getCollections()
 }

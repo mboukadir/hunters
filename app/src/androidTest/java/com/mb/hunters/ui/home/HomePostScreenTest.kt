@@ -26,7 +26,6 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.recyclerview.widget.RecyclerView
 import com.mb.hunters.R
 import com.mb.hunters.R.id
 import com.mb.hunters.TestApplication
@@ -34,7 +33,7 @@ import com.mb.hunters.data.database.entity.PostEntity
 import com.mb.hunters.test.RecyclerViewMatcher
 import com.mb.hunters.ui.home.posts.PostMapper
 import com.mb.hunters.ui.home.posts.PostUiModel
-import io.reactivex.Single
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Ignore
 import org.junit.Rule
@@ -56,26 +55,28 @@ class HomePostScreenTest {
     @Before
     fun setup() {
 
-        `when`(TestApplication.appComponent().postRepository().loadPosts(
-                AdditionalMatchers.not(ArgumentMatchers.eq(0L))))
-                .thenReturn(Single.just<List<PostEntity>>(emptyList()))
+        runBlockingTest {
+            `when`(TestApplication.appComponent().postRepository().loadPosts(
+                    AdditionalMatchers.not(ArgumentMatchers.eq(0L))))
+                    .thenReturn(emptyList())
+        }
     }
 
     @Ignore
     @Test
-    fun activityLaunches() {
+    fun activityLaunches() = runBlockingTest {
 
         `when`(TestApplication.appComponent().postRepository().loadPosts(0))
-                .thenReturn(Single.just<List<PostEntity>>(listOf(POST)))
+                .thenReturn(listOf(POST))
 
         activity.launchActivity(null)
     }
 
     @Ignore
     @Test
-    fun postsDisplay() {
+    fun postsDisplay() = runBlockingTest {
         `when`(TestApplication.appComponent().postRepository().loadPosts(0))
-                .thenReturn(Single.just<List<PostEntity>>(listOf(POST)))
+                .thenReturn((listOf(POST)))
 
         activity.launchActivity(null)
 
@@ -84,10 +85,10 @@ class HomePostScreenTest {
 
     @Ignore
     @Test
-    fun postsAreScrollable() {
+    fun postsAreScrollable() = runBlockingTest {
 
         `when`(TestApplication.appComponent().postRepository().loadPosts(0))
-                .thenReturn(Single.just<List<PostEntity>>(POSTS))
+                .thenReturn(POSTS)
 
         activity.launchActivity(null)
 

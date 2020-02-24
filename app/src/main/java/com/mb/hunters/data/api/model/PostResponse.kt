@@ -19,7 +19,7 @@ package com.mb.hunters.data.api.model
 import com.squareup.moshi.Json
 import java.util.*
 
-data class Post(
+data class PostResponse(
     val id: Long,
     val name: String,
     val tagline: String,

@@ -19,12 +19,11 @@ package com.mb.hunters.data.repository.post.local
 import com.mb.hunters.data.database.dao.PostDao
 import com.mb.hunters.data.database.entity.PostEntity
 import com.mb.hunters.ui.common.extensions.dateAt
-import io.reactivex.Single
 import java.util.*
 
 class PostLocalDataSource(private val postDao: PostDao) {
 
-    fun savePosts(posts: List<PostEntity>) {
+    suspend fun savePosts(posts: List<PostEntity>) {
         postDao.insert(posts)
     }
 
@@ -33,19 +32,16 @@ class PostLocalDataSource(private val postDao: PostDao) {
      * If there are no posts for the given day we are looking for posts from the day before
      */
 
-    fun getPostsAtDaysAgoOrOlder(daysAgo: Long): Single<List<PostEntity>> {
+    suspend fun getPostsAtDaysAgoOrOlder(daysAgo: Long): List<PostEntity> {
         val date = dateAt(daysAgo)
-        return postDao.getPosts(date)
-                .flatMap {
-
-                    // If there are no posts for the given day we are looking for posts from the day before
-                    if (it.isEmpty() && existPostsAt(date)) {
-                        getPostsAtDaysAgoOrOlder(daysAgo + 1)
-                    } else {
-                        Single.just(it)
-                    }
-                }
+        val localPost = postDao.getPosts(date)
+        // If there are no posts for the given day we are looking for posts from the day before
+        return if (localPost.isEmpty() && existPostsBefore(date)) {
+            getPostsAtDaysAgoOrOlder(daysAgo + 1)
+        } else {
+            localPost
+        }
     }
 
-    private fun existPostsAt(date: Date) = postDao.countPostOlderThan(date) > 0
+    private suspend fun existPostsBefore(date: Date) = postDao.countPostOlderThan(date) > 0
 }

@@ -31,6 +31,7 @@ import com.mb.hunters.data.repository.post.PostRepository
 import com.mb.hunters.data.repository.post.PostRepositoryData
 import com.mb.hunters.data.repository.post.local.PostLocalDataSource
 import com.mb.hunters.data.repository.post.remote.PostRemoteDataSource
+import com.mb.hunters.data.repository.post.remote.PostsResponseConverter
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -49,11 +50,14 @@ class DataModule {
     @Singleton
     fun providePostRepository(
         postService: PostService,
+        converter: PostsResponseConverter,
+        dispatchersProvider: DispatchersProvider,
         huntersDatabase: HuntersDatabase
     ): PostRepository {
         return PostRepositoryData(
-                PostRemoteDataSource(postService),
-                PostLocalDataSource(huntersDatabase.postDao())
+                PostRemoteDataSource(postService, converter, dispatchersProvider),
+                PostLocalDataSource(huntersDatabase.postDao()),
+                dispatchersProvider
         )
     }
 

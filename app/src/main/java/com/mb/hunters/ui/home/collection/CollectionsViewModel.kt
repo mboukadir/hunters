@@ -16,40 +16,43 @@
 
 package com.mb.hunters.ui.home.collection
 
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.asLiveData
 import com.mb.hunters.common.dispatcher.DispatchersProvider
 import com.mb.hunters.data.repository.collection.CollectionRepository
 import com.mb.hunters.ui.base.BaseViewModel
 import com.mb.hunters.ui.common.SingleLiveEvent
-import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.ensureActive
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 class CollectionsViewModel @Inject constructor(
-    private val dispatchersProvider: DispatchersProvider,
+    dispatchersProvider: DispatchersProvider,
     private val mapper: CollectionMapper,
     private val collectionRepository: CollectionRepository
 ) : BaseViewModel(dispatchersProvider) {
 
-    val collections = MutableLiveData<List<CollectionUiModel>>()
     val errorMessage = SingleLiveEvent<String>()
+    val collections = collectionRepository.getCollections()
+            .map { mapper.mapToUiModel(it) }
+            .flowOn(dispatchersProvider.computation)
+            .asLiveData(viewModelScope.coroutineContext)
 
-    fun loadCollections() {
-
-        viewModelScope.launch {
-            runCatching {
-                mapper.mapToUiModel(collectionRepository.getCollections())
-            }.fold({
-                collections.value = it
-            }, {
-                showErrorIfNeeded(it)
-            })
-        }
+    fun onClicked() {
     }
 
-    private fun showErrorIfNeeded(e: Throwable) {
-        if (e !is CancellationException) {
-            errorMessage.value = e.message
+    fun syncCollections() {
+        viewModelScope.launch {
+            runCatching {
+                collectionRepository.syncCollections()
+            }.onFailure { throwable ->
+                ensureActive().run {
+                    errorMessage.value = throwable.message
+                }
+            }
         }
     }
 }

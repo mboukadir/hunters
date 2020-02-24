@@ -22,6 +22,7 @@ import com.mb.hunters.data.database.entity.CollectionEntity
 import com.mb.hunters.data.repository.collection.local.CollectionLocalDataSource
 import com.mb.hunters.data.repository.collection.remote.CollectionRemoteDataSource
 import com.mb.hunters.test.TestDispatcherProvider
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Test
@@ -52,25 +53,20 @@ class CollectionDataRepositoryTest {
         given(localDataSource.save(COLLECTIONS_ENTITY_EXPECTED)).willAnswer { }
 
         // WHEN
-        val actual = dataRepository.getCollections()
+        dataRepository.syncCollections()
 
         // THEN
         then(localDataSource).should().save(COLLECTIONS_ENTITY_EXPECTED)
-
-        assertThat(actual).containsExactlyElementsIn(COLLECTIONS_ENTITY_EXPECTED)
     }
 
     @Test
     fun `Should return local collection when remote source return error`() {
         runBlockingTest {
             // GIVEN
-            given(remoteDataSource.getCollections()).willAnswer {
-                Throwable()
-            }
-            given(localDataSource.getCollections()).willReturn(COLLECTIONS_ENTITY_EXPECTED)
+            given(localDataSource.getCollections()).willReturn(flowOf(COLLECTIONS_ENTITY_EXPECTED))
 
             // WHEN
-            val actual = dataRepository.getCollections()
+            val actual = dataRepository.getCollections().first()
 
             // THEN
             then(localDataSource).should().getCollections()

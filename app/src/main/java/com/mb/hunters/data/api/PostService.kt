@@ -17,12 +17,11 @@
 package com.mb.hunters.data.api
 
 import com.mb.hunters.data.api.model.PostsResponse
-import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface PostService {
 
     @GET("v1/posts")
-    fun getPostsBy(@Query("days_ago") page: Long): Single<PostsResponse>
+    suspend fun getPostsBy(@Query("days_ago") page: Long): PostsResponse
 }

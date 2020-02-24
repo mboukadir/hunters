@@ -16,4 +16,9 @@
 
 package com.mb.hunters.data.api.model
 
-data class PostsResponse(val posts: List<Post>)
+import com.squareup.moshi.Json
+
+data class PostsResponse(
+    @Json(name = "posts")
+    val postResponses: List<PostResponse>
+)

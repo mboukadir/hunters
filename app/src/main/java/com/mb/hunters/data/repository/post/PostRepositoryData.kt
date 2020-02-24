@@ -16,26 +16,33 @@
 
 package com.mb.hunters.data.repository.post
 
+import com.mb.hunters.common.dispatcher.DispatchersProvider
 import com.mb.hunters.data.database.entity.PostEntity
 import com.mb.hunters.data.repository.post.local.PostLocalDataSource
 import com.mb.hunters.data.repository.post.remote.PostRemoteDataSource
-import io.reactivex.Single
+import kotlinx.coroutines.*
 
 class PostRepositoryData(
     private val postRemoteDataSource: PostRemoteDataSource,
-    private val postLocalDataSource: PostLocalDataSource
-) :
-        PostRepository {
+    private val postLocalDataSource: PostLocalDataSource,
+    private val dispatchersProvider: DispatchersProvider
+) : PostRepository {
 
-    override fun loadPosts(daysAgo: Long): Single<List<PostEntity>> {
-
-        return postRemoteDataSource.getPosts(daysAgo)
-                .doOnSuccess { postLocalDataSource.savePosts(it) }
-                .onErrorResumeNext { postLocalDataSource.getPostsAtDaysAgoOrOlder(daysAgo) }
+    override suspend fun loadPosts(daysAgo: Long): List<PostEntity> = withContext(dispatchersProvider.computation) {
+        runCatching {
+            postRemoteDataSource.getPosts(daysAgo).also {
+                postLocalDataSource.savePosts(it)
+            }
+        }.getOrElse {
+            ensureActive().run {
+                postLocalDataSource.getPostsAtDaysAgoOrOlder(daysAgo)
+            }
+        }
     }
 
-    override fun refreshPosts(daysAgo: Long): Single<List<PostEntity>> {
-        return postRemoteDataSource.getPosts(daysAgo)
-                .doOnSuccess { postLocalDataSource.savePosts(it) }
+    override suspend fun refreshPosts(daysAgo: Long): List<PostEntity> {
+        return postRemoteDataSource.getPosts(daysAgo).also {
+            postLocalDataSource.savePosts(it)
+        }
     }
 }
