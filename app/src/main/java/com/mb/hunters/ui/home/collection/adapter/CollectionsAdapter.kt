@@ -14,25 +14,30 @@
  * limitations under the License.
  */
 
-package com.mb.hunters.ui.home.collection
+package com.mb.hunters.ui.home.collection.adapter
 
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.mb.hunters.R
 import com.mb.hunters.ui.base.BaseViewHolder
-import com.mb.hunters.ui.home.collection.CollectionsAdapter.CollectionViewHolder
+import com.mb.hunters.ui.home.collection.model.CollectionUiModel
+import com.mb.hunters.ui.home.collection.adapter.CollectionsAdapter.CollectionViewHolder
 import kotlinx.android.synthetic.main.home_collection_list_item.view.*
 import timber.log.Timber
 
-class CollectionsAdapter(private val actionListener: ItemActionListener) : ListAdapter<CollectionUiModel, CollectionViewHolder>(DIFF_CALLBACK) {
+class CollectionsAdapter(private val actionListener: ItemActionListener) : PagingDataAdapter<CollectionUiModel, CollectionViewHolder>(
+    DIFF_CALLBACK
+) {
 
     override fun onBindViewHolder(holder: CollectionViewHolder, position: Int) {
         Timber.d("Position = $position")
-        holder.bind(getItem(position))
+        getItem(position)?.let {
+            holder.bind(it)
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CollectionViewHolder {
@@ -45,7 +50,9 @@ class CollectionsAdapter(private val actionListener: ItemActionListener) : ListA
         init {
             itemView.setOnClickListener {
                 if (adapterPosition != RecyclerView.NO_POSITION) {
-                    actionListener.onItemClick(getItem(adapterPosition))
+                    getItem(adapterPosition)?.let {
+                        actionListener.onItemClick(it)
+                    }
                 }
             }
         }

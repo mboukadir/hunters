@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.mb.hunters.ui.home.collection
+package com.mb.hunters.ui.home.collection.model
 
 data class CollectionUiModel(
     val id: Long,

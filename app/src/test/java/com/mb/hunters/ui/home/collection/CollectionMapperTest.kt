@@ -18,11 +18,14 @@ package com.mb.hunters.ui.home.collection
 
 import com.google.common.truth.Truth.assertThat
 import com.mb.hunters.data.database.entity.CollectionEntity
+import com.mb.hunters.ui.home.collection.model.CollectionMapper
+import com.mb.hunters.ui.home.collection.model.CollectionUiModel
 import org.junit.Test
 
 class CollectionMapperTest {
 
-    val collectionMapper = CollectionMapper()
+    val collectionMapper =
+        CollectionMapper()
 
     @Test
     fun mapCollectionEntityToCollectionUiModel() {
@@ -50,13 +53,14 @@ class CollectionMapperTest {
                 backgroundImageUrl = "backgroundImageUrl"
         )
 
-        val COLLECTION_MODEL = CollectionUiModel(
+        val COLLECTION_MODEL =
+            CollectionUiModel(
                 id = COLLECTION_ENTITY.id,
                 name = COLLECTION_ENTITY.name,
                 title = COLLECTION_ENTITY.title,
                 collectionUrl = COLLECTION_ENTITY.collectionUrl,
                 backgroundImageUrl = COLLECTION_ENTITY.backgroundImageUrl
-        )
+            )
 
         val COLLECTION_ENTITY_LIST = listOf(
                 CollectionsViewModelTest.COLLECTION_ENTITY,

@@ -24,6 +24,8 @@ import com.mb.hunters.data.repository.collection.CollectionRepository
 import com.mb.hunters.test.MainCoroutineRule
 import com.mb.hunters.test.TestDispatcherProvider
 import com.mb.hunters.test.observeForTesting
+import com.mb.hunters.ui.home.collection.model.CollectionMapper
+import com.mb.hunters.ui.home.collection.model.CollectionUiModel
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.then
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -101,13 +103,14 @@ class CollectionsViewModelTest {
                 backgroundImageUrl = "backgroundImageUrl"
         )
 
-        val COLLECTION_MODEL = CollectionUiModel(
+        val COLLECTION_MODEL =
+            CollectionUiModel(
                 id = COLLECTION_ENTITY.id,
                 name = COLLECTION_ENTITY.name,
                 title = COLLECTION_ENTITY.title,
                 collectionUrl = COLLECTION_ENTITY.collectionUrl,
                 backgroundImageUrl = COLLECTION_ENTITY.backgroundImageUrl
-        )
+            )
 
         val COLLECTION_ENTITY_LIST = listOf(
                 COLLECTION_ENTITY,

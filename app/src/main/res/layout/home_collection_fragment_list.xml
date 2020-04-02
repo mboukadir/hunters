@@ -30,36 +30,28 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
-        <FrameLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/collectionRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            tools:context="com.mb.hunters.ui.home.collection.CollectionsFragment"
+            tools:listitem="@layout/home_post_list_item"
+            tools:visibility="visible"
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/collectionRecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="gone"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                tools:context="com.mb.hunters.ui.home.collection.CollectionsFragment"
-                tools:listitem="@layout/home_post_list_item"
-                tools:visibility="visible"
+            />
 
-                />
-
-            <ProgressBar xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/loading"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="48dp"
-                android:layout_marginBottom="48dp"
-                android:indeterminate="true"
-                android:indeterminateTint="?attr/colorAccent"
-                android:visibility="visible"
-                tools:visibility="gone" />
-
-
-        </FrameLayout>
+        <ProgressBar
+            android:id="@+id/loading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="48dp"
+            android:layout_marginBottom="48dp"
+            android:indeterminate="true"
+            android:indeterminateTint="?attr/colorAccent"
+            android:visibility="visible"
+            tools:visibility="gone" />
 
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

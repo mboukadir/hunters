@@ -19,6 +19,7 @@ package com.mb.hunters.data.api
 import okhttp3.Interceptor
 import okhttp3.Interceptor.Chain
 import okhttp3.Response
+import java.lang.IllegalStateException
 
 class AuthInterceptor(private val accessToken: String) : Interceptor {
 

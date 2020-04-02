@@ -20,13 +20,14 @@ import com.mb.hunters.common.dispatcher.DispatchersProvider
 import com.mb.hunters.data.api.CollectionService
 import com.mb.hunters.data.api.model.Collection
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class CollectionRemoteDataSource(
+class CollectionRemoteDataSource @Inject constructor(
     private val collectionService: CollectionService,
     private val dispatchersProvider: DispatchersProvider
 ) {
 
     suspend fun getCollections(): List<Collection> = withContext(dispatchersProvider.computation) {
-        collectionService.getCollections().collections
+        collectionService.getCollections(1).collections
     }
 }

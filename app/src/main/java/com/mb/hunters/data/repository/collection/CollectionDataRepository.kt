@@ -16,6 +16,7 @@
 
 package com.mb.hunters.data.repository.collection
 
+import androidx.paging.PagingData
 import com.mb.hunters.common.dispatcher.DispatchersProvider
 import com.mb.hunters.data.api.model.Collection
 import com.mb.hunters.data.database.entity.CollectionEntity

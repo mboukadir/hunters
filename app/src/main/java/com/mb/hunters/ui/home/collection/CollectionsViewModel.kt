@@ -18,9 +18,11 @@ package com.mb.hunters.ui.home.collection
 
 import androidx.lifecycle.asLiveData
 import com.mb.hunters.common.dispatcher.DispatchersProvider
+import com.mb.hunters.data.repository.collection.CollectionPagingRepository
 import com.mb.hunters.data.repository.collection.CollectionRepository
 import com.mb.hunters.ui.base.BaseViewModel
 import com.mb.hunters.ui.common.SingleLiveEvent
+import com.mb.hunters.ui.home.collection.model.CollectionMapper
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.flowOn
@@ -32,14 +34,17 @@ import javax.inject.Inject
 class CollectionsViewModel @Inject constructor(
     dispatchersProvider: DispatchersProvider,
     private val mapper: CollectionMapper,
-    private val collectionRepository: CollectionRepository
+    private val collectionRepository: CollectionRepository,
+    private val collectionPagingRepository: CollectionPagingRepository
 ) : BaseViewModel(dispatchersProvider) {
 
     val errorMessage = SingleLiveEvent<String>()
-    val collections = collectionRepository.getCollections()
-            .map { mapper.mapToUiModel(it) }
-            .flowOn(dispatchersProvider.computation)
-            .asLiveData(viewModelScope.coroutineContext)
+    val collections = collectionPagingRepository.getCollections()
+        .map { paggingData ->
+            paggingData.map { mapper.mapToUiModel(it) }
+        }
+        .flowOn(dispatchersProvider.computation)
+        .asLiveData(viewModelScope.coroutineContext)
 
     fun onClicked() {
     }

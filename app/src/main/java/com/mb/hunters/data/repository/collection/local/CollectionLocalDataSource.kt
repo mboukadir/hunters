@@ -16,11 +16,14 @@
 
 package com.mb.hunters.data.repository.collection.local
 
+import com.mb.hunters.data.database.HuntersDatabase
 import com.mb.hunters.data.database.dao.CollectionDao
 import com.mb.hunters.data.database.entity.CollectionEntity
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class CollectionLocalDataSource(private val collectionDao: CollectionDao) {
+class CollectionLocalDataSource @Inject constructor(huntersDatabase: HuntersDatabase) {
+    private val collectionDao = huntersDatabase.collectionDao()
 
     suspend fun save(collectionEntityList: List<CollectionEntity>) =
             collectionDao.insert(collectionEntityList)

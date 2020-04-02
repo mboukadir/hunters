@@ -23,15 +23,22 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.mb.hunters.R
 import com.mb.hunters.ui.base.BaseFragment
 import com.mb.hunters.ui.base.Navigator
+import com.mb.hunters.ui.home.collection.adapter.CollectionLoadStateAdapter
+import com.mb.hunters.ui.home.collection.adapter.CollectionsAdapter
+import com.mb.hunters.ui.home.collection.model.CollectionUiModel
 import kotlinx.android.synthetic.main.home_collection_fragment_list.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
@@ -53,31 +60,54 @@ class CollectionsFragment : BaseFragment(), CollectionsAdapter.ItemActionListene
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
-        homeCollectionSwipeRefreshLayout.setOnRefreshListener {
-            collectionsViewModel.syncCollections()
-        }
 
         collectionsViewModel.errorMessage.observe(viewLifecycleOwner) {
             Snackbar.make(view, it, Snackbar.LENGTH_LONG).show()
         }
 
+
         collectionsViewModel.collections.observe(viewLifecycleOwner) {
-            collectionAdapter.submitList(it) {
-                loading.visibility = View.GONE
-                collectionRecyclerView.visibility = View.VISIBLE
-            }
+            collectionAdapter.submitData(lifecycle,it)
+
         }
 
         collectionsViewModel.syncCollections()
     }
 
     private fun setupRecyclerView() {
-        collectionAdapter = CollectionsAdapter(this)
+        loading.visibility = View.GONE
+        collectionRecyclerView.visibility = View.VISIBLE
+        collectionAdapter =
+            CollectionsAdapter(this)
+        lifecycleScope.launchWhenCreated {
+            collectionAdapter.loadStateFlow.collectLatest {
+                    loadStates ->
+                homeCollectionSwipeRefreshLayout.isRefreshing = loadStates.refresh is LoadState.Loading
+            }
+        }
+
+        lifecycleScope.launchWhenCreated {
+            @OptIn(ExperimentalPagingApi::class, ExperimentalCoroutinesApi::class)
+            collectionAdapter.dataRefreshFlow.collectLatest {
+                collectionRecyclerView.scrollToPosition(0)
+            }
+
+        }
+
         collectionRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = collectionAdapter
+            adapter = collectionAdapter.withLoadStateFooter(footer = CollectionLoadStateAdapter(
+                collectionAdapter
+            )
+            )
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
+
+
+        homeCollectionSwipeRefreshLayout.setOnRefreshListener {
+            collectionAdapter.refresh()
+        }
+
     }
 
     companion object {
