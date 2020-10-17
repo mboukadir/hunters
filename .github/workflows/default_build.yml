@@ -4,11 +4,10 @@ on:
   push:
 
 jobs:
-  test_job:
+  quality_job:
     name: Test
     runs-on: ubuntu-latest
     steps:
-
       - name: Checkout
         uses: actions/checkout@v2
 
@@ -30,24 +29,6 @@ jobs:
         with:
           name: test-reports
           path: '**/build/reports/tests/'
-
-  lint_job:
-    name: Lint
-    runs-on: ubuntu-latest
-    steps:
-
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Restore Cache
-        uses: actions/cache@v2
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
       - name: Run Debug Lint
         run: ./gradlew lintDebug
 
@@ -57,10 +38,16 @@ jobs:
         with:
           name: lint-report
           path: '**/build/reports/lint-results-*'
+      - name: Sonarqube
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: ./gradlew sonarqube -P=SONAR_TOKEN --stacktrace
+
 
   assemble_job:
     needs: [test_job, lint_job]
-    name: Assemble and Upload to Firebase
+    name: Assemble
     runs-on: ubuntu-latest
     steps:
 
@@ -80,3 +67,9 @@ jobs:
         env:
           VERSION_CODE: ${{ github.run_id }}
         run: ./gradlew assembleDebug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v2
+        with:
+          name: apk
+          path: app/build/outputs/apk/debug/**.apk
