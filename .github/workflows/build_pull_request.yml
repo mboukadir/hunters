@@ -1,7 +1,6 @@
 name: Build  Branch
 
-on:
-  push:
+on: pull_request
 
 jobs:
   quality_job:
@@ -46,7 +45,7 @@ jobs:
 
 
   assemble_job:
-    needs: [test_job, lint_job]
+    needs: [quality_job]
     name: Assemble
     runs-on: ubuntu-latest
     steps:
