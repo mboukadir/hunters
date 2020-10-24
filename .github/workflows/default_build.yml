@@ -41,6 +41,15 @@ jobs:
           name: lint-report
           path: '**/build/reports/lint-results-*'
 
+      - name: Run Detekt
+        run: ./gradlew detekt
+      - name: Upload Detekt Reports
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: detekt-report
+          path: '**/build/reports/detekt/detekt*'
+
       - name: Sonarqube
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
