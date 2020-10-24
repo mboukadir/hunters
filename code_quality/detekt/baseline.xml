@@ -1,5 +1,73 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" ?>
 <SmellBaseline>
-  <Blacklist/>
-  <Whitelist/>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>EmptyFunctionBlock:CollectionsViewModel.kt$CollectionsViewModel${ }</ID>
+    <ID>LongParameterList:CustomTabActivityHelper.kt$CustomTabActivityHelper.Companion$( activity: Activity, requestCode: Int, customTabsIntent: CustomTabsIntent, uri: Uri, title: String, fallback: CustomTabFallback? )</ID>
+    <ID>LoopWithTooManyJumpStatements:CustomTabsHelper.kt$CustomTabsHelper$for (resolveInfo in handlers) { val filter = resolveInfo.filter ?: continue if (filter.countDataAuthorities() == 0 || filter.countDataPaths() == 0) continue if (resolveInfo.activityInfo == null) continue return true }</ID>
+    <ID>MaxLineLength:AppCompatActivityExt.kt$private inline</ID>
+    <ID>MaxLineLength:CollectionsAdapter.kt$CollectionsAdapter : ListAdapter</ID>
+    <ID>MaxLineLength:EndlessRecyclerViewScrollListener.kt$EndlessRecyclerViewScrollListener$is androidx.recyclerview.widget.GridLayoutManager -&gt; lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()</ID>
+    <ID>MaxLineLength:EndlessRecyclerViewScrollListener.kt$EndlessRecyclerViewScrollListener$is androidx.recyclerview.widget.LinearLayoutManager -&gt; lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()</ID>
+    <ID>MayBeConst:WebViewActivity.kt$WebViewActivity.Companion$private val PROGRESS_RATIO = 1000</ID>
+    <ID>MayBeConst:WebViewActivity.kt$WebViewActivity.Companion$val EXTRA_IS_FAVORIS = "extra.favoris"</ID>
+    <ID>MayBeConst:WebViewActivity.kt$WebViewActivity.Companion$val EXTRA_TITLE = "EXTRA_TITLE"</ID>
+    <ID>MayBeConst:WebViewActivity.kt$WebViewActivity.Companion$val EXTRA_URL = "extra.url"</ID>
+    <ID>NewLineAtEndOfFile:ApiModule.kt$com.mb.hunters.data.api.ApiModule.kt</ID>
+    <ID>NewLineAtEndOfFile:AppComponent.kt$com.mb.hunters.di.AppComponent.kt</ID>
+    <ID>NewLineAtEndOfFile:AppModule.kt$com.mb.hunters.di.AppModule.kt</ID>
+    <ID>NewLineAtEndOfFile:AppSchedulerProvider.kt$com.mb.hunters.common.rxscheduler.AppSchedulerProvider.kt</ID>
+    <ID>NewLineAtEndOfFile:AuthInterceptor.kt$com.mb.hunters.data.api.AuthInterceptor.kt</ID>
+    <ID>NewLineAtEndOfFile:BaseActivity.kt$com.mb.hunters.ui.base.BaseActivity.kt</ID>
+    <ID>NewLineAtEndOfFile:BaseFragment.kt$com.mb.hunters.ui.base.BaseFragment.kt</ID>
+    <ID>NewLineAtEndOfFile:BaseViewModel.kt$com.mb.hunters.ui.base.BaseViewModel.kt</ID>
+    <ID>NewLineAtEndOfFile:CollectionDao.kt$com.mb.hunters.data.database.dao.CollectionDao.kt</ID>
+    <ID>NewLineAtEndOfFile:CollectionDataRepository.kt$com.mb.hunters.data.repository.collection.CollectionDataRepository.kt</ID>
+    <ID>NewLineAtEndOfFile:CollectionEntity.kt$com.mb.hunters.data.database.entity.CollectionEntity.kt</ID>
+    <ID>NewLineAtEndOfFile:CollectionLocalDataSource.kt$com.mb.hunters.data.repository.collection.local.CollectionLocalDataSource.kt</ID>
+    <ID>NewLineAtEndOfFile:CollectionModuleBuilder.kt$com.mb.hunters.ui.home.collection.di.CollectionModuleBuilder.kt</ID>
+    <ID>NewLineAtEndOfFile:CollectionRemoteDataSource.kt$com.mb.hunters.data.repository.collection.remote.CollectionRemoteDataSource.kt</ID>
+    <ID>NewLineAtEndOfFile:CollectionRepository.kt$com.mb.hunters.data.repository.collection.CollectionRepository.kt</ID>
+    <ID>NewLineAtEndOfFile:CollectionService.kt$com.mb.hunters.data.api.CollectionService.kt</ID>
+    <ID>NewLineAtEndOfFile:CollectionsAdapter.kt$com.mb.hunters.ui.home.collection.CollectionsAdapter.kt</ID>
+    <ID>NewLineAtEndOfFile:CollectionsModule.kt$com.mb.hunters.ui.home.collection.di.CollectionsModule.kt</ID>
+    <ID>NewLineAtEndOfFile:CollectionsResponse.kt$com.mb.hunters.data.api.model.CollectionsResponse.kt</ID>
+    <ID>NewLineAtEndOfFile:CollectionsViewModel.kt$com.mb.hunters.ui.home.collection.CollectionsViewModel.kt</ID>
+    <ID>NewLineAtEndOfFile:DataModule.kt$com.mb.hunters.data.DataModule.kt</ID>
+    <ID>NewLineAtEndOfFile:DateConverter.kt$com.mb.hunters.data.database.DateConverter.kt</ID>
+    <ID>NewLineAtEndOfFile:DateExtention.kt$com.mb.hunters.ui.common.extensions.DateExtention.kt</ID>
+    <ID>NewLineAtEndOfFile:DispatchersProvider.kt$com.mb.hunters.common.dispatcher.DispatchersProvider.kt</ID>
+    <ID>NewLineAtEndOfFile:EndlessRecyclerViewScrollListener.kt$com.mb.hunters.ui.common.EndlessRecyclerViewScrollListener.kt</ID>
+    <ID>NewLineAtEndOfFile:HomeBuilderModule.kt$com.mb.hunters.ui.home.di.HomeBuilderModule.kt</ID>
+    <ID>NewLineAtEndOfFile:HuntersApplication.kt$com.mb.hunters.HuntersApplication.kt</ID>
+    <ID>NewLineAtEndOfFile:HuntersDatabase.kt$com.mb.hunters.data.database.HuntersDatabase.kt</ID>
+    <ID>NewLineAtEndOfFile:HuntersNavigator.kt$com.mb.hunters.ui.common.HuntersNavigator.kt</ID>
+    <ID>NewLineAtEndOfFile:HuntersViewModelFactory.kt$com.mb.hunters.ui.common.HuntersViewModelFactory.kt</ID>
+    <ID>NewLineAtEndOfFile:Mapper.kt$com.mb.hunters.ui.base.Mapper.kt</ID>
+    <ID>NewLineAtEndOfFile:Navigator.kt$com.mb.hunters.ui.base.Navigator.kt</ID>
+    <ID>NewLineAtEndOfFile:PerFragment.kt$com.mb.hunters.di.PerFragment.kt</ID>
+    <ID>NewLineAtEndOfFile:PostDao.kt$com.mb.hunters.data.database.dao.PostDao.kt</ID>
+    <ID>NewLineAtEndOfFile:PostLocalDataSource.kt$com.mb.hunters.data.repository.post.local.PostLocalDataSource.kt</ID>
+    <ID>NewLineAtEndOfFile:PostMapper.kt$com.mb.hunters.ui.home.posts.PostMapper.kt</ID>
+    <ID>NewLineAtEndOfFile:PostRemoteDataSource.kt$com.mb.hunters.data.repository.post.remote.PostRemoteDataSource.kt</ID>
+    <ID>NewLineAtEndOfFile:PostRepository.kt$com.mb.hunters.data.repository.post.PostRepository.kt</ID>
+    <ID>NewLineAtEndOfFile:PostRepositoryData.kt$com.mb.hunters.data.repository.post.PostRepositoryData.kt</ID>
+    <ID>NewLineAtEndOfFile:PostService.kt$com.mb.hunters.data.api.PostService.kt</ID>
+    <ID>NewLineAtEndOfFile:PostsModule.kt$com.mb.hunters.ui.home.posts.di.PostsModule.kt</ID>
+    <ID>NewLineAtEndOfFile:PostsModuleBuilder.kt$com.mb.hunters.ui.home.posts.di.PostsModuleBuilder.kt</ID>
+    <ID>NewLineAtEndOfFile:SchedulerProvider.kt$com.mb.hunters.common.rxscheduler.SchedulerProvider.kt</ID>
+    <ID>NewLineAtEndOfFile:ScreenshotUrl.kt$com.mb.hunters.data.api.model.ScreenshotUrl.kt</ID>
+    <ID>NewLineAtEndOfFile:Thumbnail.kt$com.mb.hunters.data.api.model.Thumbnail.kt</ID>
+    <ID>NewLineAtEndOfFile:Topic.kt$com.mb.hunters.data.api.model.Topic.kt</ID>
+    <ID>NewLineAtEndOfFile:UiModule.kt$com.mb.hunters.ui.UiModule.kt</ID>
+    <ID>NewLineAtEndOfFile:ViewModelFactoryModule.kt$com.mb.hunters.di.ViewModelFactoryModule.kt</ID>
+    <ID>ReturnCount:CustomTabActivityHelper.kt$CustomTabActivityHelper$ fun mayLaunchUrl(uri: Uri, extras: Bundle, otherLikelyBundles: List&lt;Bundle&gt;): Boolean</ID>
+    <ID>ReturnCount:CustomTabsHelper.kt$CustomTabsHelper$ private fun hasSpecializedHandlerIntents(context: Context, intent: Intent): Boolean</ID>
+    <ID>TooGenericExceptionCaught:CustomTabsHelper.kt$CustomTabsHelper$e: RuntimeException</ID>
+    <ID>TooGenericExceptionCaught:HuntersViewModelFactory.kt$HuntersViewModelFactory$e: Exception</ID>
+    <ID>TooGenericExceptionThrown:HuntersViewModelFactory.kt$HuntersViewModelFactory$throw RuntimeException(e)</ID>
+    <ID>TooManyFunctions:HomeActivity.kt$HomeActivity$&lt;no name provided&gt; : FragmentLifecycleCallbacks</ID>
+    <ID>TooManyFunctions:PostAdapter.kt$PostAdapter : Adapter</ID>
+    <ID>WildcardImport:PostRepositoryData.kt$import kotlinx.coroutines.*</ID>
+  </CurrentIssues>
 </SmellBaseline>
