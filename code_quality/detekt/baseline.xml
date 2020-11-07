@@ -2,7 +2,7 @@
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
-    <ID>EmptyFunctionBlock:CollectionsViewModel.kt$CollectionsViewModel${ }</ID>
+<!--    <ID>EmptyFunctionBlock:CollectionsViewModel.kt$CollectionsViewModel${ }</ID>-->
     <ID>LongParameterList:CustomTabActivityHelper.kt$CustomTabActivityHelper.Companion$( activity: Activity, requestCode: Int, customTabsIntent: CustomTabsIntent, uri: Uri, title: String, fallback: CustomTabFallback? )</ID>
     <ID>LoopWithTooManyJumpStatements:CustomTabsHelper.kt$CustomTabsHelper$for (resolveInfo in handlers) { val filter = resolveInfo.filter ?: continue if (filter.countDataAuthorities() == 0 || filter.countDataPaths() == 0) continue if (resolveInfo.activityInfo == null) continue return true }</ID>
     <ID>MaxLineLength:AppCompatActivityExt.kt$private inline</ID>

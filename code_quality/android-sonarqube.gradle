@@ -1,3 +1,5 @@
+apply plugin: "org.sonarqube"
+
 def fileFilter = [
         '**/R.*', // android
         '**/R$*.*',
@@ -31,42 +33,74 @@ def fileFilter = [
         '**/lib/zxing/**/*.*'
 ]
 
+def debugTree = fileTree(dir: "${buildDir}/intermediates/classes/debug", excludes: fileFilter)
+def mainSrc = "${project.projectDir}/src"
+def kotlinDebugTree = fileTree(dir: "${buildDir}/tmp/kotlin-classes/debug", excludes: fileFilter)
+
 sonarqube {
     properties {
         property "sonar.projectName", "Hunters"
         property "sonar.login", SONAR_TOKEN
         property "sonar.host.url", "https://sonarcloud.io/"
         property "sonar.organization", "mb-projects"
+        property "sonar.projectKey", "mboukadir_hunters"
         property "sonar.projectVersion", "0.0.1"
 
+        property "sonar.exclusions" , fileFilter
 
-        property "sonar.exclusions", fileFilter
+        property "sonar.junit.reportPaths", "$project.buildDir/test-results/testDebugUnitTest"
+        property "sonar.coverage.jacoco.xmlReportPaths", "${rootProject.buildDir}/reports/jacocoTestReport.xml"
 
-        property "sonar.junit.reportPaths", "build/test-results/testDebugUnitTest"
-        property "sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml"
-
-        property "sonar.androidLint.reportPaths", "build/reports/lint-results-debug.xml"
-        property "sonar.kotlin.detekt.reportPaths", "build/reports/detekt/detekt.xml"
+        property "sonar.androidLint.reportPaths", "$project.buildDir/reports/lint-results-debug.xml"
+        property "sonar.kotlin.detekt.reportPaths", "$project.buildDir/reports/detekt/detekt.xml"
     }
 }
 
 jacoco {
-    toolVersion = '0.8.4'
+    toolVersion = '0.8.6'
 }
 
-task jacocoTestReport(type: JacocoReport, dependsOn: 'testDebugUnitTest') {
+
+task jacocoTestReport(type: JacocoReport, dependsOn: "testDebugUnitTest") {
+    group = "Reporting"
+    description = "Generating Jacoco coverage reports"
+
     reports {
         xml.enabled = true
         html.enabled = true
+        csv.enabled = true
+        xml.destination file("${rootProject.buildDir}/reports/jacocoTestReport.xml")
+        html.destination file("${buildDir}/reports/jacoco")
+        csv.destination file("${buildDir}/reports/jacocoTestReport.csv")
     }
-
-    def javaDebugTree = fileTree(dir: "$project.buildDir/intermediates/javac/debug/compileDebugJavaWithJavac/classes", excludes: fileFilter)
-    def kotlinDebugTree = fileTree(dir: "$project.buildDir/tmp/kotlin-classes/debug", excludes: fileFilter)
-    def mainSrc = "$project.projectDir/src/main/java"
-
-    getSourceDirectories().setFrom(project.files([mainSrc]))
-    getClassDirectories().setFrom(project.files([javaDebugTree, kotlinDebugTree]))
-    getExecutionData().setFrom(project.files('build/jacoco/testDebugUnitTest.exec'))
+    //sourceDirectories.from(files([mainSrc]))
+    //classDirectories.from(files([debugTree], [kotlinDebugTree]))
+     executionData.from(fileTree(dir: buildDir, includes: ['**/*.exec', '**/*.ec']))
+}
+// enforce proper setting on android type projects.
+android {
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+            returnDefaultValues = true
+        }
+        unitTests.all {
+            jacoco {
+                includeNoLocationClasses = true
+                jacoco.excludes = ['jdk.internal.*']
+            }
+        }
+    }
 }
 
+task display() {
+    def file = "${rootProject.buildDir}/reports"
+
+    def sonarEnabledProjects = rootProject.subprojects
+            .findAll { p -> p.sonarqube.getProperties().get("skipProject") == false }
+            *.name
+            .collect { projectName -> "$file/jacocoTestReport-${projectName}.xml" }
+            .join(",")
+    println("sonarEnabledProjects : $sonarEnabledProjects")
+}
 tasks.sonarqube.dependsOn jacocoTestReport

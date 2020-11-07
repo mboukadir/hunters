@@ -3,40 +3,6 @@ buildscript {
     ext.kotlin_version = '1.4.10'
 
     ext {
-
-        fileFilter = [
-                '**/R.*', // android
-                '**/R$*.*',
-                'android/**/*.*',
-                '**/BuildConfig.*',
-                '**/Manifest*.*',
-                '**/*$InjectAdapter.*', // butterknife
-                '**/*$ModuleAdapter.*',
-                '**/*$ViewInjector*.*',
-                '**/*MembersInjector*.*',
-                '**/*$ViewBinder*.*',
-                '**/*ViewBinding*.*',
-                '**/rxscheduler/**/*.*', // rx
-                '**/Lambda$*.*', // retrolambda
-                '**/Lambda.*',
-                '**/*Lambda.*',
-                '**/*Lambda*.*',
-                '**/*_MembersInjector.*', //Dagger2 generated code
-                '*/*_MembersInjector*.*',
-                '**/*_*Factory*.*',
-                '*/*Component*.*',
-                '**/*Module*.*',
-                '**/component/**/*.*', // components dagger interfaces
-                '**/data/qualifier/**/*.*', // dagger qualifier annotations
-                '**/data/service/*.*', // retrofit interfaces,
-                '**/*Test*.*',
-                '**/*Activity.*',
-                '**/*Fragment.*',
-                '**/*View.*',
-                '**/*Application.*',
-                '**/lib/zxing/**/*.*'
-        ]
-
         ci = System.getenv("CI") == "true"
 
         constraintLayout_version = '2.0.2'
