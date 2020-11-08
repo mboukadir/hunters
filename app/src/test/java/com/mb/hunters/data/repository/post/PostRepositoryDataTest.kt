@@ -49,9 +49,9 @@ class PostRepositoryDataTest {
     @Before
     fun setup() {
         postRepository = PostRepositoryData(
-                postRemoteDataSource,
-                postLocalDataSource,
-                TestDispatcherProvider.dispatcherProvider
+            postRemoteDataSource,
+            postLocalDataSource,
+            TestDispatcherProvider.dispatcherProvider
         )
     }
 

@@ -22,10 +22,10 @@ import com.mb.hunters.data.api.model.PostsResponse
 import com.mb.hunters.data.api.model.ScreenshotUrl
 import com.mb.hunters.data.api.model.Thumbnail
 import com.mb.hunters.data.database.entity.PostEntity
+import java.util.*
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner
-import java.util.*
 
 @RunWith(MockitoJUnitRunner::class)
 class PostsResponseConverterTest {
@@ -48,35 +48,35 @@ class PostsResponseConverterTest {
         private val day = Date()
         private val createdAt = Date()
         val postResponse = PostResponse(
+            id = 1,
+            name = "name",
+            tagline = "tagline",
+            redirectUrl = "redirectUrl",
+            votesCount = 1,
+            commentsCount = 2,
+            day = day,
+            createdAt = createdAt,
+            screenshotUrl = ScreenshotUrl(
+                smallImgUrl = "smallImgUrl",
+                largeImgUrl = "largeImgUrl"
+            ),
+            thumbnail = Thumbnail(
                 id = 1,
-                name = "name",
-                tagline = "tagline",
-                redirectUrl = "redirectUrl",
-                votesCount = 1,
-                commentsCount = 2,
-                day = day,
-                createdAt = createdAt,
-                screenshotUrl = ScreenshotUrl(
-                        smallImgUrl = "smallImgUrl",
-                        largeImgUrl = "largeImgUrl"
-                ),
-                thumbnail = Thumbnail(
-                        id = 1,
-                        mediaType = "mediaType",
-                        imageUrl = "imageUrl"
-                )
+                mediaType = "mediaType",
+                imageUrl = "imageUrl"
+            )
         )
         val postEntityExpected = PostEntity(
-                id = 1,
-                name = "name",
-                tagline = "tagline",
-                redirectUrl = "redirectUrl",
-                votesCount = 1,
-                commentsCount = 2,
-                day = day,
-                createdAt = createdAt,
-                screenshotUrl = "smallImgUrl",
-                thumbnailUrl = "imageUrl"
+            id = 1,
+            name = "name",
+            tagline = "tagline",
+            redirectUrl = "redirectUrl",
+            votesCount = 1,
+            commentsCount = 2,
+            day = day,
+            createdAt = createdAt,
+            screenshotUrl = "smallImgUrl",
+            thumbnailUrl = "imageUrl"
         )
     }
 }

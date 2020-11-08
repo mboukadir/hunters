@@ -22,6 +22,8 @@ import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
+import java.util.*
+import javax.inject.Singleton
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.HttpLoggingInterceptor.Level
@@ -30,8 +32,6 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import timber.log.Timber
-import java.util.*
-import javax.inject.Singleton
 
 @Module
 class ApiModule {
@@ -47,29 +47,29 @@ class ApiModule {
         })
         logging.level = Level.BODY
         return OkHttpClient.Builder()
-                .addInterceptor(AuthInterceptor(BuildConfig.PROCUCT_HUNT_DEVELOPER_TOKEN))
-                .addInterceptor(logging)
-                .build()
+            .addInterceptor(AuthInterceptor(BuildConfig.PROCUCT_HUNT_DEVELOPER_TOKEN))
+            .addInterceptor(logging)
+            .build()
     }
 
     @Provides
     @Singleton
     fun provideMoshi(): Moshi {
         return Moshi.Builder()
-                .add(KotlinJsonAdapterFactory())
-                .add(Date::class.java, Rfc3339DateJsonAdapter())
-                .build()
+            .add(KotlinJsonAdapterFactory())
+            .add(Date::class.java, Rfc3339DateJsonAdapter())
+            .build()
     }
 
     @Provides
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient, moshi: Moshi): Retrofit {
         return Retrofit.Builder()
-                .baseUrl("https://api.producthunt.com/")
-                .client(okHttpClient)
-                .addConverterFactory(MoshiConverterFactory.create(moshi))
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build()
+            .baseUrl("https://api.producthunt.com/")
+            .client(okHttpClient)
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .build()
     }
 
     @Provides

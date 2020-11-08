@@ -30,9 +30,9 @@ import com.google.android.material.snackbar.Snackbar
 import com.mb.hunters.R
 import com.mb.hunters.ui.base.BaseFragment
 import com.mb.hunters.ui.base.Navigator
+import javax.inject.Inject
 import kotlinx.android.synthetic.main.home_collection_fragment_list.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 class CollectionsFragment : BaseFragment(), CollectionsAdapter.ItemActionListener {

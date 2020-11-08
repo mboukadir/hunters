@@ -25,8 +25,6 @@ import com.mb.hunters.data.database.HuntersDatabase
 import com.mb.hunters.data.database.entity.CollectionEntity
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.take
-import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.After
 import org.junit.Before

@@ -24,10 +24,13 @@ import com.mb.hunters.data.database.dao.PostDao
 import com.mb.hunters.data.database.entity.CollectionEntity
 import com.mb.hunters.data.database.entity.PostEntity
 
-@Database(entities = [
-    PostEntity::class,
-    CollectionEntity::class
-], version = 1)
+@Database(
+    entities = [
+        PostEntity::class,
+        CollectionEntity::class
+    ],
+    version = 1
+)
 @TypeConverters(DateConverter::class)
 abstract class HuntersDatabase : RoomDatabase() {
     abstract fun postDao(): PostDao

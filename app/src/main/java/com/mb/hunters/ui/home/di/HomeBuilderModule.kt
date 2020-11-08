@@ -29,7 +29,8 @@ abstract class HomeBuilderModule {
 
     @PerActivity
     @ContributesAndroidInjector(
-            modules = [PostsModuleBuilder::class, CollectionModuleBuilder::class])
+        modules = [PostsModuleBuilder::class, CollectionModuleBuilder::class]
+    )
     @ClassKey(HomeActivity::class)
     abstract fun bindHomeActivity(): HomeActivity
 }

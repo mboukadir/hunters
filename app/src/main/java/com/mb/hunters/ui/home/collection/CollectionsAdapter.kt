@@ -40,7 +40,7 @@ class CollectionsAdapter(private val actionListener: ItemActionListener) : ListA
     }
 
     inner class CollectionViewHolder(parent: ViewGroup, @LayoutRes layoutId: Int) :
-            BaseViewHolder(parent, layoutId) {
+        BaseViewHolder(parent, layoutId) {
 
         init {
             itemView.setOnClickListener {
@@ -52,7 +52,8 @@ class CollectionsAdapter(private val actionListener: ItemActionListener) : ListA
 
         fun bind(collectionUiModel: CollectionUiModel) {
             Glide.with(itemView).load(collectionUiModel.backgroundImageUrl).into(
-                    itemView.backgroundImage)
+                itemView.backgroundImage
+            )
             itemView.name.text = collectionUiModel.name
             itemView.title.text = collectionUiModel.title
         }
@@ -66,10 +67,10 @@ class CollectionsAdapter(private val actionListener: ItemActionListener) : ListA
     companion object {
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<CollectionUiModel>() {
             override fun areItemsTheSame(oldItem: CollectionUiModel, newItem: CollectionUiModel): Boolean =
-                    oldItem.id == newItem.id
+                oldItem.id == newItem.id
 
             override fun areContentsTheSame(oldItem: CollectionUiModel, newItem: CollectionUiModel): Boolean =
-                    oldItem == newItem
+                oldItem == newItem
         }
     }
 }

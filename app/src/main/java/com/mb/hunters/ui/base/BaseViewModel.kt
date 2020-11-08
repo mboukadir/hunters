@@ -28,9 +28,11 @@ import timber.log.Timber
 abstract class BaseViewModel(dispatchersProvider: DispatchersProvider) : ViewModel() {
     val disposables = CompositeDisposable()
     val viewModelScope =
-        CoroutineScope(SupervisorJob() +
+        CoroutineScope(
+            SupervisorJob() +
                 dispatchersProvider.main +
-                CoroutineExceptionHandler { _, throwable -> Timber.e(throwable) })
+                CoroutineExceptionHandler { _, throwable -> Timber.e(throwable) }
+        )
 
     override fun onCleared() {
         disposables.clear()

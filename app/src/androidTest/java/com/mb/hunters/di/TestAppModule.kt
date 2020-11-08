@@ -22,15 +22,17 @@ import com.mb.hunters.ui.UiModule
 import com.mb.hunters.ui.home.di.HomeBuilderModule
 import dagger.Module
 import dagger.Provides
-import kotlinx.coroutines.Dispatchers
 import javax.inject.Singleton
+import kotlinx.coroutines.Dispatchers
 
-@Module(includes = [
-    InternalTestAppModule::class,
-    TestDataModule::class,
-    HomeBuilderModule::class,
-    UiModule::class
-])
+@Module(
+    includes = [
+        InternalTestAppModule::class,
+        TestDataModule::class,
+        HomeBuilderModule::class,
+        UiModule::class
+    ]
+)
 class TestAppModule {
 
     @Module

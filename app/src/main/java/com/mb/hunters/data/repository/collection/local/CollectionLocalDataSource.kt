@@ -23,8 +23,8 @@ import kotlinx.coroutines.flow.Flow
 class CollectionLocalDataSource(private val collectionDao: CollectionDao) {
 
     suspend fun save(collectionEntityList: List<CollectionEntity>) =
-            collectionDao.insert(collectionEntityList)
+        collectionDao.insert(collectionEntityList)
 
     fun getCollections(): Flow<List<CollectionEntity>> =
-            collectionDao.getCollections()
+        collectionDao.getCollections()
 }

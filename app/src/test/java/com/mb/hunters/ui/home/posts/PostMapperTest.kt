@@ -17,10 +17,10 @@
 package com.mb.hunters.ui.home.posts
 
 import com.mb.hunters.data.database.entity.PostEntity
+import java.util.Calendar
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import java.util.Calendar
 
 class PostMapperTest {
 
@@ -79,16 +79,16 @@ class PostMapperTest {
         }.time
 
         private val POST = PostEntity(
-                id = 0,
-                name = "Name",
-                tagline = "TagLine",
-                redirectUrl = "redirectUrl",
-                votesCount = 1,
-                commentsCount = 1,
-                day = TODAY,
-                createdAt = TODAY,
-                thumbnailUrl = "thumbnailUrl",
-                screenshotUrl = "screenshotUrl"
+            id = 0,
+            name = "Name",
+            tagline = "TagLine",
+            redirectUrl = "redirectUrl",
+            votesCount = 1,
+            commentsCount = 1,
+            day = TODAY,
+            createdAt = TODAY,
+            thumbnailUrl = "thumbnailUrl",
+            screenshotUrl = "screenshotUrl"
         )
 
         private val YESTERDAY_POST = POST.copy(day = YESTERDAY, createdAt = YESTERDAY)

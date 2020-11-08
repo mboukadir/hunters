@@ -24,8 +24,9 @@ import kotlinx.android.extensions.LayoutContainer
 
 open class BaseViewHolder(parent: ViewGroup, @LayoutRes layoutResId: Int) :
     androidx.recyclerview.widget.RecyclerView.ViewHolder(
-        LayoutInflater.from(parent.context).inflate(layoutResId, parent, false)),
-        LayoutContainer {
+        LayoutInflater.from(parent.context).inflate(layoutResId, parent, false)
+    ),
+    LayoutContainer {
     override val containerView: View?
         get() = itemView
 }

@@ -24,6 +24,7 @@ import com.mb.hunters.test.TestDispatcherProvider.dispatcherProvider
 import com.nhaarman.mockitokotlin2.given
 import com.nhaarman.mockitokotlin2.then
 import dagger.Lazy
+import java.util.Calendar
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Rule
@@ -31,7 +32,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
-import java.util.Calendar
 
 @RunWith(MockitoJUnitRunner::class)
 class PostsViewModelTest {
@@ -108,21 +108,21 @@ class PostsViewModelTest {
         }.time
 
         private val POST = PostEntity(
-                id = 0,
-                name = "Name",
-                tagline = "TagLine",
-                redirectUrl = "redirectUrl",
-                votesCount = 1,
-                commentsCount = 1,
-                day = TODAY,
-                createdAt = TODAY,
-                thumbnailUrl = "thumbnailUrl",
-                screenshotUrl = "screenshotUrl"
+            id = 0,
+            name = "Name",
+            tagline = "TagLine",
+            redirectUrl = "redirectUrl",
+            votesCount = 1,
+            commentsCount = 1,
+            day = TODAY,
+            createdAt = TODAY,
+            thumbnailUrl = "thumbnailUrl",
+            screenshotUrl = "screenshotUrl"
         )
 
         private val POSTS = listOf(
-                POST,
-                POST.copy(id = 2)
+            POST,
+            POST.copy(id = 2)
         )
 
         private val POSTS_UI_MODELS = POSTS.map {

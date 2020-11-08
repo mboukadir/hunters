@@ -66,17 +66,18 @@ class CollectionRemoteDataSourceTest {
         val COLLECTIONS_RESPONSE_EMPTY = CollectionsResponse(emptyList())
 
         val COLLECTION = Collection(
-                id = 1,
-                name = "name",
-                title = "title",
-                collectionUrl = "collectionUrl",
-                backgroundImageUrl = "backgroundImageUrl"
+            id = 1,
+            name = "name",
+            title = "title",
+            collectionUrl = "collectionUrl",
+            backgroundImageUrl = "backgroundImageUrl"
         )
 
-        val COLLECTIONS = listOf(COLLECTION,
-                COLLECTION.copy(id = 2),
-                COLLECTION.copy(id = 3),
-                COLLECTION.copy(id = 4)
+        val COLLECTIONS = listOf(
+            COLLECTION,
+            COLLECTION.copy(id = 2),
+            COLLECTION.copy(id = 3),
+            COLLECTION.copy(id = 4)
         )
 
         val COLLECTIONS_RESPONSE = CollectionsResponse(COLLECTIONS)

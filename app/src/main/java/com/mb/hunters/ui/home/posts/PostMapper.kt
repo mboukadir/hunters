@@ -27,16 +27,16 @@ class PostMapper @Inject constructor() : Mapper<PostEntity, PostUiModel> {
 
         return with(type) {
             PostUiModel(
-                    id = id,
-                    title = name,
-                    subTitle = tagline,
-                    postUrl = redirectUrl,
-                    votesCount = votesCount,
-                    commentsCount = commentsCount,
-                    daysAgo = day.daysAgo(),
-                    date = createdAt.toString(),
-                    bigImageUrl = screenshotUrl,
-                    smallImageUrl = thumbnailUrl
+                id = id,
+                title = name,
+                subTitle = tagline,
+                postUrl = redirectUrl,
+                votesCount = votesCount,
+                commentsCount = commentsCount,
+                daysAgo = day.daysAgo(),
+                date = createdAt.toString(),
+                bigImageUrl = screenshotUrl,
+                smallImageUrl = thumbnailUrl
             )
         }
     }

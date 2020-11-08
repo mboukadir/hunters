@@ -30,7 +30,7 @@ class CollectionDataRepository(
     private val dispatchersProvider: DispatchersProvider
 ) : CollectionRepository {
     override fun getCollections(): Flow<List<CollectionEntity>> =
-            localDataSource.getCollections()
+        localDataSource.getCollections()
 
     override suspend fun syncCollections(): Unit = withContext(dispatchersProvider.computation) {
         mapToCollectionEntityList(remoteDataSource.getCollections()).run {
@@ -44,11 +44,11 @@ class CollectionDataRepository(
 
         return collectionList.map {
             CollectionEntity(
-                    id = it.id,
-                    name = it.name,
-                    title = it.title,
-                    backgroundImageUrl = it.backgroundImageUrl ?: "",
-                    collectionUrl = it.collectionUrl
+                id = it.id,
+                name = it.name,
+                title = it.title,
+                backgroundImageUrl = it.backgroundImageUrl ?: "",
+                collectionUrl = it.collectionUrl
             )
         }
     }

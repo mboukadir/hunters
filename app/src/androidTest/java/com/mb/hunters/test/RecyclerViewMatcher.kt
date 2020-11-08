@@ -17,8 +17,8 @@
 package com.mb.hunters.test
 
 import android.content.res.Resources
-import androidx.recyclerview.widget.RecyclerView
 import android.view.View
+import androidx.recyclerview.widget.RecyclerView
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.TypeSafeMatcher
@@ -41,8 +41,10 @@ class RecyclerViewMatcher private constructor(var recyclerViewId: Int) {
                     try {
                         idDescription = this.resources!!.getResourceName(recyclerViewId)
                     } catch (var4: Resources.NotFoundException) {
-                        idDescription = String.format("%s (resource name not found)",
-                                *arrayOf<Any>(Integer.valueOf(recyclerViewId)))
+                        idDescription = String.format(
+                            "%s (resource name not found)",
+                            *arrayOf<Any>(Integer.valueOf(recyclerViewId))
+                        )
                     }
                 }
 
@@ -55,7 +57,7 @@ class RecyclerViewMatcher private constructor(var recyclerViewId: Int) {
 
                 if (childView == null) {
                     val recyclerView = view.rootView.findViewById<androidx.recyclerview.widget.RecyclerView>(recyclerViewId)
-                            as androidx.recyclerview.widget.RecyclerView
+                        as androidx.recyclerview.widget.RecyclerView
                     if (recyclerView != null && recyclerView.id == recyclerViewId) {
                         childView = recyclerView.findViewHolderForAdapterPosition(position)!!.itemView
                     } else {

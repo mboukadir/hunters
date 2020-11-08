@@ -18,11 +18,24 @@
  
  ### Code style
  
- This project uses [ktlint](https://github.com/shyiko/ktlint), provided via
- the [spotless](https://github.com/diffplug/spotless) gradle plugin, and the bundled project IntelliJ codestyle.
- 
+## Code style
+This project uses [ktlint](https://github.com/pinterest/ktlint), provided via the [ktlint-gradle](https://github.com/jlleitschuh/ktlint-gradle) gradle plugin.
+
+#### ktlint- gradle config
+
+1. Apply ktlint code style to Android Studio's code formatter
+```
+    ./gradlew ktlintApplyToIdea
+```
+
+2.   Make check before commit
+```
+    ./gradlew addKtlintCheckGitPreCommitHook
+```
+
  If you find that one of your pull reviews does not pass the CI server check due to a code style conflict, you can
- easily fix it by running: `./gradlew spotlessApply`, or running IntelliJ/Android Studio's code formatter.
+ easily fix it by running: `./gradlew ktlintFormat`, or running Android Studio's code formatter.
+
  
  ### API keys
  

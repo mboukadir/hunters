@@ -170,8 +170,10 @@ class CustomTabActivityHelper(
                 // customTabsIntent.launchUrl(activity, uri);
                 // Hack to replace customTabsIntent.launchUrl(activity, uri);
                 customTabsIntent.intent.data = uri
-                ActivityCompat.startActivityForResult(activity, customTabsIntent.intent,
-                        requestCode, customTabsIntent.startAnimationBundle)
+                ActivityCompat.startActivityForResult(
+                    activity, customTabsIntent.intent,
+                    requestCode, customTabsIntent.startAnimationBundle
+                )
             }
         }
 

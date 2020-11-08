@@ -35,19 +35,28 @@ class HuntersNavigator @Inject constructor() : Navigator {
 
         val customTabsIntent = CustomTabsIntent.Builder().apply {
             setStartAnimations(from, R.anim.slide_in_right, R.anim.slide_out_left)
-            setExitAnimations(from, android.R.anim.slide_in_left,
-                    android.R.anim.slide_out_right)
+            setExitAnimations(
+                from, android.R.anim.slide_in_left,
+                android.R.anim.slide_out_right
+            )
 
             setToolbarColor(from.resources.getColor(R.color.primary))
             setSecondaryToolbarColor(
-                    from.resources.getColor(R.color.primary_dark))
-            setCloseButtonIcon(BitmapFactory.decodeResource(from.getResources(),
-                    R.drawable.ic_arrow_back))
+                from.resources.getColor(R.color.primary_dark)
+            )
+            setCloseButtonIcon(
+                BitmapFactory.decodeResource(
+                    from.getResources(),
+                    R.drawable.ic_arrow_back
+                )
+            )
             setShowTitle(true)
             addDefaultShareMenuItem()
         }.build()
 
-        CustomTabActivityHelper.openCustomTab(from, customTabsIntent,
-                Uri.parse(post.postUrl), post.title, WebviewFallback())
+        CustomTabActivityHelper.openCustomTab(
+            from, customTabsIntent,
+            Uri.parse(post.postUrl), post.title, WebviewFallback()
+        )
     }
 }

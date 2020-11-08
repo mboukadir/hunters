@@ -25,11 +25,13 @@ import dagger.android.support.AndroidSupportInjectionModule
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [
-    AndroidSupportInjectionModule::class,
-    ViewModelFactoryModule::class,
-    TestAppModule::class
-])
+@Component(
+    modules = [
+        AndroidSupportInjectionModule::class,
+        ViewModelFactoryModule::class,
+        TestAppModule::class
+    ]
+)
 interface TestAppComponent : AndroidInjector<TestApplication> {
 
     fun postRepository(): PostRepository

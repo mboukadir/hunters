@@ -18,11 +18,13 @@ package com.mb.hunters.data.database.dao
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
-import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
 import com.google.common.truth.Truth.*
 import com.mb.hunters.data.database.HuntersDatabase
 import com.mb.hunters.data.database.entity.PostEntity
+import java.util.Calendar
+import java.util.Date
 import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.BaseMatcher
 import org.hamcrest.Description
@@ -32,8 +34,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.util.Calendar
-import java.util.Date
 
 @RunWith(AndroidJUnit4::class)
 class PostDaoTest {
@@ -46,10 +46,12 @@ class PostDaoTest {
     @Before
     fun initDb() {
 
-        database = Room.inMemoryDatabaseBuilder(InstrumentationRegistry.getInstrumentation().targetContext,
-                HuntersDatabase::class.java)
-                .allowMainThreadQueries()
-                .build()
+        database = Room.inMemoryDatabaseBuilder(
+            InstrumentationRegistry.getInstrumentation().targetContext,
+            HuntersDatabase::class.java
+        )
+            .allowMainThreadQueries()
+            .build()
     }
 
     @After
@@ -62,12 +64,12 @@ class PostDaoTest {
 
         // GIVEN
         val posts = listOf(
-                POST,
-                POST.copy(id = 2),
-                POST.copy(id = 3),
-                POST.copy(id = 4, day = ONEDAY_BEFORE_YESTERDAY),
-                POST.copy(id = 5, day = ONEDAY_BEFORE_YESTERDAY),
-                POST.copy(id = 6, day = ONEDAY_BEFORE_YESTERDAY)
+            POST,
+            POST.copy(id = 2),
+            POST.copy(id = 3),
+            POST.copy(id = 4, day = ONEDAY_BEFORE_YESTERDAY),
+            POST.copy(id = 5, day = ONEDAY_BEFORE_YESTERDAY),
+            POST.copy(id = 6, day = ONEDAY_BEFORE_YESTERDAY)
         )
 
         // When
@@ -75,7 +77,7 @@ class PostDaoTest {
 
         // Then
         val result = database.postDao()
-                .getPosts(TODAY)
+            .getPosts(TODAY)
 
         assertThat(result).containsExactlyElementsIn(listOf(POST, POST.copy(id = 2), POST.copy(id = 3)))
     }
@@ -85,12 +87,12 @@ class PostDaoTest {
 
         // GIVEN
         val posts = listOf(
-                POST,
-                POST.copy(id = 2),
-                POST.copy(id = 3),
-                POST.copy(id = 4, day = YESTERDAY),
-                POST.copy(id = 5, day = YESTERDAY),
-                POST.copy(id = 6, day = YESTERDAY)
+            POST,
+            POST.copy(id = 2),
+            POST.copy(id = 3),
+            POST.copy(id = 4, day = YESTERDAY),
+            POST.copy(id = 5, day = YESTERDAY),
+            POST.copy(id = 6, day = YESTERDAY)
         )
 
         // When
@@ -99,7 +101,7 @@ class PostDaoTest {
         // Then
         // Then
         val result = database.postDao()
-                .countPostOlderThan(YESTERDAY)
+            .countPostOlderThan(YESTERDAY)
 
         assertEquals(0, result)
     }
@@ -109,12 +111,12 @@ class PostDaoTest {
 
         // GIVEN
         val posts = listOf(
-                POST.copy(id = 1, day = TODAY),
-                POST.copy(id = 2, day = TODAY),
-                POST.copy(id = 3, day = TODAY),
-                POST.copy(id = 4, day = ONEDAY_BEFORE_YESTERDAY),
-                POST.copy(id = 5, day = ONEDAY_BEFORE_YESTERDAY),
-                POST.copy(id = 6, day = ONEDAY_BEFORE_YESTERDAY)
+            POST.copy(id = 1, day = TODAY),
+            POST.copy(id = 2, day = TODAY),
+            POST.copy(id = 3, day = TODAY),
+            POST.copy(id = 4, day = ONEDAY_BEFORE_YESTERDAY),
+            POST.copy(id = 5, day = ONEDAY_BEFORE_YESTERDAY),
+            POST.copy(id = 6, day = ONEDAY_BEFORE_YESTERDAY)
         )
 
         // When
@@ -122,7 +124,7 @@ class PostDaoTest {
 
         // Then
         val restul = database.postDao()
-                .countPostOlderThan(TODAY)
+            .countPostOlderThan(TODAY)
 
         assertEquals(3, restul)
     }
@@ -155,25 +157,25 @@ class PostDaoTest {
         }.time
 
         private val POST = PostEntity(
-                id = 0,
-                name = "Name",
-                tagline = "TagLine",
-                redirectUrl = "redirectUrl",
-                votesCount = 1,
-                commentsCount = 1,
-                day = TODAY,
-                createdAt = TODAY,
-                thumbnailUrl = "thumbnailUrl",
-                screenshotUrl = "screenshotUrl"
+            id = 0,
+            name = "Name",
+            tagline = "TagLine",
+            redirectUrl = "redirectUrl",
+            votesCount = 1,
+            commentsCount = 1,
+            day = TODAY,
+            createdAt = TODAY,
+            thumbnailUrl = "thumbnailUrl",
+            screenshotUrl = "screenshotUrl"
         )
 
         private val POSTS = listOf(
-                POST,
-                POST.copy(id = 2),
-                POST.copy(id = 3),
-                POST.copy(id = 4, day = ONEDAY_BEFORE_YESTERDAY),
-                POST.copy(id = 5, day = ONEDAY_BEFORE_YESTERDAY),
-                POST.copy(id = 6, day = ONEDAY_BEFORE_YESTERDAY)
+            POST,
+            POST.copy(id = 2),
+            POST.copy(id = 3),
+            POST.copy(id = 4, day = ONEDAY_BEFORE_YESTERDAY),
+            POST.copy(id = 5, day = ONEDAY_BEFORE_YESTERDAY),
+            POST.copy(id = 6, day = ONEDAY_BEFORE_YESTERDAY)
         )
     }
 }

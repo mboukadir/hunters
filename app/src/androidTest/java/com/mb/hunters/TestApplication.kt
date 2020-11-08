@@ -39,7 +39,7 @@ class TestApplication : DaggerApplication() {
 
         fun appComponent(): TestAppComponent {
             return (InstrumentationRegistry.getInstrumentation().targetContext as TestApplication)
-                    .appComponent
+                .appComponent
         }
     }
 }

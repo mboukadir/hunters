@@ -202,14 +202,14 @@ class PostAdapter(val itemActionListener: ItemActionListener) :
     ) : DiffUtil.Callback() {
 
         override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
-                oldList[oldItemPosition].id == newList[newItemPosition].id
+            oldList[oldItemPosition].id == newList[newItemPosition].id
 
         override fun getOldListSize() = oldList.size
 
         override fun getNewListSize() = newList.size
 
         override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) =
-                oldList[oldItemPosition] == newList[newItemPosition]
+            oldList[oldItemPosition] == newList[newItemPosition]
 
         override fun getChangePayload(oldItemPosition: Int, newItemPosition: Int): Any? {
             val oldPost = oldList[oldItemPosition]

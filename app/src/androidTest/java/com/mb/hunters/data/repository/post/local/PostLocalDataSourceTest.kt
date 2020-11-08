@@ -18,8 +18,8 @@ package com.mb.hunters.data.repository.post.local
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
-import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
 import com.google.common.truth.Truth
 import com.mb.hunters.data.database.HuntersDatabase
 import com.mb.hunters.data.database.entity.PostEntity
@@ -44,10 +44,12 @@ class PostLocalDataSourceTest {
     @Before
     fun initDb() {
 
-        database = Room.inMemoryDatabaseBuilder(InstrumentationRegistry.getInstrumentation().targetContext,
-                HuntersDatabase::class.java)
-                .allowMainThreadQueries()
-                .build()
+        database = Room.inMemoryDatabaseBuilder(
+            InstrumentationRegistry.getInstrumentation().targetContext,
+            HuntersDatabase::class.java
+        )
+            .allowMainThreadQueries()
+            .build()
 
         postLocalDataRepository = PostLocalDataSource(database.postDao())
     }
@@ -62,12 +64,12 @@ class PostLocalDataSourceTest {
 
         // GIVEN
         val posts = listOf(
-                POST,
-                POST.copy(id = 2),
-                POST.copy(id = 3),
-                POST.copy(id = 4, day = ONEDAY_BEFORE_YESTERDAY),
-                POST.copy(id = 5, day = ONEDAY_BEFORE_YESTERDAY),
-                POST.copy(id = 6, day = ONEDAY_BEFORE_YESTERDAY)
+            POST,
+            POST.copy(id = 2),
+            POST.copy(id = 3),
+            POST.copy(id = 4, day = ONEDAY_BEFORE_YESTERDAY),
+            POST.copy(id = 5, day = ONEDAY_BEFORE_YESTERDAY),
+            POST.copy(id = 6, day = ONEDAY_BEFORE_YESTERDAY)
         )
 
         // When
@@ -87,22 +89,22 @@ class PostLocalDataSourceTest {
         private val TOWDAYS_BEFORE_YESTERDAY = dateAt(3)
 
         private val POST = PostEntity(
-                id = 0,
-                name = "Name",
-                tagline = "TagLine",
-                redirectUrl = "redirectUrl",
-                votesCount = 1,
-                commentsCount = 1,
-                day = TODAY,
-                createdAt = TODAY,
-                thumbnailUrl = "thumbnailUrl",
-                screenshotUrl = "screenshotUrl"
+            id = 0,
+            name = "Name",
+            tagline = "TagLine",
+            redirectUrl = "redirectUrl",
+            votesCount = 1,
+            commentsCount = 1,
+            day = TODAY,
+            createdAt = TODAY,
+            thumbnailUrl = "thumbnailUrl",
+            screenshotUrl = "screenshotUrl"
         )
 
         private val POSTS = listOf(
-                POST.copy(id = 4, day = ONEDAY_BEFORE_YESTERDAY),
-                POST.copy(id = 5, day = ONEDAY_BEFORE_YESTERDAY),
-                POST.copy(id = 6, day = ONEDAY_BEFORE_YESTERDAY)
+            POST.copy(id = 4, day = ONEDAY_BEFORE_YESTERDAY),
+            POST.copy(id = 5, day = ONEDAY_BEFORE_YESTERDAY),
+            POST.copy(id = 6, day = ONEDAY_BEFORE_YESTERDAY)
         )
     }
 }
