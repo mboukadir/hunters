@@ -8,7 +8,7 @@
  Hunters is an app which attempts to use the latest cutting edge libraries and tools. As a summary:
  
  * Entirely written in [Kotlin](https://kotlinlang.org/)
- * Uses [RxJava](https://github.com/ReactiveX/RxJava) 2
+ * Uses [Kotlin Croutines ](https://kotlinlang.org/docs/reference/coroutines-overview.html)
  * Uses all of the [Architecture Components](https://developer.android.com/topic/libraries/architecture/): Room, LiveData and Lifecycle-components
  * Uses [dagger-android](https://google.github.io/dagger/android.html) for dependency injection
  
@@ -17,21 +17,20 @@
  First off, you require the latest Android Studio 3.0 (or newer) to be able to build the app.
  
  ### Code style
- 
-## Code style
-This project uses [ktlint](https://github.com/pinterest/ktlint), provided via the [ktlint-gradle](https://github.com/jlleitschuh/ktlint-gradle) gradle plugin.
 
-#### ktlint- gradle config
+ This project uses [ktlint](https://github.com/pinterest/ktlint), provided via the [ktlint-gradle](https://github.com/jlleitschuh/ktlint-gradle) gradle plugin.
 
-1. Apply ktlint code style to Android Studio's code formatter
-```
+ #### ktlint- gradle config
+
+ 1. Apply ktlint code style to Android Studio's code formatter
+ ```
     ./gradlew ktlintApplyToIdea
-```
+ ```
 
-2.   Make check before commit
-```
+ 2.   Make check before commit
+ ```
     ./gradlew addKtlintCheckGitPreCommitHook
-```
+ ```
 
  If you find that one of your pull reviews does not pass the CI server check due to a code style conflict, you can
  easily fix it by running: `./gradlew ktlintFormat`, or running Android Studio's code formatter.
