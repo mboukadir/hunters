@@ -36,11 +36,11 @@ import kotlinx.android.synthetic.main.home_detail_post_activity_webview.*
 class WebViewActivity : AppCompatActivity() {
 
     private val url: String by lazy {
-        intent.getStringExtra(EXTRA_URL)
+        intent.getStringExtra(EXTRA_URL)!!
     }
 
     private val title: String by lazy {
-        intent.getStringExtra(EXTRA_TITLE)
+        intent.getStringExtra(EXTRA_TITLE)!!
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

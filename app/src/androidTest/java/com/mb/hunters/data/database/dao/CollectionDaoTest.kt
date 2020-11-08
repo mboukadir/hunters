@@ -24,6 +24,9 @@ import com.google.common.truth.Truth.assertThat
 import com.mb.hunters.data.database.HuntersDatabase
 import com.mb.hunters.data.database.entity.CollectionEntity
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.take
+import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.After
 import org.junit.Before
@@ -70,7 +73,7 @@ class CollectionDaoTest {
         database.collectionDao().insert(collectionsToInsert)
 
         // When
-        val actual = database.collectionDao().getCollections()
+        val actual = database.collectionDao().getCollections().first()
 
         // Then
         assertThat(actual).containsExactlyElementsIn(COLLECTIONS)

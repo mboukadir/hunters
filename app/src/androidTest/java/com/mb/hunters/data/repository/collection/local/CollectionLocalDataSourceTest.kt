@@ -20,11 +20,13 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.google.common.truth.Truth
 import com.google.common.truth.Truth.assertThat
 import com.mb.hunters.data.database.HuntersDatabase
-import com.mb.hunters.data.database.dao.CollectionDaoTest.Companion.COLLECTION
 import com.mb.hunters.data.database.entity.CollectionEntity
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.After
 import org.junit.Before
@@ -67,7 +69,7 @@ class CollectionLocalDataSourceTest {
         collectionLocalDataRepository.save(COLLECTIONS)
 
         // When
-        val actual = collectionLocalDataRepository.getCollections()
+        val actual = collectionLocalDataRepository.getCollections().first()
 
         // Then
         assertThat(actual).containsExactlyElementsIn(COLLECTIONS)
