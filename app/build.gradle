@@ -7,21 +7,6 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'jacoco'
 apply from: "${rootDir}/code_quality/android-sonarqube.gradle"
 
-apply plugin: 'com.getkeepsafe.dexcount'
-dexcount {
-  // Only run the method counter on CI
-  runOnEachPackage = ci
-}
-
-apply plugin: 'com.diffplug.gradle.spotless'
-spotless {
-  kotlin {
-    target "**/*.kt"
-    ktlint(ktlint_version)
-    licenseHeaderFile '../spotless/copyright.kt'
-  }
-}
-
 // Manifest version information!
 def versionMajor = 0
 def versionMinor = 0
