@@ -43,7 +43,7 @@ class DataModule {
     @Singleton
     fun provideDatabase(application: Application): HuntersDatabase {
         return Room.databaseBuilder(application, HuntersDatabase::class.java, "database")
-                .build()
+            .build()
     }
 
     @Provides
@@ -55,9 +55,9 @@ class DataModule {
         huntersDatabase: HuntersDatabase
     ): PostRepository {
         return PostRepositoryData(
-                PostRemoteDataSource(postService, converter, dispatchersProvider),
-                PostLocalDataSource(huntersDatabase.postDao()),
-                dispatchersProvider
+            PostRemoteDataSource(postService, converter, dispatchersProvider),
+            PostLocalDataSource(huntersDatabase.postDao()),
+            dispatchersProvider
         )
     }
 
@@ -70,9 +70,9 @@ class DataModule {
     ): CollectionRepository {
 
         return CollectionDataRepository(
-                CollectionLocalDataSource(huntersDatabase.collectionDao()),
-                CollectionRemoteDataSource(collectionService, dispatchersProvider),
-                dispatchersProvider
+            CollectionLocalDataSource(huntersDatabase.collectionDao()),
+            CollectionRemoteDataSource(collectionService, dispatchersProvider),
+            dispatchersProvider
         )
     }
 }

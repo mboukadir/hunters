@@ -23,16 +23,18 @@ import javax.inject.Inject
 class PostsResponseConverter @Inject constructor() {
     fun convert(postsResponse: PostsResponse): List<PostEntity> {
         return postsResponse.postResponses.map {
-            PostEntity(it.id,
-                    it.name,
-                    it.tagline,
-                    it.redirectUrl,
-                    it.votesCount,
-                    it.commentsCount,
-                    it.day,
-                    it.createdAt,
-                    it.screenshotUrl.smallImgUrl,
-                    it.thumbnail.imageUrl)
+            PostEntity(
+                it.id,
+                it.name,
+                it.tagline,
+                it.redirectUrl,
+                it.votesCount,
+                it.commentsCount,
+                it.day,
+                it.createdAt,
+                it.screenshotUrl.smallImgUrl,
+                it.thumbnail.imageUrl
+            )
         }
     }
 }

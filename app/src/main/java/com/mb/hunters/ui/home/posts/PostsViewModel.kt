@@ -21,9 +21,9 @@ import com.mb.hunters.common.dispatcher.DispatchersProvider
 import com.mb.hunters.data.repository.post.PostRepository
 import com.mb.hunters.ui.base.BaseViewModel
 import dagger.Lazy
+import javax.inject.Inject
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import javax.inject.Inject
 
 class PostsViewModel @Inject constructor(
     private val mapper: PostMapper,
@@ -43,10 +43,10 @@ class PostsViewModel @Inject constructor(
         viewModelScope.launch {
             runCatching {
                 toDayPosts.value = postRepository.get()
-                        .refreshPosts(0)
-                        .map {
-                            mapper.mapToUiModel(it)
-                        }
+                    .refreshPosts(0)
+                    .map {
+                        mapper.mapToUiModel(it)
+                    }
             }.onFailure {
                 Timber.e(it)
             }
@@ -61,10 +61,10 @@ class PostsViewModel @Inject constructor(
         viewModelScope.launch {
             runCatching {
                 liveData.value = postRepository.get()
-                        .loadPosts(daysAgo)
-                        .map {
-                            mapper.mapToUiModel(it)
-                        }
+                    .loadPosts(daysAgo)
+                    .map {
+                        mapper.mapToUiModel(it)
+                    }
             }.onFailure {
                 Timber.e(it)
             }

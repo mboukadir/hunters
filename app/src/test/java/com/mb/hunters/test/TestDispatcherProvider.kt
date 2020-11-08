@@ -22,5 +22,5 @@ import kotlinx.coroutines.Dispatchers.Unconfined
 object TestDispatcherProvider {
 
     val dispatcherProvider =
-            DispatchersProvider(Unconfined, Unconfined, Unconfined)
+        DispatchersProvider(Unconfined, Unconfined, Unconfined)
 }

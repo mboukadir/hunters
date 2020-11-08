@@ -22,12 +22,13 @@ import javax.inject.Inject
 class CollectionMapper @Inject constructor() {
 
     fun mapToUiModel(collectionEntityList: List<CollectionEntity>) =
-            collectionEntityList.map { mapToUiModel(it) }
+        collectionEntityList.map { mapToUiModel(it) }
 
     fun mapToUiModel(collectionEntity: CollectionEntity) = CollectionUiModel(
-            id = collectionEntity.id,
-            name = collectionEntity.name,
-            title = collectionEntity.title,
-            collectionUrl = collectionEntity.collectionUrl,
-            backgroundImageUrl = collectionEntity.backgroundImageUrl)
+        id = collectionEntity.id,
+        name = collectionEntity.name,
+        title = collectionEntity.title,
+        collectionUrl = collectionEntity.collectionUrl,
+        backgroundImageUrl = collectionEntity.backgroundImageUrl
+    )
 }

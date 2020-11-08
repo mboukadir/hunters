@@ -18,15 +18,13 @@ package com.mb.hunters.data.repository.collection.local
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
-import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.google.common.truth.Truth
+import androidx.test.platform.app.InstrumentationRegistry
 import com.google.common.truth.Truth.assertThat
 import com.mb.hunters.data.database.HuntersDatabase
 import com.mb.hunters.data.database.entity.CollectionEntity
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.After
 import org.junit.Before
@@ -49,10 +47,12 @@ class CollectionLocalDataSourceTest {
     @Before
     fun initDb() {
 
-        database = Room.inMemoryDatabaseBuilder(InstrumentationRegistry.getInstrumentation().targetContext,
-                HuntersDatabase::class.java)
-                .allowMainThreadQueries()
-                .build()
+        database = Room.inMemoryDatabaseBuilder(
+            InstrumentationRegistry.getInstrumentation().targetContext,
+            HuntersDatabase::class.java
+        )
+            .allowMainThreadQueries()
+            .build()
 
         collectionLocalDataRepository = CollectionLocalDataSource(database.collectionDao())
     }
@@ -77,17 +77,18 @@ class CollectionLocalDataSourceTest {
 
     companion object {
         val COLLECTION = CollectionEntity(
-                id = 1,
-                name = "name",
-                title = "title",
-                collectionUrl = "collectionUrl",
-                backgroundImageUrl = "backgroundImageUrl"
+            id = 1,
+            name = "name",
+            title = "title",
+            collectionUrl = "collectionUrl",
+            backgroundImageUrl = "backgroundImageUrl"
         )
 
-        val COLLECTIONS = listOf(COLLECTION,
-                COLLECTION.copy(id = 2),
-                COLLECTION.copy(id = 3),
-                COLLECTION.copy(id = 4)
+        val COLLECTIONS = listOf(
+            COLLECTION,
+            COLLECTION.copy(id = 2),
+            COLLECTION.copy(id = 3),
+            COLLECTION.copy(id = 4)
         )
     }
 }

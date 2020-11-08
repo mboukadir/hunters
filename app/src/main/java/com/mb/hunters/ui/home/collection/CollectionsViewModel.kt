@@ -21,12 +21,12 @@ import com.mb.hunters.common.dispatcher.DispatchersProvider
 import com.mb.hunters.data.repository.collection.CollectionRepository
 import com.mb.hunters.ui.base.BaseViewModel
 import com.mb.hunters.ui.common.SingleLiveEvent
+import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 class CollectionsViewModel @Inject constructor(
@@ -37,9 +37,9 @@ class CollectionsViewModel @Inject constructor(
 
     val errorMessage = SingleLiveEvent<String>()
     val collections = collectionRepository.getCollections()
-            .map { mapper.mapToUiModel(it) }
-            .flowOn(dispatchersProvider.computation)
-            .asLiveData(viewModelScope.coroutineContext)
+        .map { mapper.mapToUiModel(it) }
+        .flowOn(dispatchersProvider.computation)
+        .asLiveData(viewModelScope.coroutineContext)
 
     fun onClicked() {
     }

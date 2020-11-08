@@ -20,8 +20,8 @@ import com.mb.hunters.data.repository.collection.CollectionRepository
 import com.mb.hunters.data.repository.post.PostRepository
 import dagger.Module
 import dagger.Provides
-import org.mockito.Mockito
 import javax.inject.Singleton
+import org.mockito.Mockito
 
 @Module
 class TestDataModule {

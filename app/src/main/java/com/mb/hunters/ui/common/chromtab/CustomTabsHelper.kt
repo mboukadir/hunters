@@ -85,9 +85,13 @@ object CustomTabsHelper {
         } else if (packagesSupportingCustomTabs.size == 1) {
             sPackageNameToUse = packagesSupportingCustomTabs[0]
         } else if (!TextUtils.isEmpty(
-                defaultViewHandlerPackageName) && !hasSpecializedHandlerIntents(
-                context, activityIntent) && packagesSupportingCustomTabs.contains(
-                defaultViewHandlerPackageName)) {
+            defaultViewHandlerPackageName
+        ) && !hasSpecializedHandlerIntents(
+                context, activityIntent
+            ) && packagesSupportingCustomTabs.contains(
+                defaultViewHandlerPackageName
+            )
+        ) {
             sPackageNameToUse = defaultViewHandlerPackageName
         } else if (packagesSupportingCustomTabs.contains(STABLE_PACKAGE)) {
             sPackageNameToUse = STABLE_PACKAGE

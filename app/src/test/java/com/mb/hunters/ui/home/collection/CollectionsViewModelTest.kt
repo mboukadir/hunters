@@ -59,9 +59,9 @@ class CollectionsViewModelTest {
         val observer = mock<Observer<List<CollectionUiModel>>>()
 
         val collectionsViewModel = CollectionsViewModel(
-                TestDispatcherProvider.dispatcherProvider,
-                mapper,
-                collectionRepository
+            TestDispatcherProvider.dispatcherProvider,
+            mapper,
+            collectionRepository
         )
 
         // WHEN
@@ -77,9 +77,9 @@ class CollectionsViewModelTest {
         given(collectionRepository.syncCollections()).willAnswer { throw Exception("Error") }
 
         val collectionsViewModel = CollectionsViewModel(
-                TestDispatcherProvider.dispatcherProvider,
-                mapper,
-                collectionRepository
+            TestDispatcherProvider.dispatcherProvider,
+            mapper,
+            collectionRepository
         )
         // WHEN
         collectionsViewModel.syncCollections()
@@ -87,36 +87,36 @@ class CollectionsViewModelTest {
         // THEN
         collectionsViewModel.errorMessage.observeForTesting {
             assertThat(collectionsViewModel.errorMessage.value)
-                    .isEqualTo("Error")
+                .isEqualTo("Error")
         }
     }
 
     companion object {
 
         val COLLECTION_ENTITY = CollectionEntity(
-                id = 1,
-                name = "name",
-                title = "title",
-                collectionUrl = "collectionUrl",
-                backgroundImageUrl = "backgroundImageUrl"
+            id = 1,
+            name = "name",
+            title = "title",
+            collectionUrl = "collectionUrl",
+            backgroundImageUrl = "backgroundImageUrl"
         )
 
         val COLLECTION_MODEL = CollectionUiModel(
-                id = COLLECTION_ENTITY.id,
-                name = COLLECTION_ENTITY.name,
-                title = COLLECTION_ENTITY.title,
-                collectionUrl = COLLECTION_ENTITY.collectionUrl,
-                backgroundImageUrl = COLLECTION_ENTITY.backgroundImageUrl
+            id = COLLECTION_ENTITY.id,
+            name = COLLECTION_ENTITY.name,
+            title = COLLECTION_ENTITY.title,
+            collectionUrl = COLLECTION_ENTITY.collectionUrl,
+            backgroundImageUrl = COLLECTION_ENTITY.backgroundImageUrl
         )
 
         val COLLECTION_ENTITY_LIST = listOf(
-                COLLECTION_ENTITY,
-                COLLECTION_ENTITY.copy(id = 2)
+            COLLECTION_ENTITY,
+            COLLECTION_ENTITY.copy(id = 2)
         )
 
         val COLLECTION_MODEL_LIST = listOf(
-                COLLECTION_MODEL,
-                COLLECTION_MODEL.copy(id = 2)
+            COLLECTION_MODEL,
+            COLLECTION_MODEL.copy(id = 2)
 
         )
     }

@@ -22,8 +22,8 @@ import com.mb.hunters.di.AppModule.InternalAppModule
 import com.mb.hunters.ui.UiModule
 import dagger.Module
 import dagger.Provides
-import kotlinx.coroutines.Dispatchers
 import javax.inject.Singleton
+import kotlinx.coroutines.Dispatchers
 
 @Module(includes = [InternalAppModule::class, UiModule::class, DataModule::class])
 abstract class AppModule {

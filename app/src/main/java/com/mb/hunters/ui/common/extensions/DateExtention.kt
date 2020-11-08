@@ -32,12 +32,12 @@ fun Date.daysAgo(): Long {
  */
 fun dateAt(daysAgo: Long): Date {
     return Calendar.getInstance()
-            .apply {
-                timeInMillis = System.currentTimeMillis() - TimeUnit.DAYS.toMillis(daysAgo)
-                set(Calendar.HOUR_OF_DAY, 0)
-                set(Calendar.MINUTE, 0)
-                set(Calendar.SECOND, 0)
-                set(Calendar.MILLISECOND, 0)
-            }
-            .time
+        .apply {
+            timeInMillis = System.currentTimeMillis() - TimeUnit.DAYS.toMillis(daysAgo)
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
+        .time
 }

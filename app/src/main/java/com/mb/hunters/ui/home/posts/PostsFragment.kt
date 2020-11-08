@@ -30,9 +30,9 @@ import com.mb.hunters.R
 import com.mb.hunters.ui.base.BaseFragment
 import com.mb.hunters.ui.base.Navigator
 import com.mb.hunters.ui.common.EndlessRecyclerViewScrollListener
+import javax.inject.Inject
 import kotlinx.android.synthetic.main.home_post_fragment_list.*
 import kotlinx.android.synthetic.main.home_post_fragment_list.view.*
-import javax.inject.Inject
 
 class PostsFragment : BaseFragment(), PostAdapter.ItemActionListener {
 
@@ -96,16 +96,18 @@ class PostsFragment : BaseFragment(), PostAdapter.ItemActionListener {
             layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
             adapter = this@PostsFragment.postAdapter
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
-            addOnScrollListener(EndlessRecyclerViewScrollListener(
+            addOnScrollListener(
+                EndlessRecyclerViewScrollListener(
                     layoutManager as androidx.recyclerview.widget.LinearLayoutManager
-            ) { _: Int, recyclerView: androidx.recyclerview.widget.RecyclerView ->
-                recyclerView.post {
-                    if (postAdapter.showLoadingMore.not()) {
-                        postAdapter.startLoadingMore()
-                        postViewModel.loadMore(postAdapter.getLastItemDayAgo() + 1)
+                ) { _: Int, recyclerView: androidx.recyclerview.widget.RecyclerView ->
+                    recyclerView.post {
+                        if (postAdapter.showLoadingMore.not()) {
+                            postAdapter.startLoadingMore()
+                            postViewModel.loadMore(postAdapter.getLastItemDayAgo() + 1)
+                        }
                     }
                 }
-            })
+            )
         }
     }
 

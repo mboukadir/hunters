@@ -43,29 +43,29 @@ class CollectionMapperTest {
     companion object {
 
         val COLLECTION_ENTITY = CollectionEntity(
-                id = 1,
-                name = "name",
-                title = "title",
-                collectionUrl = "collectionUrl",
-                backgroundImageUrl = "backgroundImageUrl"
+            id = 1,
+            name = "name",
+            title = "title",
+            collectionUrl = "collectionUrl",
+            backgroundImageUrl = "backgroundImageUrl"
         )
 
         val COLLECTION_MODEL = CollectionUiModel(
-                id = COLLECTION_ENTITY.id,
-                name = COLLECTION_ENTITY.name,
-                title = COLLECTION_ENTITY.title,
-                collectionUrl = COLLECTION_ENTITY.collectionUrl,
-                backgroundImageUrl = COLLECTION_ENTITY.backgroundImageUrl
+            id = COLLECTION_ENTITY.id,
+            name = COLLECTION_ENTITY.name,
+            title = COLLECTION_ENTITY.title,
+            collectionUrl = COLLECTION_ENTITY.collectionUrl,
+            backgroundImageUrl = COLLECTION_ENTITY.backgroundImageUrl
         )
 
         val COLLECTION_ENTITY_LIST = listOf(
-                CollectionsViewModelTest.COLLECTION_ENTITY,
-                CollectionsViewModelTest.COLLECTION_ENTITY.copy(id = 2)
+            CollectionsViewModelTest.COLLECTION_ENTITY,
+            CollectionsViewModelTest.COLLECTION_ENTITY.copy(id = 2)
         )
 
         val COLLECTION_MODEL_LIST = listOf(
-                CollectionsViewModelTest.COLLECTION_MODEL,
-                CollectionsViewModelTest.COLLECTION_MODEL.copy(id = 2)
+            CollectionsViewModelTest.COLLECTION_MODEL,
+            CollectionsViewModelTest.COLLECTION_MODEL.copy(id = 2)
 
         )
     }
