@@ -27,9 +27,7 @@ import javax.inject.Singleton
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.HttpLoggingInterceptor.Level
-import okhttp3.logging.HttpLoggingInterceptor.Logger
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import timber.log.Timber
 
@@ -40,11 +38,7 @@ class ApiModule {
     @Singleton
     fun provideOkHttp(): OkHttpClient {
 
-        val logging = HttpLoggingInterceptor(object : Logger {
-            override fun log(message: String) {
-                Timber.tag("Okhttp").d(message)
-            }
-        })
+        val logging = HttpLoggingInterceptor { message -> Timber.tag("Okhttp").d(message) }
         logging.level = Level.BODY
         return OkHttpClient.Builder()
             .addInterceptor(AuthInterceptor(BuildConfig.PROCUCT_HUNT_DEVELOPER_TOKEN))
@@ -68,7 +62,6 @@ class ApiModule {
             .baseUrl("https://api.producthunt.com/")
             .client(okHttpClient)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
     }
 

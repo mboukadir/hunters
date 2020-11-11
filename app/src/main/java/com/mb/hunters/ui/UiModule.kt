@@ -16,8 +16,6 @@
 
 package com.mb.hunters.ui
 
-import com.mb.hunters.common.rxscheduler.AppSchedulerProvider
-import com.mb.hunters.common.rxscheduler.SchedulerProvider
 import com.mb.hunters.ui.base.Navigator
 import com.mb.hunters.ui.common.HuntersNavigator
 import dagger.Binds
@@ -25,9 +23,6 @@ import dagger.Module
 
 @Module
 abstract class UiModule {
-
-    @Binds
-    abstract fun bindSchedularProvider(schedulerProvider: AppSchedulerProvider): SchedulerProvider
 
     @Binds
     abstract fun bindNavigator(huntersNavigator: HuntersNavigator): Navigator
