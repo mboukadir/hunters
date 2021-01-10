@@ -17,36 +17,25 @@
 package com.mb.hunters.di
 
 import com.mb.hunters.common.dispatcher.DispatchersProvider
-import com.mb.hunters.di.TestAppModule.InternalTestAppModule
-import com.mb.hunters.ui.UiModule
-import com.mb.hunters.ui.home.di.HomeBuilderModule
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
 import javax.inject.Singleton
 import kotlinx.coroutines.Dispatchers
 
-@Module(
-    includes = [
-        InternalTestAppModule::class,
-        TestDataModule::class,
-        HomeBuilderModule::class,
-        UiModule::class
-    ]
-)
-class TestAppModule {
+@InstallIn(ApplicationComponent::class)
+@Module
+object TestAppModule {
 
-    @Module
-    internal object InternalTestAppModule {
-
-        @JvmStatic
-        @Singleton
-        @Provides
-        fun provideCoroutinesDispatcherProvider(): DispatchersProvider {
-            return DispatchersProvider(
-                Dispatchers.Unconfined,
-                Dispatchers.Unconfined,
-                Dispatchers.Unconfined
-            )
-        }
+    @JvmStatic
+    @Singleton
+    @Provides
+    fun provideCoroutinesDispatcherProvider(): DispatchersProvider {
+        return DispatchersProvider(
+            Dispatchers.Unconfined,
+            Dispatchers.Unconfined,
+            Dispatchers.Unconfined
+        )
     }
 }

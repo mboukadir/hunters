@@ -22,7 +22,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -30,18 +29,17 @@ import com.google.android.material.snackbar.Snackbar
 import com.mb.hunters.R
 import com.mb.hunters.ui.base.BaseFragment
 import com.mb.hunters.ui.base.Navigator
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import kotlinx.android.synthetic.main.home_collection_fragment_list.*
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-@ExperimentalCoroutinesApi
+@AndroidEntryPoint
 class CollectionsFragment : BaseFragment(), CollectionsAdapter.ItemActionListener {
 
     @Inject
     lateinit var navigator: Navigator
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-    private val collectionsViewModel: CollectionsViewModel by viewModels { viewModelFactory }
+
+    private val collectionsViewModel: CollectionsViewModel by viewModels()
     private lateinit var collectionAdapter: CollectionsAdapter
 
     override fun onCreateView(

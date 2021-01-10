@@ -34,8 +34,11 @@ import com.mb.hunters.data.repository.post.remote.PostRemoteDataSource
 import com.mb.hunters.data.repository.post.remote.PostsResponseConverter
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
 import javax.inject.Singleton
 
+@InstallIn(ApplicationComponent::class)
 @Module(includes = [(ApiModule::class)])
 class DataModule {
 

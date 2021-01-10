@@ -17,10 +17,10 @@
 package com.mb.hunters.ui.base
 
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.mb.hunters.ui.common.extensions.ensureRuntimeTheme
-import dagger.android.support.DaggerAppCompatActivity
 
-abstract class BaseActivity : DaggerAppCompatActivity() {
+abstract class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         this.ensureRuntimeTheme()

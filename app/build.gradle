@@ -3,6 +3,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
 
 apply plugin: 'jacoco'
 apply from: "${rootDir}/code_quality/android-sonarqube.gradle"
@@ -14,183 +15,188 @@ def versionPatch = 1
 def versionBuild = 0
 
 android {
-  compileSdkVersion 30
+    compileSdkVersion 30
 
-  defaultConfig {
-    applicationId "com.mb.hunters"
-    minSdkVersion 21
-    targetSdkVersion 30
+    defaultConfig {
+        applicationId "com.mb.hunters"
+        minSdkVersion 21
+        targetSdkVersion 30
 
-    versionCode versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100 + versionBuild
-    versionName "${versionMajor}.${versionMinor}.${versionPatch}"
+        versionCode versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100 + versionBuild
+        versionName "${versionMajor}.${versionMinor}.${versionPatch}"
 
-    buildConfigField "String", "PROCUCT_HUNT_DEVELOPER_TOKEN", "\"" + propOrDef("PROCUCT_HUNT_DEVELOPER_TOKEN", "") + "\""
-
-
-    testInstrumentationRunner "com.mb.hunters.TestRunner"
-  }
+        buildConfigField "String", "PROCUCT_HUNT_DEVELOPER_TOKEN", "\"" + propOrDef("PROCUCT_HUNT_DEVELOPER_TOKEN", "") + "\""
 
 
-  signingConfigs {
-    releaseConfig {
-      //TODO
-
+        testInstrumentationRunner "com.mb.hunters.TestRunner"
     }
 
-    debugConfig {
-      keyAlias 'debug'
-      keyPassword 'p@ssw0rd'
-      storePassword 'p@ssw0rd'
-      storeFile rootProject.file("signing/app-debug.keystore")
-    }
-  }
 
-  buildTypes {
+    signingConfigs {
+        releaseConfig {
+            //TODO
 
-    debug {
-      // Enabling multidex support.
-      signingConfig signingConfigs.debugConfig
-      applicationIdSuffix '.debug'
-      versionNameSuffix "-debug [${getGitHash()}]"
-      //http://tools.android.com/tech-docs/new-build-system/built-in-shrinker
-      //shrinkResources false
-      minifyEnabled false
-      useProguard false
-      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-      testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguardTest-rules.pro'
+        }
+
+        debugConfig {
+            keyAlias 'debug'
+            keyPassword 'p@ssw0rd'
+            storePassword 'p@ssw0rd'
+            storeFile rootProject.file("signing/app-debug.keystore")
+        }
     }
 
-    release {
-      signingConfig null
-      shrinkResources true
-      minifyEnabled true
-      useProguard true
-      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    buildTypes {
+
+        debug {
+            // Enabling multidex support.
+            signingConfig signingConfigs.debugConfig
+            applicationIdSuffix '.debug'
+            versionNameSuffix "-debug [${getGitHash()}]"
+            //http://tools.android.com/tech-docs/new-build-system/built-in-shrinker
+            //shrinkResources false
+            minifyEnabled false
+            useProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguardTest-rules.pro'
+        }
+
+        release {
+            signingConfig null
+            shrinkResources true
+            minifyEnabled true
+            useProguard true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
     }
-  }
 
-  compileOptions {
-    sourceCompatibility JavaVersion.VERSION_1_8
-    targetCompatibility JavaVersion.VERSION_1_8
-  }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 
-  kotlinOptions {
-    jvmTarget = JavaVersion.VERSION_1_8.toString()
-  }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
 
-  dexOptions {
-    // Don't pre-dex on CI
-    preDexLibraries !ci
-  }
+    dexOptions {
+        // Don't pre-dex on CI
+        preDexLibraries !ci
+    }
 
-  packagingOptions {
-    exclude 'LICENSE.txt'
-  }
+    packagingOptions {
+        exclude 'LICENSE.txt'
+    }
 }
 
 androidExtensions {
-  experimental = true
+    experimental = true
 }
 
 dependencies {
-  implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-  implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-  implementation "androidx.activity:activity-ktx:1.1.0"
-  implementation "androidx.fragment:fragment-ktx:1.2.5"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "androidx.activity:activity-ktx:1.1.0"
+    implementation "androidx.fragment:fragment-ktx:1.2.5"
 
-  implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-  implementation 'androidx.appcompat:appcompat:1.3.0-alpha02'
-  implementation 'com.google.android.material:material:1.3.0-alpha03'
-  implementation 'androidx.recyclerview:recyclerview:1.2.0-alpha06'
-  implementation 'androidx.browser:browser:1.3.0-alpha06'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.3.0-alpha02'
+    implementation 'com.google.android.material:material:1.3.0-alpha03'
+    implementation 'androidx.recyclerview:recyclerview:1.2.0-alpha06'
+    implementation 'androidx.browser:browser:1.3.0-alpha06'
 
-  implementation "androidx.constraintlayout:constraintlayout:${constraintLayout_version}"
-
-
-  implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
-  implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
-  implementation "androidx.lifecycle:lifecycle-runtime-ktx:${lifecycle_version}"
-  implementation "androidx.lifecycle:lifecycle-extensions:${lifecycle_version}"
-  implementation "androidx.lifecycle:lifecycle-reactivestreams-ktx:${lifecycle_version}"
-  kapt "androidx.lifecycle:lifecycle-common-java8:${lifecycle_version}"
-
-  implementation "androidx.room:room-runtime:${room_version}"
-  implementation "androidx.room:room-ktx:${room_version}"
-  kapt "androidx.room:room-compiler:${room_version}"
-
-  implementation "com.google.dagger:dagger:${dagger_version}"
-  implementation "com.google.dagger:dagger-android:${dagger_version}"
-  implementation "com.google.dagger:dagger-android-support:${dagger_version}"
-  kapt "com.google.dagger:dagger-compiler:${dagger_version}"
-  kapt "com.google.dagger:dagger-android-processor:${dagger_version}"
+    implementation "androidx.constraintlayout:constraintlayout:${constraintLayout_version}"
 
 
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:${lifecycle_version}"
+    implementation "androidx.lifecycle:lifecycle-extensions:${lifecycle_version}"
+    implementation "androidx.lifecycle:lifecycle-reactivestreams-ktx:${lifecycle_version}"
+    kapt "androidx.lifecycle:lifecycle-common-java8:${lifecycle_version}"
 
-  implementation "com.squareup.retrofit2:retrofit:${retrofit_version}"
-  implementation "com.squareup.retrofit2:converter-moshi:${retrofit_version}"
-  implementation "com.squareup.okhttp3:okhttp:${okhttp_version}"
-  implementation "com.squareup.moshi:moshi:${moshi_version}"
-  implementation "com.squareup.moshi:moshi-kotlin:${moshi_version}"
-  implementation "com.squareup.moshi:moshi-adapters:${moshi_version}"
+    implementation "androidx.room:room-runtime:${room_version}"
+    implementation "androidx.room:room-ktx:${room_version}"
+    kapt "androidx.room:room-compiler:${room_version}"
 
-  implementation 'com.jakewharton.timber:timber:4.7.1'
-
-  implementation 'com.github.bumptech.glide:glide:4.11.0'
-
-  // Coroutines
-  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
-  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
-  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-rx2:$coroutines_version"
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
 
 
-  releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:${leakcanary_version}"
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_jetpack_version"
+    kapt "androidx.hilt:hilt-compiler:$hilt_jetpack_version"
 
-  debugImplementation "com.squareup.retrofit2:retrofit-mock:${retrofit_version}"
-  implementation "com.squareup.okhttp3:logging-interceptor:${okhttp_version}"
+    implementation "com.squareup.retrofit2:retrofit:${retrofit_version}"
+    implementation "com.squareup.retrofit2:converter-moshi:${retrofit_version}"
+    implementation "com.squareup.okhttp3:okhttp:${okhttp_version}"
+    implementation "com.squareup.moshi:moshi:${moshi_version}"
+    implementation "com.squareup.moshi:moshi-kotlin:${moshi_version}"
+    implementation "com.squareup.moshi:moshi-adapters:${moshi_version}"
 
-  // Dependencies for local unit tests
-  testImplementation "junit:junit:${junit_version}"
-  testImplementation "org.mockito:mockito-core:${mockito_version}"
-  testImplementation "org.hamcrest:hamcrest-all:${hamcrest_version}"
-  testImplementation 'androidx.arch.core:core-testing:2.1.0'
-  testImplementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-  testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
-  testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
+    implementation 'com.jakewharton.timber:timber:4.7.1'
 
-  testImplementation "com.google.truth:truth:1.0.1"
-  testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+
+    // Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-rx2:$coroutines_version"
 
 
+    releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:${leakcanary_version}"
 
-  // AndroidX Test - Instrumented testing
-  androidTestImplementation "androidx.test:core-ktx:1.3.0"
-  androidTestImplementation "androidx.test.ext:junit-ktx:1.1.2"
-  androidTestImplementation "androidx.test:rules:1.3.0"
-  androidTestImplementation "androidx.room:room-testing:${room_version}"
-  androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
+    debugImplementation "com.squareup.retrofit2:retrofit-mock:${retrofit_version}"
+    implementation "com.squareup.okhttp3:logging-interceptor:${okhttp_version}"
 
-  // Dependencies for Android unit tests
-  androidTestImplementation "junit:junit:${junit_version}"
-  androidTestImplementation "org.mockito:mockito-android:3.3.0"
-  androidTestImplementation "com.google.truth:truth:1.0.1"
-  androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
+    // Dependencies for local unit tests
+    testImplementation "junit:junit:${junit_version}"
+    testImplementation "org.mockito:mockito-core:${mockito_version}"
+    testImplementation "org.hamcrest:hamcrest-all:${hamcrest_version}"
+    testImplementation 'androidx.arch.core:core-testing:2.1.0'
+    testImplementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
 
-  kaptAndroidTest "com.google.dagger:dagger-compiler:${dagger_version}"
-  kaptAndroidTest "com.google.dagger:dagger-android-processor:${dagger_version}"
+    testImplementation "com.google.truth:truth:1.0.1"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
 
-  // Espresso UI Testing
-  androidTestImplementation "androidx.test.espresso:espresso-core:${espresso_version}"
-  androidTestImplementation "androidx.test.espresso:espresso-contrib:${espresso_version}"
-  androidTestImplementation "androidx.test.espresso:espresso-intents:${espresso_version}"
+
+    // AndroidX Test - Instrumented testing
+    androidTestImplementation "androidx.test:core-ktx:1.3.0"
+    androidTestImplementation "androidx.test.ext:junit-ktx:1.1.2"
+    androidTestImplementation "androidx.test:rules:1.3.0"
+    androidTestImplementation "androidx.room:room-testing:${room_version}"
+    androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
+
+    // Dependencies for Android unit tests
+    androidTestImplementation "junit:junit:${junit_version}"
+    androidTestImplementation "org.mockito:mockito-android:3.3.0"
+    androidTestImplementation "com.google.truth:truth:1.0.1"
+    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
+
+    androidTestImplementation "com.google.dagger:hilt-android-testing:$hilt_version"
+    kaptAndroidTest "com.google.dagger:hilt-android-compiler:$hilt_version"
+
+    // Espresso UI Testing
+    androidTestImplementation "androidx.test.espresso:espresso-core:${espresso_version}"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:${espresso_version}"
+    androidTestImplementation "androidx.test.espresso:espresso-intents:${espresso_version}"
+
+
 
 }
 
 def getGitHash() {
-  def stdout = new ByteArrayOutputStream()
-  exec {
-    commandLine 'git', 'rev-parse', '--short', 'HEAD'
-    standardOutput = stdout
-  }
-  return stdout.toString().trim()
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'rev-parse', '--short', 'HEAD'
+        standardOutput = stdout
+    }
+    return stdout.toString().trim()
+}
+
+String propOrDef(String propertyName, String defaultValue) {
+    def propertyValue = project.properties[propertyName]
+    return propertyValue != null ? propertyValue : defaultValue
 }

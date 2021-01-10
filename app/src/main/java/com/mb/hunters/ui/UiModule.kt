@@ -20,10 +20,12 @@ import com.mb.hunters.ui.base.Navigator
 import com.mb.hunters.ui.common.HuntersNavigator
 import dagger.Binds
 import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
 
+@InstallIn(ApplicationComponent::class)
 @Module
 abstract class UiModule {
-
     @Binds
     abstract fun bindNavigator(huntersNavigator: HuntersNavigator): Navigator
 }

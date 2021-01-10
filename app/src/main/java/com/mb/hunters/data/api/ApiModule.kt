@@ -22,6 +22,8 @@ import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
 import java.util.*
 import javax.inject.Singleton
 import okhttp3.OkHttpClient
@@ -31,6 +33,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import timber.log.Timber
 
+@InstallIn(ApplicationComponent::class)
 @Module
 class ApiModule {
 
