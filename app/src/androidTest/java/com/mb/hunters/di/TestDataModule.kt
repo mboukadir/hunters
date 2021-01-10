@@ -20,10 +20,13 @@ import com.mb.hunters.data.repository.collection.CollectionRepository
 import com.mb.hunters.data.repository.post.PostRepository
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
 import javax.inject.Singleton
 import org.mockito.Mockito
 
 @Module
+@InstallIn(ApplicationComponent::class)
 class TestDataModule {
 
     @Provides

@@ -17,29 +17,25 @@
 package com.mb.hunters.di
 
 import com.mb.hunters.common.dispatcher.DispatchersProvider
-import com.mb.hunters.data.DataModule
-import com.mb.hunters.di.AppModule.InternalAppModule
-import com.mb.hunters.ui.UiModule
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
 import javax.inject.Singleton
 import kotlinx.coroutines.Dispatchers
 
-@Module(includes = [InternalAppModule::class, UiModule::class, DataModule::class])
-abstract class AppModule {
+@InstallIn(ApplicationComponent::class)
+@Module
+object AppModule {
 
-    @Module
-    internal object InternalAppModule {
-
-        @JvmStatic
-        @Singleton
-        @Provides
-        fun provideCoroutinesDispatcherProvider(): DispatchersProvider {
-            return DispatchersProvider(
-                main = Dispatchers.Main,
-                io = Dispatchers.IO,
-                computation = Dispatchers.Default
-            )
-        }
+    @JvmStatic
+    @Singleton
+    @Provides
+    fun provideCoroutinesDispatcherProvider(): DispatchersProvider {
+        return DispatchersProvider(
+            main = Dispatchers.Main,
+            io = Dispatchers.IO,
+            computation = Dispatchers.Default
+        )
     }
 }

@@ -27,9 +27,11 @@ import com.mb.hunters.ui.common.chromtab.CustomTabActivityHelper
 import com.mb.hunters.ui.common.extensions.replaceFragmentInActivity
 import com.mb.hunters.ui.home.collection.CollectionsFragment
 import com.mb.hunters.ui.home.posts.PostsFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.home_activity.*
 import timber.log.Timber
 
+@AndroidEntryPoint
 class HomeActivity : BaseActivity() {
 
     private val customTabActivityHelper = CustomTabActivityHelper()

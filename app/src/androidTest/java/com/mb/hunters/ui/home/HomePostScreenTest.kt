@@ -28,48 +28,51 @@ import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import com.mb.hunters.R
 import com.mb.hunters.R.id
-import com.mb.hunters.TestApplication
+import com.mb.hunters.data.DataModule
 import com.mb.hunters.data.database.entity.PostEntity
+import com.mb.hunters.data.repository.post.PostRepository
+import com.mb.hunters.di.AppModule
 import com.mb.hunters.test.RecyclerViewMatcher
 import com.mb.hunters.ui.home.posts.PostMapper
 import com.mb.hunters.ui.home.posts.PostUiModel
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.android.testing.UninstallModules
 import java.util.Calendar
+import javax.inject.Inject
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.AdditionalMatchers
-import org.mockito.ArgumentMatchers
 import org.mockito.Mockito.`when`
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)
+@HiltAndroidTest
+@UninstallModules(value = [DataModule::class, AppModule::class])
 class HomePostScreenTest {
 
     @get:Rule
     @JvmField
     val activity = ActivityTestRule(HomeActivity::class.java, false, false)
 
+    @get:Rule
+    var hiltRule = HiltAndroidRule(this)
+
+    @Inject
+    lateinit var postRepository: PostRepository
+
     @Before
     fun setup() {
-
-        runBlockingTest {
-            `when`(
-                TestApplication.appComponent().postRepository().loadPosts(
-                    AdditionalMatchers.not(ArgumentMatchers.eq(0L))
-                )
-            )
-                .thenReturn(emptyList())
-        }
     }
 
     @Ignore
     @Test
     fun activityLaunches() = runBlockingTest {
 
-        `when`(TestApplication.appComponent().postRepository().loadPosts(0))
+        `when`(postRepository.loadPosts(0))
             .thenReturn(listOf(POST))
 
         activity.launchActivity(null)
@@ -78,7 +81,7 @@ class HomePostScreenTest {
     @Ignore
     @Test
     fun postsDisplay() = runBlockingTest {
-        `when`(TestApplication.appComponent().postRepository().loadPosts(0))
+        `when`(postRepository.loadPosts(0))
             .thenReturn((listOf(POST)))
 
         activity.launchActivity(null)
@@ -90,7 +93,7 @@ class HomePostScreenTest {
     @Test
     fun postsAreScrollable() = runBlockingTest {
 
-        `when`(TestApplication.appComponent().postRepository().loadPosts(0))
+        `when`(postRepository.loadPosts(0))
             .thenReturn(POSTS)
 
         activity.launchActivity(null)

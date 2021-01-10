@@ -23,26 +23,25 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.mb.hunters.R
 import com.mb.hunters.ui.base.BaseFragment
 import com.mb.hunters.ui.base.Navigator
 import com.mb.hunters.ui.common.EndlessRecyclerViewScrollListener
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import kotlinx.android.synthetic.main.home_post_fragment_list.*
 import kotlinx.android.synthetic.main.home_post_fragment_list.view.*
 
+@AndroidEntryPoint
 class PostsFragment : BaseFragment(), PostAdapter.ItemActionListener {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
     @Inject
     lateinit var navigator: Navigator
 
     private lateinit var postAdapter: PostAdapter
-    private val postViewModel: PostsViewModel by viewModels { viewModelFactory }
+    private val postViewModel: PostsViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

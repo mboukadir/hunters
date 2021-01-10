@@ -16,12 +16,12 @@
 
 package com.mb.hunters
 
-import com.mb.hunters.di.DaggerAppComponent
-import dagger.android.AndroidInjector
-import dagger.android.support.DaggerApplication
+import android.app.Application
+import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 
-class HuntersApplication : DaggerApplication() {
+@HiltAndroidApp
+class HuntersApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
@@ -30,12 +30,5 @@ class HuntersApplication : DaggerApplication() {
             Timber.plant(Timber.DebugTree())
             // Stetho.initializeWithDefaults(this)
         }
-    }
-
-    override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
-        val daggerAppComponent = DaggerAppComponent.builder().application(this).build()
-
-        daggerAppComponent.inject(this)
-        return daggerAppComponent
     }
 }

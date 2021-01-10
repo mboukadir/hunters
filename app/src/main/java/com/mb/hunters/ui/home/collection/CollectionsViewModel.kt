@@ -16,20 +16,18 @@
 
 package com.mb.hunters.ui.home.collection
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.asLiveData
 import com.mb.hunters.common.dispatcher.DispatchersProvider
 import com.mb.hunters.data.repository.collection.CollectionRepository
 import com.mb.hunters.ui.base.BaseViewModel
 import com.mb.hunters.ui.common.SingleLiveEvent
-import javax.inject.Inject
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
-@ExperimentalCoroutinesApi
-class CollectionsViewModel @Inject constructor(
+class CollectionsViewModel @ViewModelInject constructor(
     dispatchersProvider: DispatchersProvider,
     private val mapper: CollectionMapper,
     private val collectionRepository: CollectionRepository
