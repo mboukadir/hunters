@@ -41,6 +41,7 @@ class PostsFragment : BaseFragment(), PostAdapter.ItemActionListener {
     lateinit var navigator: Navigator
 
     private lateinit var postAdapter: PostAdapter
+
     private val postViewModel: PostsViewModel by viewModels()
 
     override fun onCreateView(
