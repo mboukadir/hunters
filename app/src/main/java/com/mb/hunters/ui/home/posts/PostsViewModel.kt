@@ -16,16 +16,18 @@
 
 package com.mb.hunters.ui.home.posts
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.mb.hunters.common.dispatcher.DispatchersProvider
 import com.mb.hunters.data.repository.post.PostRepository
 import com.mb.hunters.ui.base.BaseViewModel
 import dagger.Lazy
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class PostsViewModel @ViewModelInject constructor(
+@HiltViewModel
+class PostsViewModel @Inject constructor(
     private val mapper: PostMapper,
     private val postRepository: Lazy<PostRepository>,
     dispatchersProvider: DispatchersProvider
