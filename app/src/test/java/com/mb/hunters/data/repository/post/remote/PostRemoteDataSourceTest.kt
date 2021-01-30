@@ -19,7 +19,7 @@ package com.mb.hunters.data.repository.post.remote
 import com.google.common.truth.Truth
 import com.mb.hunters.data.api.PostService
 import com.mb.hunters.data.api.model.PostsResponse
-import com.mb.hunters.data.database.entity.PostEntity
+import com.mb.hunters.data.repository.post.Post
 import com.mb.hunters.test.TestDispatcherProvider
 import com.nhaarman.mockitokotlin2.mock
 import kotlinx.coroutines.test.runBlockingTest
@@ -48,7 +48,7 @@ class PostRemoteDataSourceTest {
     fun `Should return post entity list`() = runBlockingTest {
         // GIVEN
         val postsResponse = mock<PostsResponse>()
-        val postEntitiesExpected = mock<List<PostEntity>>()
+        val postEntitiesExpected = mock<List<Post>>()
 
         given(service.getPostsBy(0)).willReturn(postsResponse)
         given(converter.convert(postsResponse)).willReturn(postEntitiesExpected)

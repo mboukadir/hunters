@@ -35,5 +35,7 @@
   <color name="secondaryTextColor">#000000</color>
   <color name="background_transparent">#64575454</color>
 
+  <color name="immersive_sys_ui">#33000000</color>
+  <color name="nav_bar">@android:color/transparent</color>
 
 </resources>

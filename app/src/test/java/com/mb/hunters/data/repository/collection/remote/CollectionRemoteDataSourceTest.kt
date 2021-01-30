@@ -18,7 +18,7 @@ package com.mb.hunters.data.repository.collection.remote
 
 import com.google.common.truth.Truth.assertThat
 import com.mb.hunters.data.api.CollectionService
-import com.mb.hunters.data.api.model.Collection
+import com.mb.hunters.data.api.model.CollectionResponse
 import com.mb.hunters.data.api.model.CollectionsResponse
 import com.mb.hunters.test.TestDispatcherProvider
 import kotlinx.coroutines.test.runBlockingTest
@@ -65,7 +65,7 @@ class CollectionRemoteDataSourceTest {
 
         val COLLECTIONS_RESPONSE_EMPTY = CollectionsResponse(emptyList())
 
-        val COLLECTION = Collection(
+        val COLLECTION = CollectionResponse(
             id = 1,
             name = "name",
             title = "title",

@@ -16,23 +16,16 @@
 
 package com.mb.hunters.data.repository.post
 
-import com.google.common.truth.Truth.*
-import com.mb.hunters.data.database.entity.PostEntity
-import com.mb.hunters.data.repository.post.local.PostLocalDataSource
+import com.google.common.truth.Truth.assertThat
 import com.mb.hunters.data.repository.post.remote.PostRemoteDataSource
-import com.mb.hunters.test.TestDispatcherProvider
 import com.nhaarman.mockitokotlin2.given
 import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.never
-import com.nhaarman.mockitokotlin2.then
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
-import kotlinx.coroutines.withTimeout
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.exceptions.base.MockitoException
 import org.mockito.junit.MockitoJUnitRunner
 
 @ExperimentalCoroutinesApi
@@ -41,8 +34,6 @@ class PostRepositoryDataTest {
 
     @Mock
     lateinit var postRemoteDataSource: PostRemoteDataSource
-    @Mock
-    lateinit var postLocalDataSource: PostLocalDataSource
 
     private lateinit var postRepository: PostRepositoryData
 
@@ -50,15 +41,13 @@ class PostRepositoryDataTest {
     fun setup() {
         postRepository = PostRepositoryData(
             postRemoteDataSource,
-            postLocalDataSource,
-            TestDispatcherProvider.dispatcherProvider
         )
     }
 
     @Test
-    fun `Should load posts from remote and save it in local cache`() = runBlockingTest {
+    fun `Should load posts from remote `() = runBlockingTest {
         // GIVEN
-        val expected = mock<List<PostEntity>>()
+        val expected = mock<List<Post>>()
         given(postRemoteDataSource.getPosts(0)).willReturn(expected)
 
         // WHEN
@@ -66,35 +55,5 @@ class PostRepositoryDataTest {
 
         // THEN
         assertThat(actual).isEqualTo(expected)
-        then(postLocalDataSource).should().savePosts(expected)
-    }
-
-    @Test
-    fun `Should load posts from local when load from remote failed`() = runBlockingTest {
-        // GIVEN
-        val expected = mock<List<PostEntity>>()
-        given(postLocalDataSource.getPostsAtDaysAgoOrOlder(0)).willReturn(expected)
-        given(postRemoteDataSource.getPosts(0)).willThrow(MockitoException(""))
-
-        // WHEN
-        val actual = postRepository.loadPosts(0)
-
-        // THEN
-        assertThat(actual).isEqualTo(expected)
-    }
-
-    @Test
-    fun `Should load post not load post from local when propagates Cancellation when job was canceled`() = runBlockingTest {
-        // GIVEN
-        val expected = mock<List<PostEntity>>()
-        given(postRemoteDataSource.getPosts(0)).willReturn(expected)
-
-        // WHEN
-        withTimeout(1) {
-            postRepository.loadPosts(0)
-        }
-        advanceTimeBy(1)
-        // THEN
-        then(postLocalDataSource).should(never()).getPostsAtDaysAgoOrOlder(0)
     }
 }

@@ -14,9 +14,16 @@
  * limitations under the License.
  */
 
-package com.mb.hunters.data.repository.post
+package com.mb.hunters.data.api.model
 
-interface PostRepository {
-    suspend fun loadPosts(daysAgo: Long): List<Post>
-    suspend fun refreshPosts(daysAgo: Long): List<Post>
-}
+import com.squareup.moshi.Json
+
+data class CollectionResponse(
+    val id: Long,
+    val name: String,
+    val title: String?,
+    @Json(name = "background_image_url")
+    val backgroundImageUrl: String?,
+    @Json(name = "collection_url")
+    val collectionUrl: String
+)

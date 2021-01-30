@@ -16,9 +16,11 @@
 
 package com.mb.hunters.ui.home.posts
 
-import com.mb.hunters.data.database.entity.PostEntity
+import com.google.common.truth.Truth
+import com.mb.hunters.data.repository.post.Post
+import com.mb.hunters.ui.home.posts.model.PostMapper
+import com.mb.hunters.ui.home.posts.model.PostUiModel
 import java.util.Calendar
-import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
@@ -33,35 +35,46 @@ class PostMapperTest {
     @Test
     fun shouldMapToUiModelReturnMappedUiModelForTodayPost() {
 
-        val postUiModel = postMapper.mapToUiModel(POST)
+        val posts = listOf(POST)
 
-        assertEquals(0, postUiModel.id)
-        assertEquals("Name", postUiModel.title)
-        assertEquals("TagLine", postUiModel.subTitle)
-        assertEquals("redirectUrl", postUiModel.postUrl)
-        assertEquals(1, postUiModel.votesCount)
-        assertEquals(1, postUiModel.commentsCount)
-        assertEquals("screenshotUrl", postUiModel.bigImageUrl)
-        assertEquals("thumbnailUrl", postUiModel.smallImageUrl)
-        assertEquals(0, postUiModel.daysAgo)
-        assertEquals(TODAY.toString(), postUiModel.date)
+        val postUiModel = postMapper.mapToUiModel(posts)
+
+        Truth.assertThat(postUiModel).containsExactly(
+            PostUiModel(
+                id = 0,
+                title = "Name",
+                subTitle = "TagLine",
+                postUrl = "redirectUrl",
+                votesCount = 1,
+                commentsCount = 1,
+                date = TODAY.toString(),
+                bigImageUrl = "screenshotUrl",
+                smallImageUrl = "thumbnailUrl",
+                daysAgo = 0
+            )
+        )
     }
 
     @Test
     fun shouldMapToUiModelReturnMappedUiModelForYsterDayPost() {
 
-        val postUiModel = postMapper.mapToUiModel(YESTERDAY_POST)
+        val posts = listOf(YESTERDAY_POST)
+        val postUiModel = postMapper.mapToUiModel(posts)
 
-        assertEquals(0, postUiModel.id)
-        assertEquals("Name", postUiModel.title)
-        assertEquals("TagLine", postUiModel.subTitle)
-        assertEquals("redirectUrl", postUiModel.postUrl)
-        assertEquals(1, postUiModel.votesCount)
-        assertEquals(1, postUiModel.commentsCount)
-        assertEquals("screenshotUrl", postUiModel.bigImageUrl)
-        assertEquals("thumbnailUrl", postUiModel.smallImageUrl)
-        assertEquals(1, postUiModel.daysAgo)
-        assertEquals(YESTERDAY.toString(), postUiModel.date)
+        Truth.assertThat(postUiModel).containsExactly(
+            PostUiModel(
+                id = 0,
+                title = "Name",
+                subTitle = "TagLine",
+                postUrl = "redirectUrl",
+                votesCount = 1,
+                commentsCount = 1,
+                date = YESTERDAY.toString(),
+                bigImageUrl = "screenshotUrl",
+                smallImageUrl = "thumbnailUrl",
+                daysAgo = 1
+            )
+        )
     }
 
     companion object {
@@ -78,7 +91,7 @@ class PostMapperTest {
             add(Calendar.DATE, -1)
         }.time
 
-        private val POST = PostEntity(
+        private val POST = Post(
             id = 0,
             name = "Name",
             tagline = "TagLine",

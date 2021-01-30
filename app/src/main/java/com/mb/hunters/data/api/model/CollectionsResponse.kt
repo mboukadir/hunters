@@ -16,4 +16,4 @@
 
 package com.mb.hunters.data.api.model
 
-data class CollectionsResponse(val collections: List<Collection>)
+data class CollectionsResponse(val collections: List<CollectionResponse>)

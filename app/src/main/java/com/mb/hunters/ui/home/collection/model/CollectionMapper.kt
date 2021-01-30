@@ -14,9 +14,21 @@
  * limitations under the License.
  */
 
-package com.mb.hunters.data.repository.post
+package com.mb.hunters.ui.home.collection.model
 
-interface PostRepository {
-    suspend fun loadPosts(daysAgo: Long): List<Post>
-    suspend fun refreshPosts(daysAgo: Long): List<Post>
+import com.mb.hunters.data.repository.collection.Collection
+import javax.inject.Inject
+
+class CollectionMapper @Inject constructor() {
+
+    fun mapToUiModel(collectionEntityList: List<Collection>) =
+        collectionEntityList.map { mapToUiModel(it) }
+
+    fun mapToUiModel(collection: Collection) = CollectionUiModel(
+        id = collection.id,
+        name = collection.name,
+        title = collection.title,
+        collectionUrl = collection.collectionUrl,
+        backgroundImageUrl = collection.backgroundImageUrl
+    )
 }
