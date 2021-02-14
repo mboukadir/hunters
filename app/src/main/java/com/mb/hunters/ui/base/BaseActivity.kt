@@ -16,14 +16,6 @@
 
 package com.mb.hunters.ui.base
 
-import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.mb.hunters.ui.common.extensions.ensureRuntimeTheme
 
-abstract class BaseActivity : AppCompatActivity() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        this.ensureRuntimeTheme()
-        super.onCreate(savedInstanceState)
-    }
-}
+abstract class BaseActivity : AppCompatActivity()

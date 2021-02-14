@@ -18,15 +18,16 @@ package com.mb.hunters.ui.home.posts
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.mb.hunters.data.database.entity.PostEntity
+import com.mb.hunters.data.repository.post.Post
 import com.mb.hunters.data.repository.post.PostRepository
 import com.mb.hunters.test.TestDispatcherProvider.dispatcherProvider
+import com.mb.hunters.ui.home.posts.model.PostMapper
+import com.mb.hunters.ui.home.posts.model.PostUiModel
 import com.nhaarman.mockitokotlin2.given
+import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.then
-import dagger.Lazy
-import java.util.Calendar
+import com.nhaarman.mockitokotlin2.times
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -40,94 +41,74 @@ class PostsViewModelTest {
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Mock
-    lateinit var postRepositoryLazy: Lazy<PostRepository>
-    @Mock
     lateinit var postRepository: PostRepository
+
+    @Mock
+    lateinit var mapper: PostMapper
+
     @Mock
     lateinit var observer: Observer<List<PostUiModel>>
-
-    private lateinit var postsViewModel: PostsViewModel
-
-    @Before
-    fun setup() {
-
-        given(postRepositoryLazy.get()).willReturn(postRepository)
-        postsViewModel = PostsViewModel(postMapper, postRepositoryLazy, dispatcherProvider)
-    }
 
     @Test
     fun `Should load to day posts and return list of ui post`() = runBlockingTest {
         // GIVEN
-        given(postRepository.loadPosts(0)).willReturn(POSTS)
-        postsViewModel.toDayPosts.observeForever(observer)
+        val posts = mock<List<Post>>()
+        val postUiModels = mock<List<PostUiModel>>()
+        given(postRepository.loadPosts(0)).willReturn(posts)
+        given(mapper.mapToUiModel(posts)).willReturn(postUiModels)
+
+        val subject = newViewModel()
 
         // WHEN
-        postsViewModel.loadToDayPost()
+        subject.posts.observeForever(observer)
 
         // THEN
         then(postRepository).should().loadPosts(0)
-        then(observer).should().onChanged(POSTS_UI_MODELS)
+        then(observer).should().onChanged(postUiModels)
     }
 
     @Test
     fun `Should load more posts and return list of ui post`() = runBlockingTest {
-
         // GIVEN
-        given(postRepository.loadPosts(1)).willReturn(POSTS)
-        postsViewModel.morePosts.observeForever(observer)
+        val postsToday = mock<List<Post>>()
+        val postUiModelsToday = listOf<PostUiModel>(mock())
+        val postsYesterday = mock<List<Post>>()
+        val postUiModelsYesterday = listOf<PostUiModel>(mock())
+
+        given(postRepository.loadPosts(0)).willReturn(postsToday)
+        given(mapper.mapToUiModel(postsToday)).willReturn(postUiModelsToday)
+
+        given(postRepository.loadPosts(1)).willReturn(postsYesterday)
+        given(mapper.mapToUiModel(postsYesterday)).willReturn(postUiModelsYesterday)
+
+        val subject = newViewModel()
+        subject.posts.observeForever(observer)
 
         // WHEN
-        postsViewModel.loadMore(1)
+        subject.loadMore(0)
 
         // THEN
-        then(postRepository).should().loadPosts(1)
-        then(observer).should().onChanged(POSTS_UI_MODELS)
+        then(observer).should().onChanged(postUiModelsToday + postUiModelsYesterday)
     }
 
     @Test
     fun `Should refresh today post and return list of ui post`() = runBlockingTest {
         // GIVEN
-        given(postRepository.refreshPosts(0)).willReturn(POSTS)
-        postsViewModel.toDayPosts.observeForever(observer)
+        val posts = mock<List<Post>>()
+        val postUiModels = mock<List<PostUiModel>>()
+        given(postRepository.loadPosts(0)).willReturn(posts)
+        given(mapper.mapToUiModel(posts)).willReturn(postUiModels)
+
+        val subject = newViewModel()
+        subject.posts.observeForever(observer)
 
         // WHEN
-        postsViewModel.refreshToDayPost()
+        subject.refreshToDayPost()
 
         // THEN
-        then(observer).should().onChanged(POSTS_UI_MODELS)
+        then(postRepository).should(times(2)).loadPosts(0)
+        then(observer).should(times(2)).onChanged(postUiModels)
     }
 
-    companion object {
-
-        val postMapper = PostMapper()
-
-        private val TODAY = Calendar.getInstance().apply {
-            set(Calendar.HOUR, 0)
-            set(Calendar.MINUTE, 0)
-            set(Calendar.SECOND, 0)
-        }.time
-
-        private val POST = PostEntity(
-            id = 0,
-            name = "Name",
-            tagline = "TagLine",
-            redirectUrl = "redirectUrl",
-            votesCount = 1,
-            commentsCount = 1,
-            day = TODAY,
-            createdAt = TODAY,
-            thumbnailUrl = "thumbnailUrl",
-            screenshotUrl = "screenshotUrl"
-        )
-
-        private val POSTS = listOf(
-            POST,
-            POST.copy(id = 2)
-        )
-
-        private val POSTS_UI_MODELS = POSTS.map {
-
-            postMapper.mapToUiModel(it)
-        }
-    }
+    private fun newViewModel() = PostsViewModel(mapper, postRepository, dispatcherProvider)
 }

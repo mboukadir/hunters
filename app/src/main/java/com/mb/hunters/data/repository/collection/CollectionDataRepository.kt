@@ -17,36 +17,28 @@
 package com.mb.hunters.data.repository.collection
 
 import com.mb.hunters.common.dispatcher.DispatchersProvider
-import com.mb.hunters.data.api.model.Collection
-import com.mb.hunters.data.database.entity.CollectionEntity
-import com.mb.hunters.data.repository.collection.local.CollectionLocalDataSource
+import com.mb.hunters.data.api.model.CollectionResponse
 import com.mb.hunters.data.repository.collection.remote.CollectionRemoteDataSource
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 
 class CollectionDataRepository(
-    private val localDataSource: CollectionLocalDataSource,
     private val remoteDataSource: CollectionRemoteDataSource,
     private val dispatchersProvider: DispatchersProvider
 ) : CollectionRepository {
-    override fun getCollections(): Flow<List<CollectionEntity>> =
-        localDataSource.getCollections()
-
-    override suspend fun syncCollections(): Unit = withContext(dispatchersProvider.computation) {
-        mapToCollectionEntityList(remoteDataSource.getCollections()).run {
-            localDataSource.save(this)
+    override suspend fun getCollections(): List<Collection> =
+        withContext(dispatchersProvider.computation) {
+            mapToCollectionEntityList(remoteDataSource.getCollections())
         }
-    }
 
     private fun mapToCollectionEntityList(
-        collectionList: List<Collection>
-    ): List<CollectionEntity> {
+        collectionList: List<CollectionResponse>
+    ): List<Collection> {
 
         return collectionList.map {
-            CollectionEntity(
+            Collection(
                 id = it.id,
                 name = it.name,
-                title = it.title,
+                title = it.title.orEmpty(),
                 backgroundImageUrl = it.backgroundImageUrl ?: "",
                 collectionUrl = it.collectionUrl
             )

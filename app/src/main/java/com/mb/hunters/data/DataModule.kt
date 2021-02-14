@@ -16,20 +16,15 @@
 
 package com.mb.hunters.data
 
-import android.app.Application
-import androidx.room.Room
 import com.mb.hunters.common.dispatcher.DispatchersProvider
 import com.mb.hunters.data.api.ApiModule
 import com.mb.hunters.data.api.CollectionService
 import com.mb.hunters.data.api.PostService
-import com.mb.hunters.data.database.HuntersDatabase
 import com.mb.hunters.data.repository.collection.CollectionDataRepository
 import com.mb.hunters.data.repository.collection.CollectionRepository
-import com.mb.hunters.data.repository.collection.local.CollectionLocalDataSource
 import com.mb.hunters.data.repository.collection.remote.CollectionRemoteDataSource
 import com.mb.hunters.data.repository.post.PostRepository
 import com.mb.hunters.data.repository.post.PostRepositoryData
-import com.mb.hunters.data.repository.post.local.PostLocalDataSource
 import com.mb.hunters.data.repository.post.remote.PostRemoteDataSource
 import com.mb.hunters.data.repository.post.remote.PostsResponseConverter
 import dagger.Module
@@ -44,23 +39,13 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun provideDatabase(application: Application): HuntersDatabase {
-        return Room.databaseBuilder(application, HuntersDatabase::class.java, "database")
-            .build()
-    }
-
-    @Provides
-    @Singleton
     fun providePostRepository(
         postService: PostService,
         converter: PostsResponseConverter,
-        dispatchersProvider: DispatchersProvider,
-        huntersDatabase: HuntersDatabase
+        dispatchersProvider: DispatchersProvider
     ): PostRepository {
         return PostRepositoryData(
-            PostRemoteDataSource(postService, converter, dispatchersProvider),
-            PostLocalDataSource(huntersDatabase.postDao()),
-            dispatchersProvider
+            PostRemoteDataSource(postService, converter, dispatchersProvider)
         )
     }
 
@@ -68,12 +53,9 @@ class DataModule {
     @Singleton
     fun provideCollectionRepository(
         collectionService: CollectionService,
-        huntersDatabase: HuntersDatabase,
         dispatchersProvider: DispatchersProvider
     ): CollectionRepository {
-
         return CollectionDataRepository(
-            CollectionLocalDataSource(huntersDatabase.collectionDao()),
             CollectionRemoteDataSource(collectionService, dispatchersProvider),
             dispatchersProvider
         )

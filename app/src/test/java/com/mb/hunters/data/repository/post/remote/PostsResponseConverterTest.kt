@@ -21,7 +21,7 @@ import com.mb.hunters.data.api.model.PostResponse
 import com.mb.hunters.data.api.model.PostsResponse
 import com.mb.hunters.data.api.model.ScreenshotUrl
 import com.mb.hunters.data.api.model.Thumbnail
-import com.mb.hunters.data.database.entity.PostEntity
+import com.mb.hunters.data.repository.post.Post
 import java.util.*
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -66,7 +66,7 @@ class PostsResponseConverterTest {
                 imageUrl = "imageUrl"
             )
         )
-        val postEntityExpected = PostEntity(
+        val postEntityExpected = Post(
             id = 1,
             name = "name",
             tagline = "tagline",

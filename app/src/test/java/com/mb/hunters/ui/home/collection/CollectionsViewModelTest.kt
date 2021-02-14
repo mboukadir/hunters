@@ -18,16 +18,15 @@ package com.mb.hunters.ui.home.collection
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.google.common.truth.Truth.assertThat
-import com.mb.hunters.data.database.entity.CollectionEntity
+import com.mb.hunters.data.repository.collection.Collection
 import com.mb.hunters.data.repository.collection.CollectionRepository
 import com.mb.hunters.test.MainCoroutineRule
 import com.mb.hunters.test.TestDispatcherProvider
-import com.mb.hunters.test.observeForTesting
+import com.mb.hunters.ui.home.collection.model.CollectionMapper
+import com.mb.hunters.ui.home.collection.model.CollectionUiModel
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.then
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Rule
 import org.junit.Test
@@ -54,7 +53,7 @@ class CollectionsViewModelTest {
     @Test
     fun `Should display collections list with success`() = mainCoroutineRule.runBlockingTest {
         // GIVEN
-        given(collectionRepository.getCollections()).willReturn(flowOf(COLLECTION_ENTITY_LIST))
+        given(collectionRepository.getCollections()).willReturn(COLLECTION_ENTITY_LIST)
         given(mapper.mapToUiModel(COLLECTION_ENTITY_LIST)).willReturn(COLLECTION_MODEL_LIST)
         val observer = mock<Observer<List<CollectionUiModel>>>()
 
@@ -71,29 +70,9 @@ class CollectionsViewModelTest {
         then(observer).should().onChanged(COLLECTION_MODEL_LIST)
     }
 
-    @Test
-    fun `Should show error when load collection failed`() = mainCoroutineRule.runBlockingTest {
-        // GIVEN
-        given(collectionRepository.syncCollections()).willAnswer { throw Exception("Error") }
-
-        val collectionsViewModel = CollectionsViewModel(
-            TestDispatcherProvider.dispatcherProvider,
-            mapper,
-            collectionRepository
-        )
-        // WHEN
-        collectionsViewModel.syncCollections()
-
-        // THEN
-        collectionsViewModel.errorMessage.observeForTesting {
-            assertThat(collectionsViewModel.errorMessage.value)
-                .isEqualTo("Error")
-        }
-    }
-
     companion object {
 
-        val COLLECTION_ENTITY = CollectionEntity(
+        val COLLECTION_ENTITY = Collection(
             id = 1,
             name = "name",
             title = "title",

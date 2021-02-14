@@ -18,7 +18,7 @@ package com.mb.hunters.data.repository.collection.remote
 
 import com.mb.hunters.common.dispatcher.DispatchersProvider
 import com.mb.hunters.data.api.CollectionService
-import com.mb.hunters.data.api.model.Collection
+import com.mb.hunters.data.api.model.CollectionResponse
 import kotlinx.coroutines.withContext
 
 class CollectionRemoteDataSource(
@@ -26,7 +26,7 @@ class CollectionRemoteDataSource(
     private val dispatchersProvider: DispatchersProvider
 ) {
 
-    suspend fun getCollections(): List<Collection> = withContext(dispatchersProvider.computation) {
+    suspend fun getCollections(): List<CollectionResponse> = withContext(dispatchersProvider.computation) {
         collectionService.getCollections().collections
     }
 }

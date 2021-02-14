@@ -17,13 +17,13 @@
 package com.mb.hunters.data.repository.post.remote
 
 import com.mb.hunters.data.api.model.PostsResponse
-import com.mb.hunters.data.database.entity.PostEntity
+import com.mb.hunters.data.repository.post.Post
 import javax.inject.Inject
 
 class PostsResponseConverter @Inject constructor() {
-    fun convert(postsResponse: PostsResponse): List<PostEntity> {
+    fun convert(postsResponse: PostsResponse): List<Post> {
         return postsResponse.postResponses.map {
-            PostEntity(
+            Post(
                 it.id,
                 it.name,
                 it.tagline,

@@ -17,7 +17,9 @@
 package com.mb.hunters.ui.home.collection
 
 import com.google.common.truth.Truth.assertThat
-import com.mb.hunters.data.database.entity.CollectionEntity
+import com.mb.hunters.data.repository.collection.Collection
+import com.mb.hunters.ui.home.collection.model.CollectionMapper
+import com.mb.hunters.ui.home.collection.model.CollectionUiModel
 import org.junit.Test
 
 class CollectionMapperTest {
@@ -42,7 +44,7 @@ class CollectionMapperTest {
 
     companion object {
 
-        val COLLECTION_ENTITY = CollectionEntity(
+        val COLLECTION_ENTITY = Collection(
             id = 1,
             name = "name",
             title = "title",

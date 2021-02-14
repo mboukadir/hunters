@@ -10,10 +10,10 @@
       android:label="@string/app_name"
       android:roundIcon="@mipmap/ic_launcher_round"
       android:supportsRtl="true"
-      android:theme="@style/PreviewTheme.Hunters">
+      android:theme="@style/Theme.Hunters.Immersive">
     <activity
         android:name=".ui.home.HomeActivity"
-        android:theme="@style/PreviewTheme.Hunters.Home"
+        android:theme="@style/Theme.Hunters.Immersive"
         >
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>

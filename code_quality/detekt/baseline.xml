@@ -48,7 +48,7 @@
     <ID>NewLineAtEndOfFile:PerFragment.kt$com.mb.hunters.di.PerFragment.kt</ID>
     <ID>NewLineAtEndOfFile:PostDao.kt$com.mb.hunters.data.database.dao.PostDao.kt</ID>
     <ID>NewLineAtEndOfFile:PostLocalDataSource.kt$com.mb.hunters.data.repository.post.local.PostLocalDataSource.kt</ID>
-    <ID>NewLineAtEndOfFile:PostMapper.kt$com.mb.hunters.ui.home.posts.PostMapper.kt</ID>
+    <ID>NewLineAtEndOfFile:PostMapper.kt$com.mb.hunters.ui.home.posts.model.PostMapper.kt</ID>
     <ID>NewLineAtEndOfFile:PostRemoteDataSource.kt$com.mb.hunters.data.repository.post.remote.PostRemoteDataSource.kt</ID>
     <ID>NewLineAtEndOfFile:PostRepository.kt$com.mb.hunters.data.repository.post.PostRepository.kt</ID>
     <ID>NewLineAtEndOfFile:PostRepositoryData.kt$com.mb.hunters.data.repository.post.PostRepositoryData.kt</ID>

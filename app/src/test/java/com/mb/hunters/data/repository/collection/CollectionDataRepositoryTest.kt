@@ -17,17 +17,15 @@
 package com.mb.hunters.data.repository.collection
 
 import com.google.common.truth.Truth.assertThat
-import com.mb.hunters.data.api.model.Collection
-import com.mb.hunters.data.database.entity.CollectionEntity
-import com.mb.hunters.data.repository.collection.local.CollectionLocalDataSource
+import com.mb.hunters.data.api.model.CollectionResponse
 import com.mb.hunters.data.repository.collection.remote.CollectionRemoteDataSource
 import com.mb.hunters.test.TestDispatcherProvider
-import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.BDDMockito.*
+import org.mockito.BDDMockito.given
+import org.mockito.BDDMockito.then
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 
@@ -35,48 +33,34 @@ import org.mockito.junit.MockitoJUnitRunner
 class CollectionDataRepositoryTest {
 
     @Mock
-    lateinit var localDataSource: CollectionLocalDataSource
-    @Mock
     lateinit var remoteDataSource: CollectionRemoteDataSource
 
     lateinit var dataRepository: CollectionDataRepository
 
     @Before
     fun setup() {
-        dataRepository = CollectionDataRepository(localDataSource, remoteDataSource, TestDispatcherProvider.dispatcherProvider)
-    }
-
-    @Test
-    fun `Should save and return collection list received from remote data`() = runBlockingTest {
-        // GIVEN
-        given(remoteDataSource.getCollections()).willReturn(COLLECTIONS)
-        given(localDataSource.save(COLLECTIONS_ENTITY_EXPECTED)).willAnswer { }
-
-        // WHEN
-        dataRepository.syncCollections()
-
-        // THEN
-        then(localDataSource).should().save(COLLECTIONS_ENTITY_EXPECTED)
+        dataRepository =
+            CollectionDataRepository(remoteDataSource, TestDispatcherProvider.dispatcherProvider)
     }
 
     @Test
     fun `Should return local collection when remote source return error`() {
         runBlockingTest {
             // GIVEN
-            given(localDataSource.getCollections()).willReturn(flowOf(COLLECTIONS_ENTITY_EXPECTED))
+            given(remoteDataSource.getCollections()).willReturn(COLLECTIONS)
 
             // WHEN
-            val actual = dataRepository.getCollections().first()
+            val actual = dataRepository.getCollections()
 
             // THEN
-            then(localDataSource).should().getCollections()
-            assertThat(actual).containsExactlyElementsIn(COLLECTIONS_ENTITY_EXPECTED)
+            then(remoteDataSource).should().getCollections()
+            assertThat(actual).containsExactlyElementsIn(COLLECTIONS_EXPECTED)
         }
     }
 
     companion object {
 
-        val COLLECTION = Collection(
+        val COLLECTION = CollectionResponse(
             id = 1,
             name = "name",
             title = "title",
@@ -84,10 +68,10 @@ class CollectionDataRepositoryTest {
             backgroundImageUrl = "backgroundImageUrl"
         )
 
-        val COLLECTION_ENTITY = CollectionEntity(
+        val COLLECTION_ENTITY = Collection(
             id = COLLECTION.id,
             name = COLLECTION.name,
-            title = COLLECTION.title,
+            title = COLLECTION.title.orEmpty(),
             collectionUrl = COLLECTION.collectionUrl,
             backgroundImageUrl = COLLECTION.backgroundImageUrl ?: ""
         )
@@ -99,7 +83,7 @@ class CollectionDataRepositoryTest {
             COLLECTION.copy(id = 4)
         )
 
-        val COLLECTIONS_ENTITY_EXPECTED = listOf(
+        val COLLECTIONS_EXPECTED = listOf(
             COLLECTION_ENTITY,
             COLLECTION_ENTITY.copy(id = 2),
             COLLECTION_ENTITY.copy(id = 3),

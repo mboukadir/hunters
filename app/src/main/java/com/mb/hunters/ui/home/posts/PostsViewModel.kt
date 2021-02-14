@@ -16,11 +16,13 @@
 
 package com.mb.hunters.ui.home.posts
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.mb.hunters.common.dispatcher.DispatchersProvider
 import com.mb.hunters.data.repository.post.PostRepository
 import com.mb.hunters.ui.base.BaseViewModel
-import dagger.Lazy
+import com.mb.hunters.ui.home.posts.model.PostMapper
+import com.mb.hunters.ui.home.posts.model.PostUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.launch
@@ -29,44 +31,47 @@ import timber.log.Timber
 @HiltViewModel
 class PostsViewModel @Inject constructor(
     private val mapper: PostMapper,
-    private val postRepository: Lazy<PostRepository>,
+    private val postRepository: PostRepository,
     dispatchersProvider: DispatchersProvider
 
 ) : BaseViewModel(dispatchersProvider) {
 
-    val morePosts = MutableLiveData<List<PostUiModel>>()
-    val toDayPosts = MutableLiveData<List<PostUiModel>>()
+    private val _posts = MutableLiveData<List<PostUiModel>>()
+    val posts: LiveData<List<PostUiModel>> = _posts
 
-    fun loadToDayPost() {
-        loadPosts(liveData = toDayPosts)
+    init {
+        loadToDayPost()
     }
 
-    fun refreshToDayPost() {
+    private fun loadToDayPost() {
         viewModelScope.launch {
             runCatching {
-                toDayPosts.value = postRepository.get()
-                    .refreshPosts(0)
-                    .map {
-                        mapper.mapToUiModel(it)
-                    }
+                _posts.value =
+                    mapper.mapToUiModel(
+                        postRepository
+                            .loadPosts(0)
+                    )
             }.onFailure {
                 Timber.e(it)
             }
         }
     }
 
-    fun loadMore(daysAgo: Long) {
-        loadPosts(daysAgo, morePosts)
+    fun refreshToDayPost() {
+        loadToDayPost()
     }
 
-    private fun loadPosts(daysAgo: Long = 0, liveData: MutableLiveData<List<PostUiModel>>) {
+    fun loadMore(currentDay: Long) {
+        loadPosts(currentDay + 1)
+    }
+
+    private fun loadPosts(daysAgo: Long = 0) {
         viewModelScope.launch {
             runCatching {
-                liveData.value = postRepository.get()
-                    .loadPosts(daysAgo)
-                    .map {
-                        mapper.mapToUiModel(it)
-                    }
+                val newItems = mapper.mapToUiModel(
+                    postRepository.loadPosts(daysAgo)
+                )
+                _posts.value = _posts.value!!.toMutableList() + newItems
             }.onFailure {
                 Timber.e(it)
             }

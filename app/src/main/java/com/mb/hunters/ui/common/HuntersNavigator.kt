@@ -24,7 +24,7 @@ import com.mb.hunters.R
 import com.mb.hunters.ui.base.Navigator
 import com.mb.hunters.ui.common.chromtab.CustomTabActivityHelper
 import com.mb.hunters.ui.common.chromtab.WebviewFallback
-import com.mb.hunters.ui.home.posts.PostUiModel
+import com.mb.hunters.ui.home.posts.model.PostUiModel
 import dagger.Reusable
 import javax.inject.Inject
 

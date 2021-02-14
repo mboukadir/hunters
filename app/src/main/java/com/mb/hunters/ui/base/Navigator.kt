@@ -17,7 +17,7 @@
 package com.mb.hunters.ui.base
 
 import android.app.Activity
-import com.mb.hunters.ui.home.posts.PostUiModel
+import com.mb.hunters.ui.home.posts.model.PostUiModel
 
 interface Navigator {
     fun toDetailPost(from: Activity, post: PostUiModel)

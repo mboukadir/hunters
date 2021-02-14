@@ -14,9 +14,17 @@
  * limitations under the License.
  */
 
-package com.mb.hunters.data.repository.post
+package com.mb.hunters.ui.home.posts.model
 
-interface PostRepository {
-    suspend fun loadPosts(daysAgo: Long): List<Post>
-    suspend fun refreshPosts(daysAgo: Long): List<Post>
-}
+data class PostUiModel(
+    val id: Long,
+    val title: String,
+    val subTitle: String,
+    val postUrl: String,
+    val votesCount: Long,
+    val commentsCount: Long,
+    val daysAgo: Long,
+    val date: String,
+    val bigImageUrl: String,
+    val smallImageUrl: String
+)

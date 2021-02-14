@@ -9,12 +9,13 @@
  
  * Entirely written in [Kotlin](https://kotlinlang.org/)
  * Uses [Kotlin Croutines ](https://kotlinlang.org/docs/reference/coroutines-overview.html)
- * Uses all of the [Architecture Components](https://developer.android.com/topic/libraries/architecture/): Room, LiveData and Lifecycle-components
- * Uses [dagger-android](https://google.github.io/dagger/android.html) for dependency injection
+ * Uses Uses many of the [Architecture Components](https://developer.android.com/topic/libraries/architecture/)
+ * Uses [Jekpack Compose] (https://developer.android.com/jetpack/compose)
+ * Uses [hilt](https://dagger.dev/hilt/) for dependency injection
  
  ## Development setup
  
- First off, you require the latest Android Studio 3.0 (or newer) to be able to build the app.
+ First off, you require the Android Studio Arctic Fox Canary 6 to be able to build the app.
  
  ### Code style
 
