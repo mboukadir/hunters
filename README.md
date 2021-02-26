@@ -10,7 +10,7 @@
  * Entirely written in [Kotlin](https://kotlinlang.org/)
  * Uses [Kotlin Croutines ](https://kotlinlang.org/docs/reference/coroutines-overview.html)
  * Uses Uses many of the [Architecture Components](https://developer.android.com/topic/libraries/architecture/)
- * Uses [Jekpack Compose] (https://developer.android.com/jetpack/compose)
+ * Uses [Jekpack Compose](https://developer.android.com/jetpack/compose)
  * Uses [hilt](https://dagger.dev/hilt/) for dependency injection
  
  ## Development setup
