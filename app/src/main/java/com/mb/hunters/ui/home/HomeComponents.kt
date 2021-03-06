@@ -61,7 +61,7 @@ fun HomeBottomBar(
                     onSelectedTab(tab)
                 },
                 label = { Text(text = stringResource(id = tab.title).toUpperCase()) },
-                alwaysShowLabels = false,
+                alwaysShowLabel = false,
                 selectedContentColor = MaterialTheme.colors.secondary
             )
         }
