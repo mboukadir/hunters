@@ -23,7 +23,7 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.components.SingletonComponent
 import java.util.*
 import javax.inject.Singleton
 import okhttp3.OkHttpClient
@@ -33,7 +33,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import timber.log.Timber
 
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 @Module
 class ApiModule {
 
@@ -41,11 +41,13 @@ class ApiModule {
     @Singleton
     fun provideOkHttp(): OkHttpClient {
 
-        val logging = HttpLoggingInterceptor { message -> Timber.tag("Okhttp").d(message) }
-        logging.level = Level.BODY
         return OkHttpClient.Builder()
             .addInterceptor(AuthInterceptor(BuildConfig.PROCUCT_HUNT_DEVELOPER_TOKEN))
-            .addInterceptor(logging)
+            .addInterceptor(
+                HttpLoggingInterceptor { message -> Timber.tag("Okhttp").d(message) }.apply {
+                    level = Level.BODY
+                }
+            )
             .build()
     }
 

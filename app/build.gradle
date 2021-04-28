@@ -55,7 +55,6 @@ android {
             //http://tools.android.com/tech-docs/new-build-system/built-in-shrinker
             //shrinkResources false
             minifyEnabled false
-            useProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguardTest-rules.pro'
         }
@@ -64,7 +63,6 @@ android {
             signingConfig null
             shrinkResources true
             minifyEnabled true
-            useProguard true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -96,6 +94,11 @@ android {
     packagingOptions {
         exclude 'LICENSE.txt'
     }
+
+    lintOptions {
+        abortOnError false
+    }
+
 }
 
 androidExtensions {
@@ -107,10 +110,10 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
-    implementation "androidx.activity:activity-ktx:1.3.0-alpha03"
-    implementation "androidx.fragment:fragment-ktx:1.3.0"
+    implementation "androidx.activity:activity-ktx:1.3.0-alpha07"
+    implementation "androidx.fragment:fragment-ktx:1.3.3"
 
-    implementation "androidx.activity:activity-compose:1.3.0-alpha03"
+    implementation "androidx.activity:activity-compose:1.3.0-alpha07"
     implementation "androidx.compose.runtime:runtime:$compose_version"
     implementation "androidx.compose.ui:ui:$compose_version"
     implementation "androidx.compose.foundation:foundation-layout:$compose_version"
@@ -120,15 +123,15 @@ dependencies {
     implementation "androidx.compose.animation:animation:$compose_version"
     implementation "androidx.compose.ui:ui-tooling:$compose_version"
     implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha02"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha04"
 
     implementation "dev.chrisbanes.accompanist:accompanist-coil:0.6.0"
     implementation "dev.chrisbanes.accompanist:accompanist-insets:0.6.0"
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.appcompat:appcompat:1.3.0-beta01'
+    implementation 'androidx.appcompat:appcompat:1.3.0-rc01'
     implementation 'com.google.android.material:material:1.3.0'
-    implementation 'androidx.recyclerview:recyclerview:1.2.0-beta02'
+    implementation 'androidx.recyclerview:recyclerview:1.2.0'
     implementation 'androidx.browser:browser:1.3.0'
 
     implementation "androidx.constraintlayout:constraintlayout:${constraintLayout_version}"
@@ -142,7 +145,7 @@ dependencies {
     kapt "androidx.room:room-compiler:${room_version}"
 
     implementation "com.google.dagger:hilt-android:$hilt_version"
-    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+    kapt "com.google.dagger:hilt-compiler:$hilt_version"
 
     implementation "com.squareup.retrofit2:retrofit:${retrofit_version}"
     implementation "com.squareup.retrofit2:converter-moshi:${retrofit_version}"

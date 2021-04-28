@@ -15,6 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mb.hunters.R
 import com.mb.hunters.ui.theme.ThemedPreview
@@ -46,7 +47,8 @@ fun HomeBottomBar(
     onSelectedTab: (HomeTab) -> Unit
 ) {
     BottomNavigation(
-        modifier = modifier
+        modifier = modifier,
+        elevation = 0.dp
     ) {
         tabs.forEach { tab ->
             BottomNavigationItem(
