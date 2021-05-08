@@ -5,7 +5,7 @@ buildscript {
     ext {
         ci = System.getenv("CI") == "true"
 
-        compose_version = '1.0.0-beta05'
+        compose_version = '1.0.0-beta06'
         constraintLayout_version = '2.0.4'
         lifecycle_version = '2.3.1'
         room_version = '2.3.0'
@@ -36,7 +36,7 @@ buildscript {
     }
     dependencies {
 
-        classpath 'com.android.tools.build:gradle:7.0.0-alpha14'
+        classpath 'com.android.tools.build:gradle:7.0.0-alpha15'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "org.jetbrains.kotlin:kotlin-android-extensions:$kotlin_version"
         classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.0"
@@ -57,7 +57,7 @@ plugins {
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 
 }

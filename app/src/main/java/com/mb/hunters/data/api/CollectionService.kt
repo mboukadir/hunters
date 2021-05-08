@@ -18,9 +18,13 @@ package com.mb.hunters.data.api
 
 import com.mb.hunters.data.api.model.CollectionsResponse
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 interface CollectionService {
 
     @GET("v1/collections?search[featured]=true")
     suspend fun getCollections(): CollectionsResponse
+
+    @GET("v1/collections?search[featured]=true")
+    suspend fun getCollections(@Query("page") page: Int, @Query("per_page") per_page: Int = 2): CollectionsResponse
 }

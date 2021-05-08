@@ -18,7 +18,10 @@ package com.mb.hunters.ui.home.collection
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.paging.cachedIn
+import androidx.paging.map
 import com.mb.hunters.common.dispatcher.DispatchersProvider
+import com.mb.hunters.data.repository.collection.CollectionPagingRepository
 import com.mb.hunters.data.repository.collection.CollectionRepository
 import com.mb.hunters.ui.base.BaseViewModel
 import com.mb.hunters.ui.common.SingleLiveEvent
@@ -26,18 +29,26 @@ import com.mb.hunters.ui.home.collection.model.CollectionMapper
 import com.mb.hunters.ui.home.collection.model.CollectionUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 @HiltViewModel
 class CollectionsViewModel @Inject constructor(
     dispatchersProvider: DispatchersProvider,
     mapper: CollectionMapper,
-    collectionRepository: CollectionRepository
+    collectionRepository: CollectionRepository,
+    pagingRepository: CollectionPagingRepository
 ) : BaseViewModel(dispatchersProvider) {
 
     val errorMessage = SingleLiveEvent<String>()
     private val _collections = MutableLiveData<List<CollectionUiModel>>()
     val collections: LiveData<List<CollectionUiModel>> = _collections
+
+    val collectionsFlow = pagingRepository.getCollections().map {
+        it.map { collection ->
+            mapper.mapToUiModel(collection)
+        }
+    }.cachedIn(viewModelScope)
 
     init {
 
