@@ -61,7 +61,7 @@ class PostsResponseConverterTest {
                 largeImgUrl = "largeImgUrl"
             ),
             thumbnail = Thumbnail(
-                id = 1,
+                id = "1",
                 mediaType = "mediaType",
                 imageUrl = "imageUrl"
             )

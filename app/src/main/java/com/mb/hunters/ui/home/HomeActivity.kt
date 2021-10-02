@@ -27,14 +27,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
+import com.google.accompanist.insets.navigationBarsPadding
+import com.google.accompanist.insets.statusBarsPadding
 import com.mb.hunters.ui.base.BaseActivity
 import com.mb.hunters.ui.common.chromtab.CustomTabActivityHelper
 import com.mb.hunters.ui.home.collection.CollectionsScreen
 import com.mb.hunters.ui.home.posts.PostsScreen
 import com.mb.hunters.ui.theme.HuntersTheme
 import dagger.hilt.android.AndroidEntryPoint
-import dev.chrisbanes.accompanist.insets.navigationBarsPadding
-import dev.chrisbanes.accompanist.insets.statusBarsPadding
 
 @AndroidEntryPoint
 class HomeActivity : BaseActivity() {

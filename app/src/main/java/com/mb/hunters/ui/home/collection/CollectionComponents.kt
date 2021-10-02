@@ -1,5 +1,6 @@
 package com.mb.hunters.ui.home.collection
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -23,11 +24,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberImagePainter
 import com.mb.hunters.R
 import com.mb.hunters.ui.home.collection.model.CollectionUiModel
 import com.mb.hunters.ui.theme.ThemedPreview
 import com.mb.hunters.ui.theme.backgroundTransparent
-import dev.chrisbanes.accompanist.coil.CoilImage
 
 @Composable
 fun CollectionItem(
@@ -50,8 +51,8 @@ fun CollectionItem(
         elevation = elevation
     ) {
 
-        CoilImage(
-            data = collectionUiModel.backgroundImageUrl,
+        Image(
+            painter = rememberImagePainter(collectionUiModel.backgroundImageUrl),
             modifier = Modifier
                 .fillMaxHeight()
                 .fillMaxWidth(),

@@ -103,7 +103,7 @@ class PostsViewModelTest {
         subject.posts.observeForever(observer)
 
         // WHEN
-        subject.refreshToDayPost()
+        subject.onRefresh()
 
         // THEN
         then(postRepository).should(times(2)).loadPosts(0)

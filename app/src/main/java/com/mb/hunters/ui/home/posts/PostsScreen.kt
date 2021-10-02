@@ -21,6 +21,9 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.mb.hunters.ui.home.posts.model.PostUiModel
 import com.mb.hunters.ui.theme.ThemedPreview
 import timber.log.Timber
@@ -31,12 +34,25 @@ fun PostsScreen(
 ) {
     val viewModel = viewModel<PostsViewModel>()
     val items by viewModel.posts.observeAsState(listOf())
-    PostList(
-        posts = items,
-        modifier = modifier,
-        onItemClicked = { /* navigate*/ },
-        onNeedLoadMore = { viewModel.loadMore(it.daysAgo) }
-    )
+    val isRefreshing by viewModel.isRefreshing
+    SwipeRefresh(
+        state = rememberSwipeRefreshState(isRefreshing),
+        onRefresh = { viewModel.onRefresh() },
+        indicator = { state, trigger ->
+            SwipeRefreshIndicator(
+                state = state,
+                refreshTriggerDistance = trigger,
+                contentColor = MaterialTheme.colors.secondary
+            )
+        }
+    ) {
+        PostList(
+            posts = items,
+            modifier = modifier,
+            onItemClicked = { /* navigate*/ },
+            onNeedLoadMore = { viewModel.loadMore(it.daysAgo) }
+        )
+    }
 }
 
 @Composable

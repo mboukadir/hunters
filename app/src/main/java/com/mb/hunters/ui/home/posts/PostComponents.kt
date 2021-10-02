@@ -1,6 +1,7 @@
 package com.mb.hunters.ui.home.posts
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -29,10 +30,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.rememberImagePainter
 import com.mb.hunters.R
 import com.mb.hunters.ui.home.posts.model.PostUiModel
 import com.mb.hunters.ui.theme.ThemedPreview
-import dev.chrisbanes.accompanist.coil.CoilImage
 
 @Composable
 fun PostItem(
@@ -42,8 +43,8 @@ fun PostItem(
 
     Column(modifier = modifier.padding(16.dp)) {
 
-        CoilImage(
-            data = postUiModel.bigImageUrl,
+        Image(
+            painter = rememberImagePainter(postUiModel.bigImageUrl),
             contentDescription = stringResource(id = R.string.home_post_item_img_description),
             modifier = Modifier
                 .fillMaxWidth()
@@ -58,8 +59,8 @@ fun PostItem(
         Spacer(modifier = Modifier.height(16.dp))
 
         Row(modifier = Modifier) {
-            CoilImage(
-                data = postUiModel.smallImageUrl,
+            Image(
+                painter = rememberImagePainter(postUiModel.smallImageUrl),
                 contentDescription = stringResource(id = R.string.home_posts_item_thumbnail_discription),
                 modifier = Modifier
                     .size(46.dp)
