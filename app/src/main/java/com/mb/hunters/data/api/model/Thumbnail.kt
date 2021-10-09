@@ -19,7 +19,7 @@ package com.mb.hunters.data.api.model
 import com.squareup.moshi.Json
 
 data class Thumbnail(
-    val id: Long,
+    val id: String,
     @Json(name = "media_type") val mediaType: String,
     @Json(name = "image_url") val imageUrl: String
 )

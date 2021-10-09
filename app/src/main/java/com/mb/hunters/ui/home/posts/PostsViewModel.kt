@@ -16,6 +16,7 @@
 
 package com.mb.hunters.ui.home.posts
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.mb.hunters.common.dispatcher.DispatchersProvider
@@ -25,6 +26,7 @@ import com.mb.hunters.ui.home.posts.model.PostMapper
 import com.mb.hunters.ui.home.posts.model.PostUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -38,6 +40,8 @@ class PostsViewModel @Inject constructor(
 
     private val _posts = MutableLiveData<List<PostUiModel>>()
     val posts: LiveData<List<PostUiModel>> = _posts
+
+    val isRefreshing = mutableStateOf(false)
 
     init {
         loadToDayPost()
@@ -54,10 +58,14 @@ class PostsViewModel @Inject constructor(
             }.onFailure {
                 Timber.e(it)
             }
+
+            delay(5000)
+            isRefreshing.value = false
         }
     }
 
-    fun refreshToDayPost() {
+    fun onRefresh() {
+        isRefreshing.value = true
         loadToDayPost()
     }
 
