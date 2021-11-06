@@ -2,12 +2,13 @@ package com.mb.hunters.ui.home
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
+import androidx.compose.material3.SmallTopAppBar
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -24,18 +25,18 @@ import com.mb.hunters.ui.theme.ThemedPreview
 fun HomeTopBar(
     modifier: Modifier = Modifier
 ) {
-    TopAppBar(
+    SmallTopAppBar(
         modifier = modifier,
         title = {
             Text(
                 text = "Hunters",
                 fontSize = 22.sp,
                 fontWeight = FontWeight.Bold,
-                fontFamily = FontFamily.Serif
+                fontFamily = FontFamily.Serif,
+                color = MaterialTheme.colorScheme.primary
 
             )
-        },
-        contentColor = MaterialTheme.colors.secondary
+        }
     )
 }
 
@@ -46,12 +47,12 @@ fun HomeBottomBar(
     selectedTab: HomeTab,
     onSelectedTab: (HomeTab) -> Unit
 ) {
-    BottomNavigation(
+    NavigationBar(
         modifier = modifier,
-        elevation = 0.dp
+        tonalElevation = 0.dp
     ) {
         tabs.forEach { tab ->
-            BottomNavigationItem(
+            NavigationBarItem(
                 icon = {
                     Icon(
                         painter = painterResource(id = tab.icon),
@@ -64,7 +65,10 @@ fun HomeBottomBar(
                 },
                 label = { Text(text = stringResource(id = tab.title).toUpperCase()) },
                 alwaysShowLabel = false,
-                selectedContentColor = MaterialTheme.colors.secondary
+                colors = NavigationBarItemDefaults.colors(
+                    selectedIconColor = MaterialTheme.colorScheme.primary,
+                    selectedTextColor = MaterialTheme.colorScheme.primary
+                )
             )
         }
     }

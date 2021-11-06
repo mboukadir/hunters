@@ -21,10 +21,10 @@ import androidx.compose.runtime.Composable
 
 @Composable
 internal fun ThemedPreview(
-    darkTheme: Boolean = false,
+    useDarkTheme: Boolean = false,
     content: @Composable () -> Unit
 ) {
-    HuntersTheme(darkTheme = darkTheme) {
+    HuntersTheme(useDarkTheme = useDarkTheme) {
         Surface {
             content()
         }

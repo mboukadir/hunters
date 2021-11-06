@@ -26,14 +26,14 @@ import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
-import com.mb.hunters.R
-import kotlinx.android.synthetic.main.home_detail_post_activity_webview.*
+import com.mb.hunters.databinding.HomeDetailPostActivityWebviewBinding
 
 /**
  * This Activity is used as a fallback when there is no browser installed that supports
  * Chrome Custom Tabs
  */
 class WebViewActivity : AppCompatActivity() {
+    private lateinit var binding: HomeDetailPostActivityWebviewBinding
 
     private val url: String by lazy {
         intent.getStringExtra(EXTRA_URL)!!
@@ -45,14 +45,15 @@ class WebViewActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.home_detail_post_activity_webview)
+        binding = HomeDetailPostActivityWebviewBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         enableJavascript()
         enableCaching()
         enableCustomClients()
         zoomedOut()
 
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.toolbar)
         val actionBar = supportActionBar
         if (actionBar != null) {
             actionBar.title = title
@@ -60,13 +61,13 @@ class WebViewActivity : AppCompatActivity() {
             actionBar.setDisplayHomeAsUpEnabled(true)
         }
 
-        webView.loadUrl(url)
+        binding.webView.loadUrl(url)
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
         // Check if the key event was the Back button and if there's history
-        if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
-            webView.goBack()
+        if (keyCode == KeyEvent.KEYCODE_BACK && binding.webView.canGoBack()) {
+            binding.webView.goBack()
             return true
         }
         // If it wasn't the Back key or there's no web page history, bubble up to the default
@@ -75,7 +76,7 @@ class WebViewActivity : AppCompatActivity() {
     }
 
     private fun enableCustomClients() {
-        webView.webViewClient = object : WebViewClient() {
+        binding.webView.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
                 view.loadUrl(url)
                 return true
@@ -83,11 +84,11 @@ class WebViewActivity : AppCompatActivity() {
 
             override fun onPageFinished(view: WebView, url: String) {
                 super.onPageFinished(view, url)
-                progressBar.visibility = View.GONE
+                binding.progressBar.visibility = View.GONE
             }
         }
 
-        webView.webChromeClient = object : WebChromeClient() {
+        binding.webView.webChromeClient = object : WebChromeClient() {
             override fun onProgressChanged(view: WebView, progress: Int) {
                 setProgress(progress * PROGRESS_RATIO)
             }
@@ -95,19 +96,19 @@ class WebViewActivity : AppCompatActivity() {
     }
 
     private fun enableJavascript() {
-        webView.settings.javaScriptEnabled = true
-        webView.settings.javaScriptCanOpenWindowsAutomatically = true
+        binding.webView.settings.javaScriptEnabled = true
+        binding.webView.settings.javaScriptCanOpenWindowsAutomatically = true
     }
 
     private fun enableCaching() {
-        webView.settings.setAppCachePath(filesDir.toString() + packageName + "/cache")
-        webView.settings.setAppCacheEnabled(true)
-        webView.settings.cacheMode = WebSettings.LOAD_DEFAULT
+        binding.webView.settings.setAppCachePath("$filesDir$packageName/cache")
+        binding.webView.settings.setAppCacheEnabled(true)
+        binding.webView.settings.cacheMode = WebSettings.LOAD_DEFAULT
     }
 
     private fun zoomedOut() {
-        webView.settings.loadWithOverviewMode = true
-        webView.settings.useWideViewPort = true
+        binding.webView.settings.loadWithOverviewMode = true
+        binding.webView.settings.useWideViewPort = true
     }
 
     companion object {

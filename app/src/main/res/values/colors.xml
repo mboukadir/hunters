@@ -1,41 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <color name="primary">#f5f5f5</color>
-  <color name="primary_dark">#e0e0e0</color>
-  <color name="primary_light">#f5f5f5</color>
-  <color name="accent">#cb402b</color>
-  <color name="primary_text">#212121</color>
-  <color name="secondary_text">#757575</color>
-  <color name="icons">#212121</color>
-  <color name="divider">#bdbdbd</color>
+  <color name="primary">#FFb12d1a</color>
+  <color name="secondary">#FF775650</color>
+  <color name="tertiary">#FF6f5c2e</color>
 
-  <color name="navigation_item">#616161</color>
-
-
-  <color name="porcelain">#fafafa</color>
-  <color name="falcon">#333333</color>
-  <color name="stratus">#999999</color>
   <color name="ic_launcher_background">#CB402B</color>
-
-  <color name="white">#ffffff</color>
-  <color name="white_50p">#77ffffff</color>
-
-  <color name="cloud">#f0f0f0</color>
-  <color name="gray_gull">#e7e7e7</color>
-
-
-  <color name="primaryColor">#eeeeee</color>
-  <color name="primaryLightColor">#ffffff</color>
-  <color name="primaryDarkColor">#bcbcbc</color>
-  <color name="secondaryColor">#f57c00</color>
-  <color name="secondaryLightColor">#ffe0b2</color>
-  <color name="secondaryDarkColor">#bb4d00</color>
-  <color name="primaryTextColor">#000000</color>
-  <color name="secondaryTextColor">#000000</color>
-  <color name="background_transparent">#64575454</color>
-
-  <color name="immersive_sys_ui">#33000000</color>
-  <color name="nav_bar">@android:color/transparent</color>
 
 </resources>
