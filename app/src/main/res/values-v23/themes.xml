@@ -2,8 +2,7 @@
 <resources>
 
   <style name="Theme.Hunters" parent="Base.Theme.Hunters">
-
-    <item name="android:windowLightStatusBar">true</item>
+    <item name="android:windowLightStatusBar">?attr/isLightTheme</item>
   </style>
 
 

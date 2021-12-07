@@ -16,27 +16,11 @@
 
 package com.mb.hunters.ui.common.extensions
 
-import android.util.TypedValue
 import androidx.appcompat.app.AppCompatActivity
-import com.mb.hunters.R
 
 /**
  * Various extension functions for AppCompatActivity.
  */
-
-/**
- * apply runtime Theme which must be define in the preview theme
- * Throws an [IllegalArgumentException]  if the runtime theme not defined in preview theme
- */
-fun AppCompatActivity.ensureRuntimeTheme() {
-
-    val typedValue = TypedValue()
-    this.theme.resolveAttribute(R.attr.runtimeTheme, typedValue, true)
-    require(typedValue.resourceId > 0) {
-        "runtimeTheme is not defined in the preview theme"
-    }
-    this.setTheme(typedValue.resourceId)
-}
 
 /**
  * The `fragment` is added to the container view with id `frameId`. The operation is

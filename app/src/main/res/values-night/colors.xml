@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="immersive_sys_ui">@android:color/transparent</color>
-    <color name="nav_bar">@android:color/transparent</color>
+    <color name="primary">#FFffb4a5</color>
+    <color name="secondary">#FFe7bdb5</color>
+    <color name="tertiary">#FFddc48c</color>
+
 </resources>

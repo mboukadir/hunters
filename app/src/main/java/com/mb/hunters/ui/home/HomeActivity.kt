@@ -20,9 +20,8 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.primarySurface
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -36,6 +35,7 @@ import com.mb.hunters.ui.home.posts.PostsScreen
 import com.mb.hunters.ui.theme.HuntersTheme
 import dagger.hilt.android.AndroidEntryPoint
 
+@ExperimentalMaterial3Api
 @AndroidEntryPoint
 class HomeActivity : BaseActivity() {
 
@@ -51,7 +51,6 @@ class HomeActivity : BaseActivity() {
                 val (selectedTab, setSelectedTab) = remember { mutableStateOf(HomeTab.POSTS) }
                 val tabs = HomeTab.values().asList()
                 Scaffold(
-                    backgroundColor = MaterialTheme.colors.primarySurface,
                     topBar = { HomeTopBar(modifier = Modifier.statusBarsPadding()) },
                     bottomBar = {
                         HomeBottomBar(

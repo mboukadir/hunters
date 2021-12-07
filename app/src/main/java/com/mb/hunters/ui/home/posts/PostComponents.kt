@@ -14,13 +14,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.ContentAlpha
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
-import androidx.compose.material.LocalContentAlpha
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -43,16 +41,19 @@ fun PostItem(
 
     Column(modifier = modifier.padding(16.dp)) {
 
+        val imageShape = RoundedCornerShape(4.dp)
         Image(
             painter = rememberImagePainter(postUiModel.bigImageUrl),
             contentDescription = stringResource(id = R.string.home_post_item_img_description),
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)
+                .clip(shape = imageShape)
                 .border(
-                    border = BorderStroke(2.dp, MaterialTheme.colors.secondary),
-                    shape = MaterialTheme.shapes.medium
-                ),
+                    border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary),
+                    shape = imageShape
+                )
+                .padding(2.dp),
             contentScale = ContentScale.Crop
         )
 
@@ -66,7 +67,7 @@ fun PostItem(
                     .size(46.dp)
                     .clip(shape = CircleShape)
                     .border(
-                        border = BorderStroke(2.dp, MaterialTheme.colors.secondary),
+                        border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary),
                         shape = CircleShape
                     ),
                 contentScale = ContentScale.Crop
@@ -121,10 +122,10 @@ fun Counter(
         Icon(
             painter = painter,
             contentDescription = "",
-            tint = MaterialTheme.colors.secondary
+            tint = MaterialTheme.colorScheme.primary
         )
 
-        Text(text = counter, color = MaterialTheme.colors.secondary)
+        Text(text = counter, color = MaterialTheme.colorScheme.primary)
     }
 }
 
@@ -138,15 +139,15 @@ private fun PostTitles(
     Column(modifier) {
         Text(
             text = title,
-            style = typography.h6,
+            style = typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onSurface
         )
 
-        CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
-            Text(
-                text = subTitle,
-                style = typography.body2
-            )
-        }
+        Text(
+            text = subTitle,
+            style = typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
     }
 }
 

@@ -42,7 +42,7 @@ class HuntersNavigator @Inject constructor() : Navigator {
 
             setToolbarColor(from.resources.getColor(R.color.primary))
             setSecondaryToolbarColor(
-                from.resources.getColor(R.color.primary_dark)
+                from.resources.getColor(R.color.secondary)
             )
             setCloseButtonIcon(
                 BitmapFactory.decodeResource(
