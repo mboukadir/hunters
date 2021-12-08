@@ -20,19 +20,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import com.mb.hunters.ui.Screen
 import com.mb.hunters.ui.home.posts.model.PostUiModel
 import com.mb.hunters.ui.theme.ThemedPreview
 import timber.log.Timber
 
 @Composable
 fun PostsScreen(
+    navController: NavController,
+    viewModel: PostsViewModel,
     modifier: Modifier = Modifier
 ) {
-    val viewModel = viewModel<PostsViewModel>()
     val items by viewModel.posts.observeAsState(listOf())
     val isRefreshing by viewModel.isRefreshing
     SwipeRefresh(
@@ -49,7 +51,9 @@ fun PostsScreen(
         PostList(
             posts = items,
             modifier = modifier,
-            onItemClicked = { /* navigate*/ },
+            onItemClicked = {
+                navController.navigate("${Screen.PostDetail.route}/${it.id}")
+            },
             onNeedLoadMore = { viewModel.loadMore(it.daysAgo) }
         )
     }

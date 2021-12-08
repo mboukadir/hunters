@@ -1,7 +1,7 @@
 package com.mb.hunters.ui.home
 
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -10,6 +10,8 @@ import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.SmallTopAppBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -18,75 +20,106 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.mb.hunters.R
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+import com.mb.hunters.ui.Screen
 import com.mb.hunters.ui.theme.ThemedPreview
 
 @Composable
 fun HomeTopBar(
+    navController: NavController,
     modifier: Modifier = Modifier
 ) {
-    SmallTopAppBar(
-        modifier = modifier,
-        title = {
-            Text(
-                text = "Hunters",
-                fontSize = 22.sp,
-                fontWeight = FontWeight.Bold,
-                fontFamily = FontFamily.Serif,
-                color = MaterialTheme.colorScheme.primary
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination
+    val currentRoute = currentDestination?.route ?: Screen.Home.Posts.route
+    val routes = remember { homeScreens.map { it.route } }
 
-            )
-        }
-    )
+    AnimatedVisibility(visible = currentRoute in routes) {
+        SmallTopAppBar(
+            modifier = modifier,
+            title = {
+                Text(
+                    text = "Hunters",
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = FontFamily.Serif,
+                    color = MaterialTheme.colorScheme.primary
+
+                )
+            }
+        )
+    }
 }
 
 @Composable
 fun HomeBottomBar(
+    navController: NavController,
     modifier: Modifier = Modifier,
-    tabs: List<HomeTab>,
-    selectedTab: HomeTab,
-    onSelectedTab: (HomeTab) -> Unit
+    screens: List<Screen.Home>,
 ) {
-    NavigationBar(
-        modifier = modifier,
-        tonalElevation = 0.dp
-    ) {
-        tabs.forEach { tab ->
-            NavigationBarItem(
-                icon = {
-                    Icon(
-                        painter = painterResource(id = tab.icon),
-                        contentDescription = stringResource(id = tab.title)
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination
+    val currentRoute = currentDestination?.route ?: Screen.Home.Posts.route
+    val routes = remember(screens) { homeScreens.map { it.route } }
+
+    AnimatedVisibility(visible = (currentRoute in routes)) {
+        NavigationBar(
+            modifier = modifier.padding(0.dp),
+            tonalElevation = 0.dp
+        ) {
+            screens.forEach { screen ->
+                val isSelected =
+                    currentDestination?.hierarchy?.any { it.route == screen.route } == true
+                NavigationBarItem(
+                    icon = {
+                        Icon(
+                            painter = painterResource(id = screen.icon),
+                            contentDescription = stringResource(id = screen.title)
+                        )
+                    },
+                    selected = isSelected,
+                    onClick = {
+                        navController.navigate(screen.route) {
+                            // Pop up to the start destination of the graph to
+                            // avoid building up a large stack of destinations
+                            // on the back stack as users select items
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            // Avoid multiple copies of the same destination when
+                            // reselecting the same item
+                            launchSingleTop = true
+                            // Restore state when reselecting a previously selected item
+                            restoreState = true
+                        }
+                    },
+                    label = { Text(text = stringResource(id = screen.title)) },
+                    alwaysShowLabel = true,
+                    colors = NavigationBarItemDefaults.colors(
+                        selectedIconColor = MaterialTheme.colorScheme.primary,
+                        selectedTextColor = MaterialTheme.colorScheme.primary
                     )
-                },
-                selected = tab == selectedTab,
-                onClick = {
-                    onSelectedTab(tab)
-                },
-                label = { Text(text = stringResource(id = tab.title).toUpperCase()) },
-                alwaysShowLabel = false,
-                colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = MaterialTheme.colorScheme.primary,
-                    selectedTextColor = MaterialTheme.colorScheme.primary
                 )
-            )
+            }
         }
     }
 }
 
-enum class HomeTab(
-    @StringRes val title: Int,
-    @DrawableRes val icon: Int
-) {
-    POSTS(R.string.home_nav_posts, R.drawable.ic_popular),
-    COLLECTIONS(R.string.home_nav_collection, R.drawable.ic_collection_24px),
-}
+val homeScreens = listOf(
+    Screen.Home.Posts,
+    Screen.Home.Collections
+)
 
 @Preview
 @Composable
 fun HomeTopBarPreview() {
     ThemedPreview {
-        HomeTopBar()
+        val navController = rememberNavController()
+        HomeTopBar(navController)
     }
 }
 
@@ -94,13 +127,10 @@ fun HomeTopBarPreview() {
 @Composable
 fun HomeBottomBarPreview() {
     ThemedPreview {
+        val navController = rememberNavController()
         HomeBottomBar(
-            tabs = listOf(
-                HomeTab.POSTS,
-                HomeTab.COLLECTIONS
-            ),
-            selectedTab = HomeTab.POSTS
-        ) {
-        }
+            navController = navController,
+            screens = homeScreens
+        )
     }
 }
