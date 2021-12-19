@@ -11,8 +11,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mb.hunters.ui.home.collection.model.CollectionUiModel
 
 @Composable
-fun CollectionsScreen() {
-    val viewModel = viewModel<CollectionsViewModel>()
+fun CollectionsScreen(
+    viewModel: CollectionsViewModel
+) {
     val items by viewModel.collections.observeAsState(listOf())
     CollectionList(
         items
