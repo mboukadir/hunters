@@ -29,5 +29,5 @@ data class PostResponse(
     val day: Date,
     @Json(name = "created_at") val createdAt: Date,
     @Json(name = "screenshot_url") val screenshotUrl: ScreenshotUrl,
-    val thumbnail: Thumbnail
+    val thumbnail: ThumbnailResponse
 )

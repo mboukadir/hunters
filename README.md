@@ -1,7 +1,12 @@
 
 # Hunters  [🛠 WORK-IN-PROGRESS 🛠]
  Hunters is Unofficial Android client for [Product Hunt](https://www.producthunt.com/)
- 
+
+ ## 🎥 Demo
+| Dark Mode                                                                      | Light Mode                                                                       |
+|:-------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
+| <img src="demo/post_list_detail_dark.gif" alt="Post Dark Mode"  width="360" /> | <img src="demo/post_list_detail_light.gif" alt="Post Light Mode"  width="360" /> |
+
  
  ## Android development
  
@@ -9,7 +14,7 @@
  
  * Entirely written in [Kotlin](https://kotlinlang.org/)
  * Uses [Kotlin Croutines ](https://kotlinlang.org/docs/reference/coroutines-overview.html)
- * Uses Uses many of the [Architecture Components](https://developer.android.com/topic/libraries/architecture/)
+ * Uses many of the [Architecture Components](https://developer.android.com/topic/libraries/architecture/)
  * Uses [Jekpack Compose](https://developer.android.com/jetpack/compose)
  * Uses [hilt](https://dagger.dev/hilt/) for dependency injection
  

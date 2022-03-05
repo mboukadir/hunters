@@ -8,6 +8,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -18,7 +19,9 @@ import androidx.navigation.navArgument
 import com.mb.hunters.R
 import com.mb.hunters.ui.home.collection.CollectionsScreen
 import com.mb.hunters.ui.home.posts.PostsScreen
-import com.mb.hunters.ui.postdetail.PostDetailScreen
+import com.mb.hunters.ui.post.detail.PostDetailScreen
+import com.mb.hunters.ui.post.poster.PostPosterScreen
+import com.mb.hunters.ui.post.state.PosterItemsState
 
 @Composable
 fun NavGraph(
@@ -38,16 +41,14 @@ fun NavGraph(
             route = Screen.Home.ROUTE
         )
 
-        composable(
-            route = "${Screen.PostDetail.route}/{${Screen.PostDetail.POST_ID_KEY}}",
+        postDetailGraph(
+            navController = navController,
+            startDestination = "${Screen.Post.Detail.route}/{${Screen.Post.POST_ID_KEY}}",
+            route = "${Screen.Post.ROUTE}/{${Screen.Post.POST_ID_KEY}}",
             arguments = listOf(
-                navArgument(Screen.PostDetail.POST_ID_KEY) { type = NavType.LongType }
+                navArgument(Screen.Post.POST_ID_KEY) { type = NavType.LongType }
             )
-        ) { backStackEntry ->
-            val arguments = requireNotNull(backStackEntry.arguments)
-            val postId = arguments.getLong(Screen.PostDetail.POST_ID_KEY)
-            PostDetailScreen(postId, modifier)
-        }
+        )
     }
 }
 
@@ -59,6 +60,37 @@ private fun NavGraphBuilder.homeGraph(
     navigation(startDestination = startDestination, route = route) {
         composable(Screen.Home.Posts.route) { PostsScreen(navController, hiltViewModel()) }
         composable(Screen.Home.Collections.route) { CollectionsScreen(hiltViewModel()) }
+    }
+}
+
+private fun NavGraphBuilder.postDetailGraph(
+    navController: NavHostController,
+    startDestination: String,
+    route: String,
+    arguments: List<NamedNavArgument> = emptyList(),
+) {
+    navigation(startDestination = startDestination, route = route, arguments = arguments) {
+        composable(
+            route = startDestination,
+            arguments = arguments
+        ) {
+            PostDetailScreen(
+                navController = navController,
+                postDetailViewModel = hiltViewModel(),
+                modifier = Modifier
+            )
+        }
+        composable(
+            route = Screen.Post.Poster.route,
+        ) {
+            val posterItemsState = navController.previousBackStackEntry
+                ?.arguments?.getParcelable<PosterItemsState>(Screen.Post.POST_POSTER_KEY)
+
+            PostPosterScreen(
+                navController = navController,
+                items = posterItemsState?.items
+            )
+        }
     }
 }
 
@@ -78,7 +110,14 @@ sealed class Screen(val route: String) {
             Home("collections", R.string.home_nav_collection, R.drawable.ic_collection_24px)
     }
 
-    object PostDetail : Screen("post") {
-        const val POST_ID_KEY = "id"
+    sealed class Post(route: String) : Screen(route) {
+        companion object {
+            const val ROUTE = "post"
+            const val POST_ID_KEY = "POST_ID.KEY"
+            const val POST_POSTER_KEY = "POST_POSTER.KEY"
+        }
+
+        object Detail : Post("detail")
+        object Poster : Post("poster")
     }
 }

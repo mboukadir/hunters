@@ -54,3 +54,7 @@ val md_theme_dark_inverseOnSurface = Color(0xFF201a19)
 val md_theme_dark_inverseSurface = Color(0xFFeddfdd)
 
 val backgroundTransparent = Color(0x9A2C2A2A)
+
+val Gold = Color(0xFFFFD700)
+val Silver = Color(0xFFC0C0C0)
+val Bronze = Color(0xFFCC6633)

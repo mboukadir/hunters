@@ -51,7 +51,7 @@ class PostsViewModel @Inject constructor(
         viewModelScope.launch {
             runCatching {
                 _posts.value =
-                    mapper.mapToUiModel(
+                    mapper.map(
                         postRepository
                             .loadPosts(0)
                     )
@@ -76,7 +76,7 @@ class PostsViewModel @Inject constructor(
     private fun loadPosts(daysAgo: Long = 0) {
         viewModelScope.launch {
             runCatching {
-                val newItems = mapper.mapToUiModel(
+                val newItems = mapper.map(
                     postRepository.loadPosts(daysAgo)
                 )
                 _posts.value = _posts.value!!.toMutableList() + newItems

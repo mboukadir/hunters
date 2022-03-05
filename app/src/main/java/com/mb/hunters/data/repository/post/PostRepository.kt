@@ -16,7 +16,11 @@
 
 package com.mb.hunters.data.repository.post
 
+import com.mb.hunters.data.repository.post.model.Post
+import com.mb.hunters.data.repository.post.model.PostDetail
+
 interface PostRepository {
     suspend fun loadPosts(daysAgo: Long): List<Post>
     suspend fun refreshPosts(daysAgo: Long): List<Post>
+    suspend fun getPost(id: Long): PostDetail
 }

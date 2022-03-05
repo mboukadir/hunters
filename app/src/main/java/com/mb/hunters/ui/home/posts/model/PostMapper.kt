@@ -16,13 +16,13 @@
 
 package com.mb.hunters.ui.home.posts.model
 
-import com.mb.hunters.data.repository.post.Post
+import com.mb.hunters.data.repository.post.model.Post
 import com.mb.hunters.ui.base.Mapper
 import com.mb.hunters.ui.common.extensions.daysAgo
 import javax.inject.Inject
 
 class PostMapper @Inject constructor() : Mapper<List<Post>, List<PostUiModel>> {
-    override fun mapToUiModel(type: List<Post>): List<PostUiModel> =
+    override fun map(type: List<Post>): List<PostUiModel> =
         type.map {
             with(it) {
                 PostUiModel(

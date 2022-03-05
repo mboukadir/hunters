@@ -18,7 +18,8 @@ package com.mb.hunters.data.repository.post.remote
 
 import com.mb.hunters.common.dispatcher.DispatchersProvider
 import com.mb.hunters.data.api.PostService
-import com.mb.hunters.data.repository.post.Post
+import com.mb.hunters.data.repository.post.model.Post
+import com.mb.hunters.data.repository.post.model.PostDetail
 import kotlinx.coroutines.withContext
 
 class PostRemoteDataSource(
@@ -29,5 +30,9 @@ class PostRemoteDataSource(
 
     suspend fun getPosts(page: Long): List<Post> = withContext(dispatchersProvider.computation) {
         converter.convert(postService.getPostsBy(page))
+    }
+
+    suspend fun getPost(id: Long): PostDetail = withContext(dispatchersProvider.computation) {
+        converter.convert(postService.getPostBy(id).post)
     }
 }

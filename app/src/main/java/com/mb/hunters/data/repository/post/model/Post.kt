@@ -1,4 +1,4 @@
-package com.mb.hunters.data.repository.post
+package com.mb.hunters.data.repository.post.model
 
 import java.util.Date
 

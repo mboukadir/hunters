@@ -16,6 +16,8 @@
 
 package com.mb.hunters.data.repository.post
 
+import com.mb.hunters.data.repository.post.model.Post
+import com.mb.hunters.data.repository.post.model.PostDetail
 import com.mb.hunters.data.repository.post.remote.PostRemoteDataSource
 
 class PostRepositoryData(
@@ -27,5 +29,9 @@ class PostRepositoryData(
 
     override suspend fun refreshPosts(daysAgo: Long): List<Post> {
         return postRemoteDataSource.getPosts(daysAgo)
+    }
+
+    override suspend fun getPost(id: Long): PostDetail {
+        return postRemoteDataSource.getPost(id)
     }
 }

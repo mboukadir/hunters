@@ -17,7 +17,7 @@
 package com.mb.hunters.ui.home.posts
 
 import com.google.common.truth.Truth
-import com.mb.hunters.data.repository.post.Post
+import com.mb.hunters.data.repository.post.model.Post
 import com.mb.hunters.ui.home.posts.model.PostMapper
 import com.mb.hunters.ui.home.posts.model.PostUiModel
 import java.util.Calendar
@@ -37,7 +37,7 @@ class PostMapperTest {
 
         val posts = listOf(POST)
 
-        val postUiModel = postMapper.mapToUiModel(posts)
+        val postUiModel = postMapper.map(posts)
 
         Truth.assertThat(postUiModel).containsExactly(
             PostUiModel(
@@ -59,7 +59,7 @@ class PostMapperTest {
     fun shouldMapToUiModelReturnMappedUiModelForYsterDayPost() {
 
         val posts = listOf(YESTERDAY_POST)
-        val postUiModel = postMapper.mapToUiModel(posts)
+        val postUiModel = postMapper.map(posts)
 
         Truth.assertThat(postUiModel).containsExactly(
             PostUiModel(

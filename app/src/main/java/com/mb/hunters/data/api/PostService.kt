@@ -16,12 +16,17 @@
 
 package com.mb.hunters.data.api
 
+import com.mb.hunters.data.api.model.PostDetailResponseEnvelope
 import com.mb.hunters.data.api.model.PostsResponse
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface PostService {
 
     @GET("v1/posts")
     suspend fun getPostsBy(@Query("days_ago") page: Long): PostsResponse
+
+    @GET("v1/posts/{id}")
+    suspend fun getPostBy(@Path("id") id: Long): PostDetailResponseEnvelope
 }
