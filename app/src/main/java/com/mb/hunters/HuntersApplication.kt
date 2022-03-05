@@ -28,7 +28,6 @@ class HuntersApplication : Application() {
 
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
-            // Stetho.initializeWithDefaults(this)
         }
     }
 }

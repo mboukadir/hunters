@@ -16,13 +16,17 @@
 
 package com.mb.hunters.data.repository.post.remote
 
-import com.google.common.truth.Truth
+import com.google.common.truth.Truth.*
 import com.mb.hunters.data.api.PostService
+import com.mb.hunters.data.api.model.PostDetailResponse
+import com.mb.hunters.data.api.model.PostDetailResponseEnvelope
 import com.mb.hunters.data.api.model.PostsResponse
-import com.mb.hunters.data.repository.post.Post
+import com.mb.hunters.data.repository.post.model.Post
+import com.mb.hunters.data.repository.post.model.PostDetail
 import com.mb.hunters.test.TestDispatcherProvider
 import com.nhaarman.mockitokotlin2.mock
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -31,32 +35,59 @@ import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
+@OptIn(ExperimentalCoroutinesApi::class)
 class PostRemoteDataSourceTest {
 
     @Mock
     lateinit var service: PostService
+
     @Mock
     lateinit var converter: PostsResponseConverter
-    lateinit var postRemoteDataSource: PostRemoteDataSource
+
+    private lateinit var subject: PostRemoteDataSource
 
     @Before
     fun setup() {
-        postRemoteDataSource = PostRemoteDataSource(service, converter, TestDispatcherProvider.dispatcherProvider)
+        subject =
+            PostRemoteDataSource(
+                postService = service,
+                converter = converter,
+                dispatchersProvider =
+                TestDispatcherProvider.dispatcherProvider
+            )
     }
 
     @Test
-    fun `Should return post entity list`() = runBlockingTest {
+    fun `Should return post  list`() = runTest {
         // GIVEN
+        val page = 0L
         val postsResponse = mock<PostsResponse>()
-        val postEntitiesExpected = mock<List<Post>>()
+        val expected = mock<List<Post>>()
 
-        given(service.getPostsBy(0)).willReturn(postsResponse)
-        given(converter.convert(postsResponse)).willReturn(postEntitiesExpected)
+        given(service.getPostsBy(page)).willReturn(postsResponse)
+        given(converter.convert(postsResponse)).willReturn(expected)
 
         // WHEN
-        val actual = postRemoteDataSource.getPosts(0)
+        val actual = subject.getPosts(page)
 
         // THEN
-        Truth.assertThat(actual).isEqualTo(postEntitiesExpected)
+        assertThat(actual).isEqualTo(expected)
+    }
+
+    @Test
+    fun `Should return post detail`() = runTest {
+        // GIVEN
+        val postId = 1L
+        val postDetailResponse = mock<PostDetailResponse>()
+        val expected = mock<PostDetail>()
+
+        given(service.getPostBy(postId)).willReturn(PostDetailResponseEnvelope(postDetailResponse))
+        given(converter.convert(postDetailResponse)).willReturn(expected)
+
+        // WHEN
+        val actual = subject.getPost(postId)
+
+        // THEN
+        assertThat(actual).isEqualTo(expected)
     }
 }

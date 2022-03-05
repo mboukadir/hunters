@@ -16,6 +16,9 @@
 
 package com.mb.hunters.ui.common.extensions
 
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneId
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -41,3 +44,7 @@ fun dateAt(daysAgo: Long): Date {
         }
         .time
 }
+
+fun Date.toLocalDateTime(): LocalDateTime = Instant.ofEpochMilli(time)
+    .atZone(ZoneId.systemDefault())
+    .toLocalDateTime()

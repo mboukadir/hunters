@@ -21,6 +21,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import java.time.Clock
 import javax.inject.Singleton
 import kotlinx.coroutines.Dispatchers
 
@@ -28,7 +29,6 @@ import kotlinx.coroutines.Dispatchers
 @Module
 object AppModule {
 
-    @JvmStatic
     @Singleton
     @Provides
     fun provideCoroutinesDispatcherProvider(): DispatchersProvider {
@@ -38,4 +38,8 @@ object AppModule {
             computation = Dispatchers.Default
         )
     }
+
+    @Singleton
+    @Provides
+    fun providesClock(): Clock = Clock.systemDefaultZone()
 }

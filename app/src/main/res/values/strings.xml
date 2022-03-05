@@ -1,9 +1,32 @@
 <resources>
-  <string name="app_name">Hunters</string>
-  <string name="home_nav_posts">Posts</string>
-  <string name="home_nav_collection">Collections</string>
-  <string name="home_title">Hunters</string>
-  <string name="home_post_item_img_description">Post image</string>
-  <string name="home_posts_item_thumbnail_discription">Post Thumbnail</string>
-  <string name="empty"/>
+    <string name="app_name">Hunters</string>
+    <string name="home_nav_posts">Posts</string>
+    <string name="home_nav_collection">Collections</string>
+    <string name="home_title">Hunters</string>
+    <string name="home_post_item_img_description">Post image</string>
+    <string name="home_posts_item_thumbnail_discription">Post Thumbnail</string>
+    <string name="empty" />
+    <string name="generic_error_msg">Something goes wrong</string>
+
+    <string name="detail_post_badge_text_hunter">H</string>
+    <string name="detail_post_badge_text_maker">M</string>
+    <string name="detail_post_badge_date_today">Today</string>
+    <string name="detail_post_badge_title">"#%d Product of the Day"</string>
+    <plurals name="detail_post_featured_hour_ago">
+        <item quantity="one">FEATURED %s HOUR AGO</item>
+        <item quantity="other">FEATURED %s HOURS AGO</item>
+    </plurals>
+    <plurals name="detail_post_featured_day_ago">
+        <item quantity="one">FEATURED %d DAY AGO</item>
+        <item quantity="other">FEATURED %d DAYS AGO</item>
+    </plurals>
+    <plurals name="detail_post_featured_month_ago">
+        <item quantity="one">FEATURED %d MONTH AGO</item>
+        <item quantity="other">FEATURED %d MONTHS AGO</item>
+    </plurals>
+    <plurals name="detail_post_featured_year_ago">
+        <item quantity="one">FEATURED %d YEAR AGO</item>
+        <item quantity="other">FEATURED %d YEARS AGO</item>
+    </plurals>
+
 </resources>

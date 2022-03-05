@@ -18,5 +18,5 @@ package com.mb.hunters.ui.base
 
 interface Mapper<in E, out D> {
 
-    fun mapToUiModel(type: E): D
+    fun map(type: E): D
 }

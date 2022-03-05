@@ -17,11 +17,13 @@
 package com.mb.hunters.data.repository.post
 
 import com.google.common.truth.Truth.assertThat
+import com.mb.hunters.data.repository.post.model.Post
+import com.mb.hunters.data.repository.post.model.PostDetail
 import com.mb.hunters.data.repository.post.remote.PostRemoteDataSource
 import com.nhaarman.mockitokotlin2.given
 import com.nhaarman.mockitokotlin2.mock
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -45,13 +47,27 @@ class PostRepositoryDataTest {
     }
 
     @Test
-    fun `Should load posts from remote `() = runBlockingTest {
+    fun `Should load posts from remote `() = runTest {
         // GIVEN
         val expected = mock<List<Post>>()
         given(postRemoteDataSource.getPosts(0)).willReturn(expected)
 
         // WHEN
         val actual = postRepository.loadPosts(0)
+
+        // THEN
+        assertThat(actual).isEqualTo(expected)
+    }
+
+    @Test
+    fun `Should load detail post`() = runTest {
+        // GIVEN
+        val id = 1L
+        val expected = mock<PostDetail>()
+        given(postRemoteDataSource.getPost(id)).willReturn(expected)
+
+        // WHEN
+        val actual = postRepository.getPost(id)
 
         // THEN
         assertThat(actual).isEqualTo(expected)

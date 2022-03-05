@@ -19,14 +19,15 @@ fun HuntersApp() {
     HuntersTheme {
         val navController = rememberNavController()
         Scaffold(
-            modifier = Modifier.statusBarsPadding().navigationBarsPadding(),
             topBar = {
                 HomeTopBar(
+                    modifier = Modifier.statusBarsPadding(),
                     navController = navController
                 )
             },
             bottomBar = {
                 HomeBottomBar(
+                    modifier = Modifier.navigationBarsPadding(),
                     navController = navController,
                     screens = homeScreens,
                 )

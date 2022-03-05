@@ -18,8 +18,8 @@ package com.mb.hunters.ui.home.posts
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.mb.hunters.data.repository.post.Post
 import com.mb.hunters.data.repository.post.PostRepository
+import com.mb.hunters.data.repository.post.model.Post
 import com.mb.hunters.test.TestDispatcherProvider.dispatcherProvider
 import com.mb.hunters.ui.home.posts.model.PostMapper
 import com.mb.hunters.ui.home.posts.model.PostUiModel
@@ -55,7 +55,7 @@ class PostsViewModelTest {
         val posts = mock<List<Post>>()
         val postUiModels = mock<List<PostUiModel>>()
         given(postRepository.loadPosts(0)).willReturn(posts)
-        given(mapper.mapToUiModel(posts)).willReturn(postUiModels)
+        given(mapper.map(posts)).willReturn(postUiModels)
 
         val subject = newViewModel()
 
@@ -76,10 +76,10 @@ class PostsViewModelTest {
         val postUiModelsYesterday = listOf<PostUiModel>(mock())
 
         given(postRepository.loadPosts(0)).willReturn(postsToday)
-        given(mapper.mapToUiModel(postsToday)).willReturn(postUiModelsToday)
+        given(mapper.map(postsToday)).willReturn(postUiModelsToday)
 
         given(postRepository.loadPosts(1)).willReturn(postsYesterday)
-        given(mapper.mapToUiModel(postsYesterday)).willReturn(postUiModelsYesterday)
+        given(mapper.map(postsYesterday)).willReturn(postUiModelsYesterday)
 
         val subject = newViewModel()
         subject.posts.observeForever(observer)
@@ -97,7 +97,7 @@ class PostsViewModelTest {
         val posts = mock<List<Post>>()
         val postUiModels = mock<List<PostUiModel>>()
         given(postRepository.loadPosts(0)).willReturn(posts)
-        given(mapper.mapToUiModel(posts)).willReturn(postUiModels)
+        given(mapper.map(posts)).willReturn(postUiModels)
 
         val subject = newViewModel()
         subject.posts.observeForever(observer)

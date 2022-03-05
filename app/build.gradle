@@ -70,6 +70,7 @@ android {
     }
 
     compileOptions {
+        coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
@@ -102,7 +103,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
 
     implementation("androidx.activity:activity-ktx:1.4.0")
     implementation "androidx.activity:activity-compose:1.4.0"
@@ -112,25 +113,28 @@ dependencies {
     implementation "androidx.compose.ui:ui:$compose_version"
     implementation "androidx.compose.foundation:foundation-layout:$compose_version"
     implementation "androidx.compose.material:material:$compose_version"
-    implementation "androidx.compose.material3:material3:1.0.0-alpha04"
+    implementation "androidx.compose.material3:material3:1.0.0-alpha06"
     implementation "androidx.compose.material:material-icons-extended:$compose_version"
     implementation "androidx.compose.foundation:foundation:$compose_version"
     implementation "androidx.compose.animation:animation:$compose_version"
     implementation "androidx.compose.ui:ui-tooling:$compose_version"
     implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
 
-    implementation "androidx.navigation:navigation-compose:2.5.0-alpha01"
+    implementation "androidx.navigation:navigation-compose:2.5.0-alpha03"
     implementation 'androidx.hilt:hilt-navigation-compose:1.0.0'
 
 
-    implementation "com.google.accompanist:accompanist-insets:0.21.5-rc"
-    implementation "com.google.accompanist:accompanist-swiperefresh:0.21.5-rc"
+    implementation "com.google.accompanist:accompanist-insets:0.24.3-alpha"
+    implementation "com.google.accompanist:accompanist-swiperefresh:0.24.3-alpha"
+    implementation "com.google.accompanist:accompanist-pager:0.24.3-alpha"
+    implementation "com.google.accompanist:accompanist-pager-indicators:0.24.3-alpha"
 
     implementation("io.coil-kt:coil-compose:1.4.0")
+    implementation("androidx.palette:palette-ktx:1.0.0")
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
-    implementation 'com.google.android.material:material:1.6.0-alpha02'
+    implementation 'com.google.android.material:material:1.6.0-alpha03'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'androidx.browser:browser:1.4.0'
 
@@ -168,6 +172,8 @@ dependencies {
 
     debugImplementation "com.squareup.retrofit2:retrofit-mock:${retrofit_version}"
     implementation "com.squareup.okhttp3:logging-interceptor:${okhttp_version}"
+
+
 
     // Dependencies for local unit tests
     testImplementation "junit:junit:${junit_version}"

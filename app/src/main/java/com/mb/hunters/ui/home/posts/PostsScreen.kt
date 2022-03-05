@@ -52,7 +52,7 @@ fun PostsScreen(
             posts = items,
             modifier = modifier,
             onItemClicked = {
-                navController.navigate("${Screen.PostDetail.route}/${it.id}")
+                navController.navigate("${Screen.Post.ROUTE}/${it.id}")
             },
             onNeedLoadMore = { viewModel.loadMore(it.daysAgo) }
         )
