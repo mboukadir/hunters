@@ -50,6 +50,7 @@ import androidx.core.graphics.drawable.toBitmap
 import androidx.navigation.NavController
 import androidx.palette.graphics.Palette
 import coil.annotation.ExperimentalCoilApi
+import coil.compose.AsyncImagePainter
 import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
 import com.google.accompanist.insets.statusBarsPadding
@@ -141,7 +142,7 @@ private fun PosterPage(
             allowHardware(false)
         })
 
-        val drawable = (painter.state as? ImagePainter.State.Success)?.result?.drawable
+        val drawable = (painter.state as? AsyncImagePainter.State.Success)?.result?.drawable
         if (drawable != null) {
             LaunchedEffect(image.url) {
                 withContext(Dispatchers.Default) {
@@ -159,7 +160,7 @@ private fun PosterPage(
             contentDescription = "",
             contentScale = ContentScale.Fit
         )
-        if (painter.state !is ImagePainter.State.Success) {
+        if (painter.state !is AsyncImagePainter.State.Success) {
             Icon(
                 modifier = Modifier
                     .align(alignment = Alignment.Center)

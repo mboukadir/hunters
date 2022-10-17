@@ -48,10 +48,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.PhotoCamera
 import androidx.compose.material.icons.outlined.PlayCircleOutline
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SmallTopAppBar
+import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
@@ -141,6 +143,7 @@ private fun PostDetailTitles(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PostDetailAppBar(
     onBackClick: () -> Unit,
@@ -148,28 +151,18 @@ fun PostDetailAppBar(
     scrollBehavior: TopAppBarScrollBehavior
 ) {
     val backgroundColors = TopAppBarDefaults.smallTopAppBarColors()
-    val backgroundColor = backgroundColors.containerColor(
-        scrollFraction = scrollBehavior.scrollFraction
-    ).value
-    val foregroundColors = TopAppBarDefaults.smallTopAppBarColors(
-        containerColor = Color.Transparent,
-        scrolledContainerColor = Color.Transparent
+    TopAppBar(
+        modifier = modifier,
+        title = {},
+        navigationIcon = {
+            IconButton(onClick = onBackClick) {
+                Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "")
+            }
+        },
+        actions = {},
+        scrollBehavior = scrollBehavior,
+        colors = backgroundColors,
     )
-
-    Box(modifier = Modifier.background(backgroundColor)) {
-        SmallTopAppBar(
-            modifier = modifier,
-            title = {},
-            navigationIcon = {
-                IconButton(onClick = onBackClick) {
-                    Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "")
-                }
-            },
-            actions = {},
-            scrollBehavior = scrollBehavior,
-            colors = foregroundColors,
-        )
-    }
 }
 
 @Composable
@@ -269,6 +262,7 @@ private fun LazyItemScope.PosterItem(
                 contentDescription = ""
             )
         }
+
         is PosterItemState.Video ->
 
             Box(

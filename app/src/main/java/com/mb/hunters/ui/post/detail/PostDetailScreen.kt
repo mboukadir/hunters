@@ -112,7 +112,7 @@ private fun PostDetailScreen(
     onBackClick: () -> Unit,
     onPosterClick: (PosterItemsState) -> Unit
 ) {
-    val scrollBehavior = remember { TopAppBarDefaults.pinnedScrollBehavior() }
+    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     Column(
         modifier = modifier
             .navigationBarsPadding()

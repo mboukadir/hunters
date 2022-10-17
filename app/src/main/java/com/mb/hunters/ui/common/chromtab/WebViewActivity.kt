@@ -101,8 +101,6 @@ class WebViewActivity : AppCompatActivity() {
     }
 
     private fun enableCaching() {
-        binding.webView.settings.setAppCachePath("$filesDir$packageName/cache")
-        binding.webView.settings.setAppCacheEnabled(true)
         binding.webView.settings.cacheMode = WebSettings.LOAD_DEFAULT
     }
 

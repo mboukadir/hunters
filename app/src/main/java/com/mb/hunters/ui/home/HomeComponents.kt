@@ -18,6 +18,7 @@ package com.mb.hunters.ui.home
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -44,6 +45,7 @@ import androidx.navigation.compose.rememberNavController
 import com.mb.hunters.ui.Screen
 import com.mb.hunters.ui.theme.ThemedPreview
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeTopBar(
     navController: NavController,
