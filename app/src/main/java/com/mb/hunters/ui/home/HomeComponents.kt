@@ -76,8 +76,8 @@ fun HomeTopBar(
 @Composable
 fun HomeBottomBar(
     navController: NavController,
-    modifier: Modifier = Modifier,
     screens: List<Screen.Home>,
+    modifier: Modifier = Modifier,
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination

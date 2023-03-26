@@ -16,6 +16,7 @@
 
 package com.mb.hunters.ui
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -31,6 +32,7 @@ import com.mb.hunters.ui.theme.HuntersTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
+@SuppressLint("ComposeModifierMissing")
 fun HuntersApp() {
     HuntersTheme {
         val navController = rememberNavController()

@@ -22,6 +22,7 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Modifier
 import com.mb.hunters.ui.home.collection.model.CollectionUiModel
 
 @Composable
@@ -36,9 +37,14 @@ fun CollectionsScreen(
 
 @Composable
 fun CollectionList(
-    items: List<CollectionUiModel>
+    items: List<CollectionUiModel>,
+    modifier: Modifier = Modifier
 ) {
-    LazyVerticalGrid(columns = GridCells.Fixed(2)) {
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2),
+        modifier = modifier
+
+    ) {
         items(items = items) { collectionUiModel ->
             CollectionItem(collectionUiModel = collectionUiModel)
         }

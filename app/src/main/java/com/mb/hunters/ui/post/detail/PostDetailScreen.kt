@@ -108,9 +108,9 @@ fun PostDetailScreen(
 @Composable
 private fun PostDetailScreen(
     postDetailUiState: PostDetailUiState,
-    modifier: Modifier,
     onBackClick: () -> Unit,
-    onPosterClick: (PosterItemsState) -> Unit
+    onPosterClick: (PosterItemsState) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     Column(
@@ -129,9 +129,11 @@ private fun PostDetailScreen(
                 is PostDetailUiState.Failed -> {
                     PostDetailError()
                 }
+
                 PostDetailUiState.Loading -> {
                     PostDetailLoading()
                 }
+
                 is PostDetailUiState.Success -> {
                     PostDetailContent(
                         postDetailUiState = postDetailUiState,
@@ -144,8 +146,10 @@ private fun PostDetailScreen(
 }
 
 @Composable
-fun PostDetailLoading() {
-    Box(modifier = Modifier.fillMaxSize()) {
+fun PostDetailLoading(
+    modifier: Modifier = Modifier
+) {
+    Box(modifier = modifier.fillMaxSize()) {
         CircularProgressIndicator(
             modifier = Modifier
                 .size(size = 54.dp)
@@ -155,8 +159,10 @@ fun PostDetailLoading() {
 }
 
 @Composable
-fun PostDetailError() {
-    ErrorScreen(modifier = Modifier.fillMaxSize())
+fun PostDetailError(
+    modifier: Modifier = Modifier
+) {
+    ErrorScreen(modifier = modifier.fillMaxSize())
 }
 
 @Composable
@@ -249,7 +255,7 @@ fun Body(
 }
 
 @Composable
-fun PostBadge(badge: BadgeState, modifier: Modifier) {
+fun PostBadge(badge: BadgeState, modifier: Modifier = Modifier) {
 
     Row(
         modifier = modifier.padding(vertical = 16.dp),

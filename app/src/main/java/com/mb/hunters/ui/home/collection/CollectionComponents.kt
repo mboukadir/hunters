@@ -75,7 +75,7 @@ fun CollectionItem(
             contentScale = ContentScale.Crop
         )
         Box(
-            modifier.fillMaxHeight()
+            Modifier.fillMaxHeight()
                 .fillMaxWidth().background(color = backgroundTransparent),
         ) {
 

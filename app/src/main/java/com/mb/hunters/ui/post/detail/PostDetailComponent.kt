@@ -16,6 +16,7 @@
 
 package com.mb.hunters.ui.post.detail
 
+import android.annotation.SuppressLint
 import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.BorderStroke
@@ -147,8 +148,8 @@ private fun PostDetailTitles(
 @Composable
 fun PostDetailAppBar(
     onBackClick: () -> Unit,
+    scrollBehavior: TopAppBarScrollBehavior,
     modifier: Modifier = Modifier,
-    scrollBehavior: TopAppBarScrollBehavior
 ) {
     val backgroundColors = TopAppBarDefaults.smallTopAppBarColors()
     TopAppBar(
@@ -168,8 +169,8 @@ fun PostDetailAppBar(
 @Composable
 private fun PostDetailPoster(
     posterItemsState: PosterItemsState,
+    onPosterClick: (PosterItemsState) -> Unit,
     modifier: Modifier = Modifier,
-    onPosterClick: (PosterItemsState) -> Unit
 ) {
 
     Box(
@@ -178,7 +179,7 @@ private fun PostDetailPoster(
             .fillMaxWidth()
     ) {
         LazyRow(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxWidth()
                 .height(300.dp)
         ) {
@@ -299,7 +300,11 @@ private fun LazyItemScope.PosterItem(
 }
 
 @Composable
-fun Makers(modifier: Modifier = Modifier, hunter: Hunter?, makers: List<Maker>) {
+fun Makers(
+           hunter: Hunter?,
+           makers: List<Maker>,
+    modifier: Modifier = Modifier
+) {
     LazyRow(
         modifier = modifier.wrapContentHeight(),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -411,6 +416,7 @@ fun MakersLightPreview() {
 }
 
 @Composable
+@SuppressLint("ComposeModifierMissing")
 fun MakersPreview() {
 
     val hunter = Hunter(

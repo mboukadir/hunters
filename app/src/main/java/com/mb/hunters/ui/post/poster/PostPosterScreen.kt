@@ -42,6 +42,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
@@ -52,7 +53,9 @@ import androidx.palette.graphics.Palette
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.AsyncImagePainter
 import coil.compose.ImagePainter
+import coil.compose.rememberAsyncImagePainter
 import coil.compose.rememberImagePainter
+import coil.request.ImageRequest
 import com.google.accompanist.insets.statusBarsPadding
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -138,9 +141,11 @@ private fun PosterPage(
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         var pagerColorState by remember(image.url) { mutableStateOf(Color.Transparent) }
-        val painter = rememberImagePainter(data = image.url, builder = {
-            allowHardware(false)
-        })
+        val painter = rememberAsyncImagePainter(
+            ImageRequest.Builder(LocalContext.current).data(data = image.url).apply(block = fun ImageRequest.Builder.() {
+                allowHardware(false)
+            }).build()
+        )
 
         val drawable = (painter.state as? AsyncImagePainter.State.Success)?.result?.drawable
         if (drawable != null) {
@@ -191,7 +196,9 @@ fun PostPosterScreenLightPreview() {
 }
 
 @Composable
-fun PostPosterScreenPreview() {
+fun PostPosterScreenPreview(
+    modifier: Modifier = Modifier
+) {
     val images = listOf(
         PosterItemState.Image(""),
         PosterItemState.Image(""),
